@@ -10,7 +10,8 @@ archivo <- getwd()
 
 seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metrics) {
   ################################################################################
-  # Reads .csv and .xls(x) files and outputs a var
+  # Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive ma
+  # trix. Also determinates which field is dim or metric.
   ################################################################################  
   vars <- NULL
   
