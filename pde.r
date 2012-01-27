@@ -1,14 +1,27 @@
+<<<<<<< HEAD
+=======
+# Veamos si funciona como yo quería
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
 rm(list=ls())
 
 # Dependencies
 require(XML)
 require(xlsx)
+<<<<<<< HEAD
 #setwd('C:/Documents and Settings/George/Desktop/')
 setwd("I:/george/comandos_paquetes_librerias/r/pde/series_sc/")
 
 archivo <- getwd()
 
 seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metrics) {
+=======
+#setwd("I:/george/comandos_paquetes_librerias/r/pde")
+setwd('C:/Documents and Settings/George/Desktop/')
+
+archivo <- getwd()
+
+seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace) {
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
 ################################################################################
 # Reads .csv and .xls(x) files and outputs a var
 ################################################################################  
@@ -24,19 +37,31 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
            if (ext %in% exts[,1]) {
+<<<<<<< HEAD
              cols <- read.table(x,sep=exts[exts[,1] == ext,2], header=F, nrows=1, fileEncoding='latin1', encoding='latin1')
              cols <- as.character(cols);cols <- enc2utf8(cols)
              data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F)
+=======
+             cols <- read.table(x,sep=exts[exts[,1] == ext,2], header=F, nrows=1)
+             cols <- as.character(cols)
+             data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1)
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
              colnames(data) <- cols
            } else {
              cols <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=0:1,encoding=y)
              cols <- as.character(cols,deparse=T)
+<<<<<<< HEAD
              data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000)
+=======
+             data <- read.xlsx2(x, sheetIndex=1, header=F,startRow=2)
+             data <- data[,-NCOL(data)]
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
            }
 
            # Builds descriptive matrix
            var <- c(
              cleantext(cols),
+<<<<<<< HEAD
              cols,
              fixType(unlist(lapply(data, typeof))),
              substr(rep(cleantext(x), length(cols)), 1,nchar(x)-4))
@@ -63,10 +88,23 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
              colnames(data) <- cols
+=======
+             cols, 
+             fixType(unlist(lapply(data, typeof))),
+             substr(rep(cleantext(x), length(cols)), 1,nchar(x)-4))
+           
+           var <- matrix(var, ncol = 4)
+           
+           vars <<- rbind(vars, var)
+           # In the case of output, it creates a new folder
+           if (!is.na(output)) {
+             try(colnames(data) <- cleantext(cols))
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
              write.table(data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=
                ''), sep=',', quote=F, fileEncoding=y, row.names=F)
            }
            }, y=encoding)
+<<<<<<< HEAD
   
   # Identifies where are the correspondant tables for each dimension
   vars <- cbind(vars, V7 = NA)
@@ -82,6 +120,8 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
     }
   }
 
+=======
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
   return(vars)
 }
 
@@ -91,7 +131,11 @@ fixType <- function(x) {
 ################################################################################
   replace <- matrix(c('logical', 'integer', 'double', 'complex', 'character',
     'boolean', 'integer', 'float', 'float', 'string'), ncol =2)
+<<<<<<< HEAD
   for (i in 1:5) x <- as.character(gsub(replace[i,1], replace[i,2],x, fixed=T))
+=======
+  for (i in 1:5) x <- gsub(replace[i,1], replace[i,2],x)
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
   return(x)
 }
 
@@ -141,6 +185,7 @@ addConcepts <- function(val,parent,lang) {
   fun(val, FUN= 
     function(x) {
       x <- as.character(x)
+<<<<<<< HEAD
       if (x[3] == 'string') {ATT <- c(id=x[1], extends='entity:entity')}
       if (x[3] != 'string') {ATT <- c(id=x[1])}
 
@@ -158,6 +203,13 @@ addConcepts <- function(val,parent,lang) {
                    newXMLNode('table', attrs=c(ref=paste(x[6],'_table',sep='')))
                    )
       }
+=======
+      newXMLNode('concept', attrs=c(id=x[1]), parent=parent,newXMLNode(
+        'info',newXMLNode('name', newXMLNode(
+          'value', attrs=c('xml:lang'=lang[1]), suppressNamespaceWarning=T,
+          x[2]))), newXMLNode('type', attrs=c(ref=x[3]))
+      )
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
     }
   )
 }
@@ -168,6 +220,7 @@ addSlices <- function(tableid, sliceatt, parent) {
 ################################################################################
   by(data=sliceatt, INDICES=tableid,FUN=
     function(x) {
+<<<<<<< HEAD
       newXMLNode(name='slice', attrs=c(id=paste(x[1,4],'_slice',sep='')),
                  parent=parent, apply(x, MARGIN = 1,FUN=
           function(z){
@@ -179,11 +232,23 @@ addSlices <- function(tableid, sliceatt, parent) {
             } else {
               newXMLNode(name=z[5], attrs=c(concept=z[1]))
           }}), newXMLNode('table', attrs=c(ref=paste(x[1,4],'_table',sep=''))))
+=======
+      newXMLNode(name='slice', attrs=c(id=paste(x[1,4],'_slice',sep='')),parent=parent,
+                 apply(X=x, MARGIN = 1, FUN=
+          function(z){
+            z <- as.character(z)
+            newXMLNode(name=z[5], attrs=c(concept=z[1]))
+          }), newXMLNode('table', attrs=c(ref=paste(x[1,4],'_table',sep=''))))
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
     }
   )
 }
 
+<<<<<<< HEAD
 addTables <- function(tableid, tableatt, parent, format) {
+=======
+addTables <- function(tableid, tableatt, parent) {
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
 ################################################################################
 # Function to create and populate the tables
 ################################################################################
@@ -194,11 +259,16 @@ addTables <- function(tableid, tableatt, parent, format) {
         MARGIN = 1, FUN=
           function(z){
             z <- as.character(z)
+<<<<<<< HEAD
             if (z[3] == 'date') {
               newXMLNode(name='column', attrs=c(id=z[1], type=z[3], format=format))  
             } else {
               newXMLNode(name='column', attrs=c(id=z[1], type=z[3]))
           }}), newXMLNode(name='data', newXMLNode('file', attrs=c(format=
+=======
+            newXMLNode(name='column', attrs=c(id=z[1], type=z[3]))
+          }), newXMLNode(name='data', newXMLNode('file', attrs=c(format=
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
             'csv', encoding='utf8'),paste(x[1,4],'.csv',sep='')))
       )
     }
@@ -213,7 +283,10 @@ pde <- function(
   output = NA,
   replace = F,
   targetNamespace = '',
+<<<<<<< HEAD
   timeFormat = 'yyyy',
+=======
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
   lang = c('es', 'en'),
   name = NA,
   description = NA,
@@ -236,6 +309,7 @@ pde <- function(
   setwd(path)
   files <- list.files(pattern=extension)
 
+<<<<<<< HEAD
   # Timeframe metrics
   metrics <- matrix(c('dia','day','semana','week','trimestre','quarter',
                                'mes','month','agno', 'year'), ncol = 2, byrow=T)
@@ -245,6 +319,22 @@ pde <- function(
   # Creates a unique concept list
   varConcepts <- unique(vars[,c(1:3,5:7)])
   varConcepts <- varConcepts[varConcepts[,5] != 'TRUE' & varConcepts[,3] !='date',]
+=======
+  # Variables Lists and datatypes
+  vars <- seekTables(files, encoding, extension, output, replace)
+  
+  # Tells which is metric or not
+  vars <- cbind(vars, 'metric')
+  metrics <- c('dia','day','semana','week','trimestre','quarter','mes','month',
+               'ango', 'year')
+  vars[vars[,1] %in% metrics, 5] <- 'dimension'
+  vars[vars[,1] %in% metrics, 3] <- 'date'
+  
+  vars[vars[,3] %in% 'string',5] <- 'dimension'
+  
+  # Creates a unique concept list
+  varConcepts <- unique(vars[,1:3])
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
   
   # Armado de xml
   archXML <- newXMLDoc()
@@ -256,7 +346,11 @@ pde <- function(
   
   # Definiciones dspl
      
+<<<<<<< HEAD
   imports <- c('quantity', 'entity', 'geo', 'time', 'unit')
+=======
+  imports <- c('quantity', 'entity', 'geo', 'time')
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
   
   sapply(imports,
          function(x) {
@@ -293,6 +387,7 @@ pde <- function(
   # CONCEPTS
   newXMLCommentNode('Concepts Def', parent=dspl)
   concepts <- newXMLNode('concepts', parent = dspl)
+<<<<<<< HEAD
   addConcepts(varConcepts,concepts, lang)
 
   # SLICES
@@ -300,11 +395,23 @@ pde <- function(
   slices <- newXMLNode('slices', parent = dspl)
   addSlices(tableid=unlist(vars[vars[,6] != T,4]),sliceatt=vars[vars[,6] != T,],
             parent=slices)
+=======
+  addConcepts(varConcepts[!(varConcepts[,1] %in% metrics),],concepts, lang)
+  
+  # SLICES
+  newXMLCommentNode('Slices Def', parent=dspl)
+  slices <- newXMLNode('slices', parent = dspl)
+  addSlices(tableid=unlist(vars[,4]),sliceatt=vars,parent=slices)
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
 
   # TABLES
   newXMLCommentNode('Tables Def', parent=dspl)
   tables <- newXMLNode('tables', parent = dspl)
+<<<<<<< HEAD
   addTables(tableid=unlist(vars[,4]),tableatt=vars,parent=tables, format=timeFormat)  
+=======
+  addTables(tableid=unlist(vars[,4]),tableatt=vars,parent=tables)  
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
   
   # If an output file is specified, it writes it on it
   if (is.na(output)) {
@@ -319,7 +426,13 @@ pde <- function(
   
 }
 
+<<<<<<< HEAD
 pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='xls',encoding='UTF-8',
     description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
     lang=c('es'), output=archivo, replace = T, timeFormat='yyyy-MM')
 
+=======
+pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='tab',
+    description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
+    lang=c('es'), output='C:/Documents and Settings/George/Desktop/', replace = T)
+>>>>>>> 643932ca5defc9a1e925e24b7eb78446475dd63f
