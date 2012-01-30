@@ -23,19 +23,21 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
            if (ext %in% exts[,1]) {
-             cols <- read.table(x,sep=exts[exts[,1] == ext,2], header=F, nrows=1,
-                                fileEncoding=y, encoding=y)
-             cols <- as.character(cols);cols <- enc2utf8(cols)
-             data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F)
+             
+             cols <- read.table(paste(output,'/',x,sep=''),sep=exts[exts[,1] == ext,2],
+                                header=F, nrows=1, encoding=y)
+             
+             cols <- as.character(cols)#;cols <- enc2utf8(cols)
+             data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec=',')
              colnames(data) <- cols
            } else {
              cols <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=0:1,encoding=y)
              cols <- as.character(cols,deparse=T)
              data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000)
            }
-           
+           fnames <- x
            for (i in c('.csv','.tab','.xlsx','.xls')) {
-            fnames <- gsub(i, '', x, fixed=T)
+            fnames <- gsub(i, '', fnames, fixed=T)
            }
            fnames <- rep(fnames, length(cols))
            
@@ -63,8 +65,9 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
                                                     cleantext(cols), fixed = T)}
            
            var[,1] <- cols
-           
+
            vars <<- rbind(vars, var)
+
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
              colnames(data) <- cols
@@ -86,7 +89,6 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
       }
     }
   }
-  
   return(vars)
 }
 
@@ -230,6 +232,7 @@ pde <- function(
   fileEncoding = 'UTF-8'
   ) {
   # Depuracion de Errores
+  
   description <- ifelse(!is.na(description),description,'No description')
   name <- ifelse(!is.na(name),name,'No name')
   providerName <- ifelse(!is.na(providerName),providerName,'No provider')
@@ -238,12 +241,14 @@ pde <- function(
   options(stringsAsFactors=F)
   
   # Obteniendo listado de archivos
-  files <- list.files(path=getwd(),pattern=extension)
   
+  files <- list.files(path=path,pattern=extension)
+    
   # Timeframe metrics
   metrics <- matrix(c('dia','day','semana','week','trimestre','quarter',
-                      'mes','month','agno', 'year'), ncol = 2, byrow=T)
+                      'mes','month','agno', 'year', 'year','year','month','month'), ncol = 2, byrow=T)
   # Variables Lists and datatypes
+  
   vars <- seekTables(files, encoding, extension, output, replace, metrics)
   
   # Creates a unique concept list
@@ -300,9 +305,9 @@ pde <- function(
   addConcepts(varConcepts,concepts, lang)
   
   # SLICES
-  newXMLCommentNode('Slices Def', parent=dspl)
+  newXMLCommentNode('Slices Def', parent=dspl);print(vars)
   slices <- newXMLNode('slices', parent = dspl)
-  addSlices(tableid=unlist(vars[vars[,6] != T,4]),sliceatt=vars[vars[,6] != T,],
+  addSlices(tableid=unlist(vars[vars[,6] != 'TRUE',4]),sliceatt=vars[vars[,6] != T,],
             parent=slices)
   
   # TABLES
@@ -324,7 +329,10 @@ pde <- function(
 }
 
 pde <- compiler::cmpfun(pde)
+x <- 'I:/presentaciones/201201_australianos/google'
+pde(x, replace=T, timeFormat='yyyy', lang='en', name='Chilean Pension System Statistics', 
+    providerName='Pension Supervisor', extension='xls', output=x)
 
-pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='xls',encoding='UTF-8',
-    description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
-    lang=c('es'), output=archivo, replace = T, timeFormat='yyyy-MM')
+#pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='xls',encoding='UTF-8',
+#    description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
+#    lang=c('es'), output=archivo, replace = T, timeFormat='yyyy-MM')
