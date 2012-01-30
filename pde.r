@@ -3,16 +3,14 @@ rm(list=ls())
 # Dependencies
 require(XML)
 require(xlsx)
-#setwd('C:/Documents and Settings/George/Desktop/')
-setwd("I:/george/comandos_paquetes_librerias/r/pde/series_sc/")
 
-archivo <- getwd()
+archivo <- 'c:/rdspl/series_sc'
 
 seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metrics) {
-  ################################################################################
-  # Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive ma
-  # trix. Also determinates which field is dim or metric.
-  ################################################################################  
+################################################################################
+# Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive ma
+# trix. Also determinates which field is dim or metric.
+################################################################################  
   vars <- NULL
   
   if (replace & !is.na(output)) {
@@ -25,7 +23,8 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
            if (ext %in% exts[,1]) {
-             cols <- read.table(x,sep=exts[exts[,1] == ext,2], header=F, nrows=1, fileEncoding='latin1', encoding='latin1')
+             cols <- read.table(x,sep=exts[exts[,1] == ext,2], header=F, nrows=1,
+                                fileEncoding=y, encoding=y)
              cols <- as.character(cols);cols <- enc2utf8(cols)
              data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F)
              colnames(data) <- cols
@@ -35,12 +34,17 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
              data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000)
            }
            
+           for (i in c('.csv','.tab','.xlsx','.xls')) {
+            fnames <- gsub(i, '', x, fixed=T)
+           }
+           fnames <- rep(fnames, length(cols))
+           
            # Builds descriptive matrix
            var <- c(
              cleantext(cols),
              cols,
              fixType(unlist(lapply(data, typeof))),
-             substr(rep(cleantext(x), length(cols)), 1,nchar(x)-4))
+             fnames)
            var <- matrix(var, ncol = 4)
            
            # Creates a new column of metric vs dimm
@@ -65,7 +69,7 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            if (!is.na(output)) {
              colnames(data) <- cols
              write.table(data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=
-               ''), sep=',', quote=F, fileEncoding=y, row.names=F)
+               ''), na='', sep=',', quote=F, fileEncoding=y, row.names=F)
            }
          }, y=encoding)
   
@@ -234,8 +238,7 @@ pde <- function(
   options(stringsAsFactors=F)
   
   # Obteniendo listado de archivos
-  setwd(path)
-  files <- list.files(pattern=extension)
+  files <- list.files(path=getwd(),pattern=extension)
   
   # Timeframe metrics
   metrics <- matrix(c('dia','day','semana','week','trimestre','quarter',
@@ -319,6 +322,8 @@ pde <- function(
   }
   
 }
+
+pde <- compiler::cmpfun(pde)
 
 pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='xls',encoding='UTF-8',
     description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
