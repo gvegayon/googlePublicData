@@ -1,10 +1,10 @@
-rm(list=ls())
+#rm(list=ls())
 
 # Dependencies
 require(XML)
 require(xlsx)
 
-archivo <- 'c:/rdspl/series_sc'
+#archivo <- 'c:/rdspl/series_sc'
 
 seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metrics) {
 ################################################################################
@@ -27,7 +27,7 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
              cols <- read.table(paste(output,'/',x,sep=''),sep=exts[exts[,1] == ext,2],
                                 header=F, nrows=1, encoding=y)
              
-             cols <- as.character(cols)#;cols <- enc2utf8(cols)
+             cols <- as.character(cols)
              data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec=',')
              colnames(data) <- cols
            } else {
@@ -329,9 +329,9 @@ pde <- function(
 }
 
 pde <- compiler::cmpfun(pde)
-x <- 'I:/presentaciones/201201_australianos/google'
-pde(x, replace=T, timeFormat='yyyy', lang='en', name='Chilean Pension System Statistics', 
-    providerName='Pension Supervisor', extension='xls', output=x)
+#x <- 'I:/presentaciones/201201_australianos/google'
+#pde(x, replace=T, timeFormat='yyyy', lang='en', name='Chilean Pension System Statistics', 
+    #providerName='Pension Supervisor', extension='xls', output=x)
 
 #pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='xls',encoding='UTF-8',
 #    description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
