@@ -10,7 +10,6 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
 # Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive ma
 # trix. Also determinates which field is dim or metric.
 ################################################################################  
-  vars <- NULL
   
   # Makes the dir of output
   if (replace & !is.na(output)) {
@@ -26,6 +25,8 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
   } else if (!replace & !is.na(output)) {
     stop(call='Directorio ya existe, debe hacer explícito el reemplazo de este.')
   }
+
+  vars <- NULL
   vars <- sapply(paths,
          function(x,y) {
            # Reads each file, gets the variables names and datatypes
@@ -80,12 +81,12 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
              colnames(data) <- cols
-             write.table(data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=
-               ''), na='', sep=',', quote=F, fileEncoding=y, row.names=F)
+             write.table(x=data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=''), 
+               na='', sep=',',quote=F,row.names=F,dec='.')
              cat(x,'analized correctly and exported as csv\n')
            }
            else {
-             print(x,'analized correctly\n')
+             cat(x,'analized correctly\n')
            }
            
            return(vars)
@@ -271,6 +272,7 @@ pde <- function(
   ) {
   # Depuracion de Errores
   
+  
   description <- ifelse(!is.na(description),description,'No description')
   name <- ifelse(!is.na(name),name,'No name')
   providerName <- ifelse(!is.na(providerName),providerName,'No provider')
@@ -281,6 +283,14 @@ pde <- function(
   # getting the files list
   setwd(path)
   files <- list.files(path=path,pattern=extension)
+  nfiles <- length(files)
+  if (nfiles==0) {
+    cat(nfiles, 'files found. Check if the directory is ok.\n') 
+  }
+  else {
+    cat(nfiles, 'files found...\n')
+  }
+  
     
   # Timeframe metrics
   metrics <- matrix(c(
@@ -358,6 +368,7 @@ pde <- function(
   if (is.na(output)) {
     result <- structure(.Data=list(saveXML(archXML, encoding = 'UTF-8'),vars),
                         .Names=c('xml', 'variables'))
+    return(result)
   } else {
     result <- file(paste(output,'/r_pde/metadata.xml',sep=''), encoding='UTF-8')
     ER <- cat(saveXML(archXML, encoding='UTF-8'), file=result)
