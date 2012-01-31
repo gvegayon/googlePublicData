@@ -8,24 +8,27 @@ require(xlsx)
 
 seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metrics) {
 ################################################################################
+# DESCRIPTION:
 # Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive ma
 # trix. Also determinates which field is dim or metric.
 ################################################################################  
   vars <- NULL
   
+  # Makes the dir of output
   if (replace & !is.na(output)) {
     try(dir.create(path=paste(output,'/r_pde',sep=''),showWarnings=F), silent=T)
   } else if (!replace & !is.na(output)) {
     stop(call='Directorio ya existe, debe hacer explícito el reemplazo de este.')
   }
-  sapply(paths,
+  vars <- sapply(paths,
          function(x,y) {
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
            if (ext %in% exts[,1]) {
              
-             cols <- read.table(paste(output,'/',x,sep=''),sep=exts[exts[,1] == ext,2],
-                                header=F, nrows=1, encoding=y)
+             cols <- read.table(
+               paste(getwd(),'/',x,sep=''), sep=exts[exts[,1] == ext,2], 
+               header=F, nrows=1, encoding=y)
              
              cols <- as.character(cols)
              data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec=',')
@@ -33,7 +36,7 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            } else {
              cols <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=0:1,encoding=y)
              cols <- as.character(cols,deparse=T)
-             data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000)
+             data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000,encoding=y)
            }
            fnames <- x
            for (i in c('.csv','.tab','.xlsx','.xls')) {
@@ -66,7 +69,7 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            
            var[,1] <- cols
 
-           vars <<- rbind(vars, var)
+           vars <- rbind(vars, var)
 
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
@@ -74,7 +77,12 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
              write.table(data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=
                ''), na='', sep=',', quote=F, fileEncoding=y, row.names=F)
            }
+           
+           return(vars)
          }, y=encoding)
+  
+  # Puts it all into a single matrrx
+  vars <- do.call('rbind', sapply(vars, unlist))
   
   # Identifies where are the correspondant tables for each dimension
   vars <- cbind(vars, V7 = NA)
@@ -213,9 +221,29 @@ addTables <- function(tableid, tableatt, parent, format) {
 }
 
 pde <- function(
-  ################################################################################
-  # Function to create a dspl doc
-  ################################################################################  
+################################################################################
+# DESCRIPTION:
+# Based on an specific folder directory, the function seeks for files that match
+# the specified extension (csv, tab, xls, xlsx), reads the column names, guesses
+# the datatype and outputs a dspl metadata file including the corresponding csv
+# files
+#
+# VARIABLES:
+# - path: Full path to the folder where the tables are saved.
+# - Output: FUll path to the output folder (pde will create a subfolder call r_dspl).
+# - replace: In the case of defining output, replaces the files.
+# - targetNamespace:
+# - timeFormat: The corresponding time format of the collection.
+# - lang: A list of the languages supported by the dataset.
+# - name: The name of the dataset.
+# - description: The dataset description.
+# - url: The corresponding URL for the dataset.
+# - providerNAme
+# - providerURL
+# - extension: The extension of the tables in the 'path' folder.
+# - encoding: The char encoding of the input tables.
+# - fileEncoding: The tables files encoding.
+################################################################################  
   path,
   output = NA,
   replace = F,
@@ -240,15 +268,16 @@ pde <- function(
   # Parametros iniciales
   options(stringsAsFactors=F)
   
-  # Obteniendo listado de archivos
-  
+  # getting the files list
+  setwd(path)
   files <- list.files(path=path,pattern=extension)
     
   # Timeframe metrics
-  metrics <- matrix(c('dia','day','semana','week','trimestre','quarter',
-                      'mes','month','agno', 'year', 'year','year','month','month'), ncol = 2, byrow=T)
-  # Variables Lists and datatypes
+  metrics <- matrix(c(
+    'dia','day','semana','week','trimestre','quarter', 'mes','month','agno', 
+    'year', 'year','year','month','month'), ncol = 2, byrow=T)
   
+  # Variables Lists and datatypes
   vars <- seekTables(files, encoding, extension, output, replace, metrics)
   
   # Creates a unique concept list
