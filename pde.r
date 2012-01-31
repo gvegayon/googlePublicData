@@ -1,5 +1,3 @@
-#rm(list=ls())
-
 # Dependencies
 require(XML)
 require(xlsx)
@@ -16,7 +14,15 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
   
   # Makes the dir of output
   if (replace & !is.na(output)) {
-    try(dir.create(path=paste(output,'/r_pde',sep=''),showWarnings=F), silent=T)
+    output2 <- paste(output,'/r_pde',sep='')
+    ER <- try(dir.create(path=output2,showWarnings=F), silent=T)
+    if (class(ER)=='try-error') {
+      stop(paste('Couldn\'t create the folder r_pde in',output2))
+    }
+    else {
+      cat('Output defined', 'Results will be saved at',output2,sep='\n')
+    }
+    
   } else if (!replace & !is.na(output)) {
     stop(call='Directorio ya existe, debe hacer explícito el reemplazo de este.')
   }
@@ -76,6 +82,10 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
              colnames(data) <- cols
              write.table(data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=
                ''), na='', sep=',', quote=F, fileEncoding=y, row.names=F)
+             cat(x,'analized correctly and exported as csv\n')
+           }
+           else {
+             print(x,'analized correctly\n')
            }
            
            return(vars)
@@ -334,7 +344,7 @@ pde <- function(
   addConcepts(varConcepts,concepts, lang)
   
   # SLICES
-  newXMLCommentNode('Slices Def', parent=dspl);print(vars)
+  newXMLCommentNode('Slices Def', parent=dspl)
   slices <- newXMLNode('slices', parent = dspl)
   addSlices(tableid=unlist(vars[vars[,6] != 'TRUE',4]),sliceatt=vars[vars[,6] != T,],
             parent=slices)
@@ -348,11 +358,16 @@ pde <- function(
   if (is.na(output)) {
     result <- structure(.Data=list(saveXML(archXML, encoding = 'UTF-8'),vars),
                         .Names=c('xml', 'variables'))
-    
   } else {
     result <- file(paste(output,'/r_pde/metadata.xml',sep=''), encoding='UTF-8')
-    cat(saveXML(archXML, encoding='UTF-8'), file=result)
+    ER <- cat(saveXML(archXML, encoding='UTF-8'), file=result)
     close.connection(con=result)
+    if (class(ER) == 'try-error') {
+      stop('Error: Couldn\'t save the metadata file')
+    }
+    else {
+      cat('Metadata created successfully at', paste(output, 'r_dspl/metadata.xml',sep=''),sep='\n')
+    }    
   }
   
 }
