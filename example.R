@@ -5,18 +5,34 @@ source('pde.r', encoding='UTF-8')
 
 mydspl <- pde(
   path='c:/comandos_paquetes_librerias/r/rdspl/series_sc/',
+  output='c:/comandos_paquetes_librerias/r/rdspl/series_sc/',
+  replace=T,
+  timeFormat='yyyy',
+  lang=c('en','es'),
+  name=c('Unemployment Insurance','Seguro de Cesantía'),
+  description=c('Some unemployment insurance statistics','Algunas estadisticas de desempleo'),
+  url='http://www.spensiones.cl/safpstats/stats/',
+  providerName=c('Chilean Pension Supervisor','Superintendencia de Pensiones, Chile'),
+  providerURL='http://www.spensiones.cl/',
+  extension='xls',
+  encoding='UTF-8')
+
+mydspl
+
+mydspl <- pde(
+  path='c:/comandos_paquetes_librerias/r/rdspl/series_sc/',
   output=NA,
   replace=T,
   timeFormat='yyyy',
   lang=c('en','es'),
   name=c('Unemployment Insurance','Seguro de Cesantía'),
-  description=NA,
-  url=NA,
+  description=c('Some unemployment insurance statistics','Algunas estadisticas de desempleo'),
+  url='http://www.spensiones.cl/safpstats/stats/',
   providerName=c('Chilean Pension Supervisor','Superintendencia de Pensiones, Chile'),
-  providerURL=NA,
+  providerURL='http://www.spensiones.cl/',
   extension='xls',
-  encoding='latin1')
+  encoding='UTF-8')
 
-cat(mydspl$xml, encoding='latin1')
+cat(mydspl$xml)
 
-cat(mydspl$variables)
+mydspl$variables

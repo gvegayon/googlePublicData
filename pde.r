@@ -81,9 +81,11 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
              colnames(data) <- cols
+             #ordenar <- var[var[,5]=='dimension' & var[,3] != 'date',1]
+             #data <- data[order(with(data,ordenar)),]
              write.table(x=data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=''), 
                na='', sep=',',quote=F,row.names=F,dec='.')
-             cat(x,'analized correctly and exported as csv\n')
+             cat(x,'analized correctly, ordered by ', ordenar,' and exported as csv\n')
            }
            else {
              cat(x,'analized correctly\n')
@@ -280,8 +282,19 @@ pde <- function(
   # Parametros iniciales
   options(stringsAsFactors=F)
   
+  # Checking if output path is Ok
+  if (!is.na(output)) {
+    ER <- try(setwd(output), silent=T)
+    if (class(ER) == 'try-error') {
+      stop('Incorrect output path:\n\t\t\t', output, '\n\t\toutput path couldn\'t be found')
+    }
+  }
   # getting the files list
-  setwd(path)
+  ER <- try(setwd(path), silent=T)
+  if (class(ER) == 'try-error') {
+    stop('Incorrect path:\n\t\t\t', path, '\n\t\tpath couldn\'t be found')
+  }
+  
   files <- list.files(path=path,pattern=extension)
   nfiles <- length(files)
   if (nfiles==0) {
@@ -369,25 +382,14 @@ pde <- function(
     result <- structure(.Data=list(saveXML(archXML, encoding = 'UTF-8'),vars),
                         .Names=c('xml', 'variables'))
     return(result)
+  
   } else {
     result <- file(paste(output,'/r_pde/metadata.xml',sep=''), encoding='UTF-8')
-    ER <- cat(saveXML(archXML, encoding='UTF-8'), file=result)
+    cat(saveXML(archXML, encoding='UTF-8'), file=result)
     close.connection(con=result)
-    if (class(ER) == 'try-error') {
-      stop('Error: Couldn\'t save the metadata file')
-    }
-    else {
-      cat('Metadata created successfully at', paste(output, 'r_dspl/metadata.xml',sep=''),sep='\n')
-    }    
+    return(paste('Metadata created successfully at',output, 'r_dspl/metadata.xml',sep=''))
   }
   
 }
 
 pde <- compiler::cmpfun(pde)
-#x <- 'I:/presentaciones/201201_australianos/google'
-#pde(x, replace=T, timeFormat='yyyy', lang='en', name='Chilean Pension System Statistics', 
-    #providerName='Pension Supervisor', extension='xls', output=x)
-
-#pde(archivo, name=c('Afiliados al seguro de cesantía'), extension='xls',encoding='UTF-8',
-#    description =c('Esto es sólo una prueba'), providerName=c('SPensiones'),
-#    lang=c('es'), output=archivo, replace = T, timeFormat='yyyy-MM')
