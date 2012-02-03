@@ -81,16 +81,19 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
              colnames(data) <- cols
-             #ordenar <- var[var[,5]=='dimension' & var[,3] != 'date',1]
-             #data <- data[order(with(data,ordenar)),]
-             write.table(x=data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=''), 
-               na='', sep=',',quote=F,row.names=F,dec='.')
-             cat(x,'analized correctly, ordered by ', ordenar,' and exported as csv\n')
+             
+             # Sorts the data acording to dimensional concepts (not date)
+             ord <- var[var[,5]=='dimension' & var[,3] != 'date',1]
+             if (length(ord)!=0) data <- data[do.call(order,data[ord]),]
+             
+             # Writes the data into csv files
+             write.table(x=data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=''),
+               fileEncoding=y, na='', sep=',',quote=F,row.names=F,dec='.')
+             cat(x,'analized correctly, ordered by ', ord,' and exported as csv\n')
            }
            else {
              cat(x,'analized correctly\n')
            }
-           
            return(vars)
          }, y=encoding)
   
@@ -110,6 +113,7 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
       }
     }
   }
+  vars <- data.frame(vars); colnames(vars)
   return(vars)
 }
 
@@ -391,5 +395,3 @@ pde <- function(
   }
   
 }
-
-pde <- compiler::cmpfun(pde)
