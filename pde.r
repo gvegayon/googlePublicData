@@ -117,10 +117,37 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
   return(vars)
 }
 
+checkSlices <- function(dims, by) {
+################################################################################
+# Checks if there's any pair of slices with the same dimentions (error)
+################################################################################
+  # Builds a list of dims by slice
+  slices.dims <- do.call(list,by(dims, by, function(x) unlist(x[order(x)])))
+  
+  # Generates a list of cohorts (unique) that shouldn't be store more than once
+  unique.dims <- unique(slices.dims)
+  
+  for (i in 1:length(unique.dims)) {
+    # Sets the counters
+    counter <- 0
+    fields <- NULL
+    for (j in names(slices.dims)) {
+      test <- identical(slices.dims[[j]], unique.dims[[i]])
+      
+      if (test) {counter <- counter + 1; fields <- paste(fields, j, sep=',')}
+      if (counter > 1) {
+        stop("Dimention(s) ", unlist(unique.dims[[i]]),
+             " apear more than once in the collection at ", fields,
+             ". Variables in those tables should be grouped in only one table.")
+      }
+    }
+  }
+}
+
 fixType <- function(x) {
-  ################################################################################
-  # Transforms the datatypes in function of allowed datatypes for DSPL
-  ################################################################################
+################################################################################
+# Transforms the datatypes in function of allowed datatypes for DSPL
+################################################################################
   replace <- matrix(c('logical', 'integer', 'double', 'complex', 'character',
                       'boolean', 'integer', 'float', 'float', 'string'), ncol =2)
   for (i in 1:5) x <- as.character(gsub(replace[i,1], replace[i,2],x, fixed=T))
@@ -128,9 +155,9 @@ fixType <- function(x) {
 }
 
 cleantext <- function(x) {
-  ################################################################################
-  # Adapts labels to IDs
-  ################################################################################  
+################################################################################
+# Adapts labels to IDs
+################################################################################  
   lcase <- matrix(c("á", "a", "é", "e", "í", "i", 'ó', 'o', "ú", "u", "ñ", 
                     "gn", "ý", "y"), ncol = 2, byrow = T)
   
@@ -152,18 +179,18 @@ cleantext <- function(x) {
 }
 
 addInfo <- function(nodename,values,parent,lang) {
-  ################################################################################
-  # Function to add information and provider nodes y multiple languages
-  ################################################################################  
+################################################################################
+# Function to add information and provider nodes y multiple languages
+################################################################################  
   newXMLNode(nodename, parent=parent, sapply(values, function(x) {
     newXMLNode('value',attrs=c('xml:lang'=lang[which(values==x)]), x,
                suppressNamespaceWarning=T)}))
 }
 
 addConcepts <- function(val,parent,lang) {
-  ################################################################################
-  # Function to create and populate the concepts
-  ################################################################################d  
+################################################################################
+# Function to create and populate the concepts
+################################################################################  
   if (NCOL(val) > 1) {
     fun <- function(x, ...) {apply(x, MARGIN = 1,...)}
   } else {
@@ -195,9 +222,9 @@ addConcepts <- function(val,parent,lang) {
 }
 
 addSlices <- function(tableid, sliceatt, parent) {
-  ################################################################################
-  # Function to create and populate the slices
-  ################################################################################
+################################################################################
+# Function to create and populate the slices
+################################################################################
   by(data=sliceatt, INDICES=tableid,FUN=
     function(x) {
       newXMLNode(name='slice', attrs=c(id=paste(x[1,4],'_slice',sep='')),
@@ -216,9 +243,9 @@ addSlices <- function(tableid, sliceatt, parent) {
 }
 
 addTables <- function(tableid, tableatt, parent, format) {
-  ################################################################################
-  # Function to create and populate the tables
-  ################################################################################
+################################################################################
+# Function to create and populate the tables
+################################################################################
   by(data=tableatt, INDICES=tableid,FUN=
     function(x) {
       newXMLNode(name='table', attrs=c(id=paste(x[1,4],'_table',sep='')),parent=
@@ -316,6 +343,10 @@ pde <- function(
   
   # Variables Lists and datatypes
   vars <- seekTables(files, encoding, extension, output, replace, metrics)
+  dims <- subset(vars, V5=='dimension', select=c(V1, V4, V5))
+  
+  # Identifying if there is any duplicated slice
+  checkSlices(dims=dims$V1, by=dims$V4)
   
   # Creates a unique concept list
   varConcepts <- unique(vars[,c(1:3,5:7)])
@@ -391,7 +422,8 @@ pde <- function(
     result <- file(paste(output,'/r_pde/metadata.xml',sep=''), encoding='UTF-8')
     cat(saveXML(archXML, encoding='UTF-8'), file=result)
     close.connection(con=result)
-    return(paste('Metadata created successfully at',output, 'r_dspl/metadata.xml',sep=''))
+    return(paste('Metadata created successfully at ',output, 
+                 'r_dspl/metadata.xml',sep=''))
   }
   
 }
