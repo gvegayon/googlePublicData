@@ -4,16 +4,79 @@ require(xlsx)
 
 #archivo <- 'c:/rdspl/series_sc'
 
-seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metrics) {
+checkPath <- function(x, type='output') {
 ################################################################################
 # DESCRIPTION:
-# Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive ma
-# trix. Also determinates which field is dim or metric.
+# Checks if the output path exists, otherwise stops the routine.
 ################################################################################  
+  ER <- try(setwd(x), silent=T)
+  if (class(ER) == 'try-error') {
+    stop('Incorrect ', type,' path:\n\t\t\t', x, '\n\t\t couldn\'t be found')
+  } 
+}
+
+getFilesNames <- function(path, extension='csv') {
+################################################################################
+# DESCRIPTION:
+# As a function of a path and a file extension, gets all the file names there.
+################################################################################  
+  files <- list.files(path=path,pattern=extension)
+  nfiles <- length(files)
+  if (nfiles==0) {
+    stop(nfiles, ' files found.\nCannot\' continue') 
+  }
+  else {
+    cat(nfiles, 'files found...\n')
+  }
+  return(files)
+}
+
+dsplConfig <- function(path, encoding='UTF-8', ext='csv', output=NA) {
+################################################################################
+# DESCRIPTION:
+# Reads .csv and .xls(x) files, outputs a descriptive dataframe of the data and
+# builds a config file.
+################################################################################  
+  
+  checkPath(path, "input")
+  
+  files <- getFilesNames(path, 'xls')
+  
+  x <- seekTables(files=files, encoding=encoding, ext=ext)
+  x <- unique(
+    subset(x,subset=type != 'date' & is.dim.tab==F, 
+           select=c(id, label))
+    )
+  x <- data.frame(x, description=NA, topic=NA)
+  if (is.na(output)) {
+    return(x) 
+  } 
+  else {
+    ERR<-try(write.table(x, file=output, quote=F, na="___", sep='\t'))
+    if (class(ERR)!='try-error') {
+      cat('DSPL Configfile written correctly at',output,'\n')
+    }
+    else {
+      cat('An error has occurred during the file writing at',output,'\n')
+    }
+  }
+}
+
+seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace = T) {
+################################################################################
+# DESCRIPTION:
+# Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive da
+# taframe. Also determinates which field is dim or metric.
+################################################################################  
+  
+  # Timeframe metrics
+  metrics <- matrix(c(
+    'dia','day','semana','week','trimestre','quarter', 'mes','month','agno', 
+    'year', 'year','year','month','month'), ncol = 2, byrow=T)
   
   # Makes the dir of output
   if (replace & !is.na(output)) {
-    output2 <- paste(output,'/r_pde',sep='')
+    output2 <- paste(output,'r_pde',sep='')
     ER <- try(dir.create(path=output2,showWarnings=F), silent=T)
     if (class(ER)=='try-error') {
       stop(paste('Couldn\'t create the folder r_pde in',output2))
@@ -23,11 +86,11 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
     }
     
   } else if (!replace & !is.na(output)) {
-    stop(call='Directorio ya existe, debe hacer explícito el reemplazo de este.')
+    stop(call='Folder already exists, you must make explicit the intention to replace it.')
   }
 
   vars <- NULL
-  vars <- sapply(paths,
+  vars <- sapply(files,
          function(x,y) {
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
@@ -115,7 +178,7 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
   }
   vars <- data.frame(vars)
   colnames(vars) <- c(
-    'id', 'label', 'data.type', 'slice', 'concept.type', 'is.dim.tab', 'dim.tab.ref'
+    'id', 'label', 'type', 'slice', 'concept.type', 'is.dim.tab', 'dim.tab.ref'
     )
   return(vars)
 }
@@ -194,6 +257,7 @@ addConcepts <- function(val,parent,lang) {
 ################################################################################
 # Function to create and populate the concepts
 ################################################################################  
+  colnames(val)[3] <- 'ref'
   if (NCOL(val) > 1) {
     fun <- function(x, ...) {apply(x, MARGIN = 1,...)}
   } else {
@@ -203,20 +267,20 @@ addConcepts <- function(val,parent,lang) {
   fun(val, FUN= 
     function(x) {
       #x <- as.character(x)
-      if (x['data.type'] == 'string') {ATT <- c(id=x['id'], extends='entity:entity')}
-      if (x['data.type'] != 'string') {ATT <- c(id=x['id'])}
+      if (x['ref'] == 'string') {ATT <- c(x['id'], extends='entity:entity')}
+      if (x['ref'] != 'string') {ATT <- c(x['id'])}
       
       # in the case of not being a dimensional concept
       if (x['concept.type']!='dimension') {
         newXMLNode('concept', attrs=ATT, parent=parent,newXMLNode('info',newXMLNode(
           'name', newXMLNode('value', attrs=c('xml:lang'=lang[1]), suppressNamespaceWarning=T,
-                             x['label']))), newXMLNode('type',attrs=c(ref=x['data.type']))
+                             x['label']))), newXMLNode('type', attrs=c(x['ref']))
                    )
       } else {
         # in the case of being a dimensional concept
         newXMLNode('concept', attrs=ATT, parent=parent,newXMLNode('info',newXMLNode(
           'name', newXMLNode('value', attrs=c('xml:lang'=lang[1]), suppressNamespaceWarning=T,
-                             x['label']))), newXMLNode('type',attrs=c(ref=x['data.type'])),
+                             x['label']))), newXMLNode('type',attrs=c(x['ref'])),
                    newXMLNode('table', attrs=c(ref=paste(x['dim.tab.ref'],'_table',sep='')))
                    )
       }
@@ -228,6 +292,7 @@ addSlices <- function(tableid, sliceatt, parent) {
 ################################################################################
 # Function to create and populate the slices
 ################################################################################
+  colnames(sliceatt)[1] <- 'concept'
   by(data=sliceatt, INDICES=tableid,FUN=
     function(x) {
       newXMLNode(name='slice', attrs=c(id=paste(x$slice[1],'_slice',sep='')),
@@ -235,15 +300,15 @@ addSlices <- function(tableid, sliceatt, parent) {
                    function(z){
                      #z <- as.character(z)
                      # In the case of dates-time
-                     if (z['data.type'] == 'date') {
+                     if (z['type'] == 'date') {
                        newXMLNode(name=z['concept.type'], 
-                                  attrs=c(concept=paste('time:',z['id'],sep='')))
+                                  attrs=c(concept=paste('time:',z['concept'],sep='')))
                        # Otherwise
                      } else {
-                       newXMLNode(name=z['concept.type'], attrs=c(concept=z['id']))
+                       newXMLNode(name=z['concept.type'], attrs=c(z['concept']))
                      }}), newXMLNode('table', attrs=c(ref=paste(x$slice[1],'_table',sep=''))))
     }
-     )
+    )
 }
 
 addTables <- function(tableid, tableatt, parent, format) {
@@ -256,11 +321,10 @@ addTables <- function(tableid, tableatt, parent, format) {
         parent, apply(X=x, 
                       MARGIN = 1, FUN=
                         function(z){
-                          #z <- as.character(z)
-                          if (z['data.type'] == 'date') {
-                            newXMLNode(name='column', attrs=c(id=z['id'], type=z['data.type'], format=format))  
+                          if (z['type'] == 'date') {
+                            newXMLNode(name='column', attrs=c(z['id'], z['type'], format=format))  
                           } else {
-                            newXMLNode(name='column', attrs=c(id=z['id'], type=z['data.type']))
+                            newXMLNode(name='column', attrs=c(z['id'], z['type']))
                           }}), newXMLNode(name='data', newXMLNode('file', attrs=c(format=
                             'csv', encoding='utf8'),paste(x$slice[1],'.csv',sep='')))
                  )
@@ -318,35 +382,14 @@ pde <- function(
   options(stringsAsFactors=F)
   
   # Checking if output path is Ok
-  if (!is.na(output)) {
-    ER <- try(setwd(output), silent=T)
-    if (class(ER) == 'try-error') {
-      stop('Incorrect output path:\n\t\t\t', output, '\n\t\toutput path couldn\'t be found')
-    }
-  }
-  # getting the files list
-  ER <- try(setwd(path), silent=T)
-  if (class(ER) == 'try-error') {
-    stop('Incorrect path:\n\t\t\t', path, '\n\t\tpath couldn\'t be found')
-  }
+  checkPath(output, "output")
+  checkPath(path, "input")
   
-  files <- list.files(path=path,pattern=extension)
-  nfiles <- length(files)
-  if (nfiles==0) {
-    cat(nfiles, 'files found. Check if the directory is ok.\n') 
-  }
-  else {
-    cat(nfiles, 'files found...\n')
-  }
-  
-    
-  # Timeframe metrics
-  metrics <- matrix(c(
-    'dia','day','semana','week','trimestre','quarter', 'mes','month','agno', 
-    'year', 'year','year','month','month'), ncol = 2, byrow=T)
+  # Gets the filenames
+  files <- getFilesNames(path, extension) 
   
   # Variables Lists and datatypes
-  vars <- seekTables(files, encoding, extension, output, replace, metrics)
+  vars <- seekTables(files, encoding, extension, output, replace)
   dims <- subset(vars, concept.type=='dimension', select=c(id, slice, concept.type))
   
   # Identifying if there is any duplicated slice
@@ -354,7 +397,7 @@ pde <- function(
   
   # Creates a unique concept list
   varConcepts <- unique(
-    subset(vars,subset=data.type != 'date' & is.dim.tab==F, select=-slice)
+    subset(vars,subset=type != 'date' & is.dim.tab==F, select=-slice)
     )
   
   # Armado de xml
