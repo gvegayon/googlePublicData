@@ -1,0 +1,19 @@
+id	label	description	topic
+8	fondo	Fondo	___	___
+9	rentabilidad_mensual	Rentabilidad Mensual	___	___
+10	rentabilidad_ultimo_quarter	Rentabilidad Ultimo Trimestre	___	___
+11	rentabilidad_ultimo_semonthtre	Rentabilidad Ultimo Semestre	___	___
+12	acumulado_del_year_en_curso	Acumulado del Agno en Curso	___	___
+13	rentabilidad_de_los_ultimos_12_monthes	Rentabilidad de los Ultimos 12 meses	___	___
+14	promedio_acumulado	Promedio Acumulado	___	___
+16	solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas	Solicitudes de prestaciones por cesantia efectivamente pagadas	___	___
+17	afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia	Afiliados que recibieron pago de la prestacion por cesantia	___	___
+18	numero_de_nuevos_afiliados_en_el_month	Numero de Nuevos Afiliados en el Mes	___	___
+19	remuneracion_imponible_promedio	Remuneracion imponible promedio	___	___
+20	tasa_de_desempleo_nene	Tasa de desempleo NENE	___	___
+21	tasa_de_desempleo_ene	Tasa de desempleo ENE	___	___
+22	tasa_de_desempleo_promedio_ult_4_years	Tasa de desempleo promedio ult 4 agnos	___	___
+23	tasa_desempleo_de_activacion	Tasa desempleo de activacion	___	___
+25	afiliacion	Afiliacion	___	___
+28	contrato	Contrato	___	___
+34	sexo	Sexo	___	___
