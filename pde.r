@@ -113,7 +113,10 @@ seekTables <- function(paths, encoding='UTF-8', ext='csv', output, replace, metr
       }
     }
   }
-  vars <- data.frame(vars); colnames(vars)
+  vars <- data.frame(vars)
+  colnames(vars) <- c(
+    'id', 'label', 'data.type', 'slice', 'concept.type', 'is.dim.tab', 'dim.tab.ref'
+    )
   return(vars)
 }
 
@@ -199,22 +202,22 @@ addConcepts <- function(val,parent,lang) {
   
   fun(val, FUN= 
     function(x) {
-      x <- as.character(x)
-      if (x[3] == 'string') {ATT <- c(id=x[1], extends='entity:entity')}
-      if (x[3] != 'string') {ATT <- c(id=x[1])}
+      #x <- as.character(x)
+      if (x['data.type'] == 'string') {ATT <- c(id=x['id'], extends='entity:entity')}
+      if (x['data.type'] != 'string') {ATT <- c(id=x['id'])}
       
       # in the case of not being a dimensional concept
-      if (x[4]!='dimension') {
+      if (x['concept.type']!='dimension') {
         newXMLNode('concept', attrs=ATT, parent=parent,newXMLNode('info',newXMLNode(
           'name', newXMLNode('value', attrs=c('xml:lang'=lang[1]), suppressNamespaceWarning=T,
-                             x[2]))), newXMLNode('type',attrs=c(ref=x[3]))
+                             x['label']))), newXMLNode('type',attrs=c(ref=x['data.type']))
                    )
       } else {
         # in the case of being a dimensional concept
         newXMLNode('concept', attrs=ATT, parent=parent,newXMLNode('info',newXMLNode(
           'name', newXMLNode('value', attrs=c('xml:lang'=lang[1]), suppressNamespaceWarning=T,
-                             x[2]))), newXMLNode('type',attrs=c(ref=x[3])),
-                   newXMLNode('table', attrs=c(ref=paste(x[6],'_table',sep='')))
+                             x['label']))), newXMLNode('type',attrs=c(ref=x['data.type'])),
+                   newXMLNode('table', attrs=c(ref=paste(x['dim.tab.ref'],'_table',sep='')))
                    )
       }
     }
@@ -227,17 +230,18 @@ addSlices <- function(tableid, sliceatt, parent) {
 ################################################################################
   by(data=sliceatt, INDICES=tableid,FUN=
     function(x) {
-      newXMLNode(name='slice', attrs=c(id=paste(x[1,4],'_slice',sep='')),
+      newXMLNode(name='slice', attrs=c(id=paste(x$slice[1],'_slice',sep='')),
                  parent=parent, apply(x, MARGIN = 1,FUN=
                    function(z){
-                     z <- as.character(z)
+                     #z <- as.character(z)
                      # In the case of dates-time
-                     if (z[3] == 'date') {
-                       newXMLNode(name=z[5], attrs=c(concept=paste('time:',z[1],sep='')))
+                     if (z['data.type'] == 'date') {
+                       newXMLNode(name=z['concept.type'], 
+                                  attrs=c(concept=paste('time:',z['id'],sep='')))
                        # Otherwise
                      } else {
-                       newXMLNode(name=z[5], attrs=c(concept=z[1]))
-                     }}), newXMLNode('table', attrs=c(ref=paste(x[1,4],'_table',sep=''))))
+                       newXMLNode(name=z['concept.type'], attrs=c(concept=z['id']))
+                     }}), newXMLNode('table', attrs=c(ref=paste(x$slice[1],'_table',sep=''))))
     }
      )
 }
@@ -248,17 +252,17 @@ addTables <- function(tableid, tableatt, parent, format) {
 ################################################################################
   by(data=tableatt, INDICES=tableid,FUN=
     function(x) {
-      newXMLNode(name='table', attrs=c(id=paste(x[1,4],'_table',sep='')),parent=
+      newXMLNode(name='table', attrs=c(id=paste(x$slice[1],'_table',sep='')),parent=
         parent, apply(X=x, 
                       MARGIN = 1, FUN=
                         function(z){
-                          z <- as.character(z)
-                          if (z[3] == 'date') {
-                            newXMLNode(name='column', attrs=c(id=z[1], type=z[3], format=format))  
+                          #z <- as.character(z)
+                          if (z['data.type'] == 'date') {
+                            newXMLNode(name='column', attrs=c(id=z['id'], type=z['data.type'], format=format))  
                           } else {
-                            newXMLNode(name='column', attrs=c(id=z[1], type=z[3]))
+                            newXMLNode(name='column', attrs=c(id=z['id'], type=z['data.type']))
                           }}), newXMLNode(name='data', newXMLNode('file', attrs=c(format=
-                            'csv', encoding='utf8'),paste(x[1,4],'.csv',sep='')))
+                            'csv', encoding='utf8'),paste(x$slice[1],'.csv',sep='')))
                  )
     }
      )
@@ -343,14 +347,15 @@ pde <- function(
   
   # Variables Lists and datatypes
   vars <- seekTables(files, encoding, extension, output, replace, metrics)
-  dims <- subset(vars, V5=='dimension', select=c(V1, V4, V5))
+  dims <- subset(vars, concept.type=='dimension', select=c(id, slice, concept.type))
   
   # Identifying if there is any duplicated slice
-  checkSlices(dims=dims$V1, by=dims$V4)
+  checkSlices(dims=dims$id, by=dims$slice)
   
   # Creates a unique concept list
-  varConcepts <- unique(vars[,c(1:3,5:7)])
-  varConcepts <- varConcepts[varConcepts[,5] != 'TRUE' & varConcepts[,3] !='date',]
+  varConcepts <- unique(
+    subset(vars,subset=data.type != 'date' & is.dim.tab==F, select=-slice)
+    )
   
   # Armado de xml
   archXML <- newXMLDoc()
@@ -404,13 +409,16 @@ pde <- function(
   # SLICES
   newXMLCommentNode('Slices Def', parent=dspl)
   slices <- newXMLNode('slices', parent = dspl)
-  addSlices(tableid=unlist(vars[vars[,6] != 'TRUE',4]),sliceatt=vars[vars[,6] != T,],
-            parent=slices)
+  addSlices(
+    tableid=subset(vars, is.dim.tab != T, slice),
+    sliceatt=subset(vars, is.dim.tab != T),
+    parent=slices
+    )
   
   # TABLES
   newXMLCommentNode('Tables Def', parent=dspl)
   tables <- newXMLNode('tables', parent = dspl)
-  addTables(tableid=unlist(vars[,4]),tableatt=vars,parent=tables, format=timeFormat)  
+  addTables(tableid=vars$slice,tableatt=vars,parent=tables, format=timeFormat)  
   
   # If an output file is specified, it writes it on it
   if (is.na(output)) {
