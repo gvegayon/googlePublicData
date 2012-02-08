@@ -21,7 +21,7 @@ mydspl <- pde(
 
 mydspl
 
-mydspl <- pde(
+mydspl2 <- pde(
   path='c:/comandos_paquetes_librerias/r/rdspl/series_sc/',
   output=NA,
   replace=T,
@@ -35,6 +35,6 @@ mydspl <- pde(
   extension='xls',
   encoding='UTF-8')
 
-cat(mydspl$xml)
+cat(mydspl2$xml)
 
-mydspl$variables
+View(mydspl2$variables)

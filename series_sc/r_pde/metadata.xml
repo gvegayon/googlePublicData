@@ -32,152 +32,152 @@
   </provider>
   <!--Concepts Def-->
   <concepts>
-    <concept id="fondo" extends="entity:entity">
+    <concept id.id="fondo" extends="entity:entity">
       <info>
         <name>
           <value xml:lang="en">Fondo</value>
         </name>
       </info>
-      <type ref="string"/>
+      <type ref.data.type="string"/>
       <table ref="fondos_table"/>
     </concept>
-    <concept id="rentabilidad_mensual">
+    <concept id.id="rentabilidad_mensual">
       <info>
         <name>
           <value xml:lang="en">Rentabilidad Mensual</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="rentabilidad_ultimo_quarter">
+    <concept id.id="rentabilidad_ultimo_quarter">
       <info>
         <name>
           <value xml:lang="en">Rentabilidad Ultimo Trimestre</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="rentabilidad_ultimo_semonthtre">
+    <concept id.id="rentabilidad_ultimo_semonthtre">
       <info>
         <name>
           <value xml:lang="en">Rentabilidad Ultimo Semestre</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="acumulado_del_year_en_curso">
+    <concept id.id="acumulado_del_year_en_curso">
       <info>
         <name>
           <value xml:lang="en">Acumulado del Agno en Curso</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="rentabilidad_de_los_ultimos_12_monthes">
+    <concept id.id="rentabilidad_de_los_ultimos_12_monthes">
       <info>
         <name>
           <value xml:lang="en">Rentabilidad de los Ultimos 12 meses</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="promedio_acumulado">
+    <concept id.id="promedio_acumulado">
       <info>
         <name>
           <value xml:lang="en">Promedio Acumulado</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas">
+    <concept id.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas">
       <info>
         <name>
           <value xml:lang="en">Solicitudes de prestaciones por cesantia efectivamente pagadas</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia">
+    <concept id.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia">
       <info>
         <name>
           <value xml:lang="en">Afiliados que recibieron pago de la prestacion por cesantia</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="numero_de_nuevos_afiliados_en_el_month">
+    <concept id.id="numero_de_nuevos_afiliados_en_el_month">
       <info>
         <name>
           <value xml:lang="en">Numero de Nuevos Afiliados en el Mes</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="remuneracion_imponible_promedio">
+    <concept id.id="remuneracion_imponible_promedio">
       <info>
         <name>
           <value xml:lang="en">Remuneracion imponible promedio</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="tasa_de_desempleo_nene">
+    <concept id.id="tasa_de_desempleo_nene">
       <info>
         <name>
           <value xml:lang="en">Tasa de desempleo NENE</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="tasa_de_desempleo_ene">
+    <concept id.id="tasa_de_desempleo_ene">
       <info>
         <name>
           <value xml:lang="en">Tasa de desempleo ENE</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="tasa_de_desempleo_promedio_ult_4_years">
+    <concept id.id="tasa_de_desempleo_promedio_ult_4_years">
       <info>
         <name>
           <value xml:lang="en">Tasa de desempleo promedio ult 4 agnos</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="tasa_desempleo_de_activacion">
+    <concept id.id="tasa_desempleo_de_activacion">
       <info>
         <name>
           <value xml:lang="en">Tasa desempleo de activacion</value>
         </name>
       </info>
-      <type ref="float"/>
+      <type ref.data.type="float"/>
     </concept>
-    <concept id="afiliacion" extends="entity:entity">
+    <concept id.id="afiliacion" extends="entity:entity">
       <info>
         <name>
           <value xml:lang="en">Afiliacion</value>
         </name>
       </info>
-      <type ref="string"/>
+      <type ref.data.type="string"/>
       <table ref="afiliaciones_table"/>
     </concept>
-    <concept id="contrato" extends="entity:entity">
+    <concept id.id="contrato" extends="entity:entity">
       <info>
         <name>
           <value xml:lang="en">Contrato</value>
         </name>
       </info>
-      <type ref="string"/>
+      <type ref.data.type="string"/>
       <table ref="contratos_table"/>
     </concept>
-    <concept id="sexo" extends="entity:entity">
+    <concept id.id="sexo" extends="entity:entity">
       <info>
         <name>
           <value xml:lang="en">Sexo</value>
         </name>
       </info>
-      <type ref="string"/>
+      <type ref.data.type="string"/>
       <table ref="sexos_table"/>
     </concept>
   </concepts>
@@ -185,149 +185,149 @@
   <slices>
     <slice id="fondos_mensual_fondo_slice">
       <dimension concept="time:month"/>
-      <dimension concept="fondo"/>
-      <metric concept="rentabilidad_mensual"/>
-      <metric concept="rentabilidad_ultimo_quarter"/>
-      <metric concept="rentabilidad_ultimo_semonthtre"/>
-      <metric concept="acumulado_del_year_en_curso"/>
-      <metric concept="rentabilidad_de_los_ultimos_12_monthes"/>
-      <metric concept="promedio_acumulado"/>
+      <dimension concept.id="fondo"/>
+      <metric concept.id="rentabilidad_mensual"/>
+      <metric concept.id="rentabilidad_ultimo_quarter"/>
+      <metric concept.id="rentabilidad_ultimo_semonthtre"/>
+      <metric concept.id="acumulado_del_year_en_curso"/>
+      <metric concept.id="rentabilidad_de_los_ultimos_12_monthes"/>
+      <metric concept.id="promedio_acumulado"/>
       <table ref="fondos_mensual_fondo_table"/>
     </slice>
     <slice id="personas_mes_slice">
       <dimension concept="time:month"/>
-      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
-      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
-      <metric concept="numero_de_nuevos_afiliados_en_el_month"/>
-      <metric concept="remuneracion_imponible_promedio"/>
-      <metric concept="tasa_de_desempleo_nene"/>
-      <metric concept="tasa_de_desempleo_ene"/>
-      <metric concept="tasa_de_desempleo_promedio_ult_4_years"/>
-      <metric concept="tasa_desempleo_de_activacion"/>
+      <metric concept.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <metric concept.id="numero_de_nuevos_afiliados_en_el_month"/>
+      <metric concept.id="remuneracion_imponible_promedio"/>
+      <metric concept.id="tasa_de_desempleo_nene"/>
+      <metric concept.id="tasa_de_desempleo_ene"/>
+      <metric concept.id="tasa_de_desempleo_promedio_ult_4_years"/>
+      <metric concept.id="tasa_desempleo_de_activacion"/>
       <table ref="personas_mes_table"/>
     </slice>
     <slice id="personas_mes_afiliacion_slice">
       <dimension concept="time:month"/>
-      <dimension concept="afiliacion"/>
-      <metric concept="numero_de_nuevos_afiliados_en_el_month"/>
+      <dimension concept.id="afiliacion"/>
+      <metric concept.id="numero_de_nuevos_afiliados_en_el_month"/>
       <table ref="personas_mes_afiliacion_table"/>
     </slice>
     <slice id="personas_mes_contrato_slice">
       <dimension concept="time:month"/>
-      <dimension concept="contrato"/>
-      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
-      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
-      <metric concept="remuneracion_imponible_promedio"/>
+      <dimension concept.id="contrato"/>
+      <metric concept.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <metric concept.id="remuneracion_imponible_promedio"/>
       <table ref="personas_mes_contrato_table"/>
     </slice>
     <slice id="personas_mes_contrato_sexo_slice">
       <dimension concept="time:month"/>
-      <dimension concept="contrato"/>
-      <dimension concept="sexo"/>
-      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
-      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
-      <metric concept="remuneracion_imponible_promedio"/>
+      <dimension concept.id="contrato"/>
+      <dimension concept.id="sexo"/>
+      <metric concept.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <metric concept.id="remuneracion_imponible_promedio"/>
       <table ref="personas_mes_contrato_sexo_table"/>
     </slice>
     <slice id="personas_mes_sexo_slice">
       <dimension concept="time:month"/>
-      <dimension concept="sexo"/>
-      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
-      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <dimension concept.id="sexo"/>
+      <metric concept.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
       <table ref="personas_mes_sexo_table"/>
     </slice>
   </slices>
   <!--Tables Def-->
   <tables>
     <table id="afiliaciones_table">
-      <column id="afiliacion" type="string"/>
-      <column id="name" type="string"/>
+      <column id.id="afiliacion" type.data.type="string"/>
+      <column id.id="name" type.data.type="string"/>
       <data>
         <file format="csv" encoding="utf8">afiliaciones.csv</file>
       </data>
     </table>
     <table id="contratos_table">
-      <column id="contrato" type="string"/>
-      <column id="name" type="string"/>
+      <column id.id="contrato" type.data.type="string"/>
+      <column id.id="name" type.data.type="string"/>
       <data>
         <file format="csv" encoding="utf8">contratos.csv</file>
       </data>
     </table>
     <table id="fondos_table">
-      <column id="fondo" type="string"/>
-      <column id="name" type="string"/>
+      <column id.id="fondo" type.data.type="string"/>
+      <column id.id="name" type.data.type="string"/>
       <data>
         <file format="csv" encoding="utf8">fondos.csv</file>
       </data>
     </table>
     <table id="fondos_mensual_fondo_table">
-      <column id="month" type="date" format="yyyy-MM"/>
-      <column id="fondo" type="string"/>
-      <column id="rentabilidad_mensual" type="float"/>
-      <column id="rentabilidad_ultimo_quarter" type="float"/>
-      <column id="rentabilidad_ultimo_semonthtre" type="float"/>
-      <column id="acumulado_del_year_en_curso" type="float"/>
-      <column id="rentabilidad_de_los_ultimos_12_monthes" type="float"/>
-      <column id="promedio_acumulado" type="float"/>
+      <column id.id="month" type.data.type="date" format="yyyy-MM"/>
+      <column id.id="fondo" type.data.type="string"/>
+      <column id.id="rentabilidad_mensual" type.data.type="float"/>
+      <column id.id="rentabilidad_ultimo_quarter" type.data.type="float"/>
+      <column id.id="rentabilidad_ultimo_semonthtre" type.data.type="float"/>
+      <column id.id="acumulado_del_year_en_curso" type.data.type="float"/>
+      <column id.id="rentabilidad_de_los_ultimos_12_monthes" type.data.type="float"/>
+      <column id.id="promedio_acumulado" type.data.type="float"/>
       <data>
         <file format="csv" encoding="utf8">fondos_mensual_fondo.csv</file>
       </data>
     </table>
     <table id="personas_mes_table">
-      <column id="month" type="date" format="yyyy-MM"/>
-      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
-      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
-      <column id="numero_de_nuevos_afiliados_en_el_month" type="float"/>
-      <column id="remuneracion_imponible_promedio" type="float"/>
-      <column id="tasa_de_desempleo_nene" type="float"/>
-      <column id="tasa_de_desempleo_ene" type="float"/>
-      <column id="tasa_de_desempleo_promedio_ult_4_years" type="float"/>
-      <column id="tasa_desempleo_de_activacion" type="float"/>
+      <column id.id="month" type.data.type="date" format="yyyy-MM"/>
+      <column id.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type.data.type="float"/>
+      <column id.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type.data.type="float"/>
+      <column id.id="numero_de_nuevos_afiliados_en_el_month" type.data.type="float"/>
+      <column id.id="remuneracion_imponible_promedio" type.data.type="float"/>
+      <column id.id="tasa_de_desempleo_nene" type.data.type="float"/>
+      <column id.id="tasa_de_desempleo_ene" type.data.type="float"/>
+      <column id.id="tasa_de_desempleo_promedio_ult_4_years" type.data.type="float"/>
+      <column id.id="tasa_desempleo_de_activacion" type.data.type="float"/>
       <data>
         <file format="csv" encoding="utf8">personas_mes.csv</file>
       </data>
     </table>
     <table id="personas_mes_afiliacion_table">
-      <column id="month" type="date" format="yyyy-MM"/>
-      <column id="afiliacion" type="string"/>
-      <column id="numero_de_nuevos_afiliados_en_el_month" type="float"/>
+      <column id.id="month" type.data.type="date" format="yyyy-MM"/>
+      <column id.id="afiliacion" type.data.type="string"/>
+      <column id.id="numero_de_nuevos_afiliados_en_el_month" type.data.type="float"/>
       <data>
         <file format="csv" encoding="utf8">personas_mes_afiliacion.csv</file>
       </data>
     </table>
     <table id="personas_mes_contrato_table">
-      <column id="month" type="date" format="yyyy-MM"/>
-      <column id="contrato" type="string"/>
-      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
-      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
-      <column id="remuneracion_imponible_promedio" type="float"/>
+      <column id.id="month" type.data.type="date" format="yyyy-MM"/>
+      <column id.id="contrato" type.data.type="string"/>
+      <column id.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type.data.type="float"/>
+      <column id.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type.data.type="float"/>
+      <column id.id="remuneracion_imponible_promedio" type.data.type="float"/>
       <data>
         <file format="csv" encoding="utf8">personas_mes_contrato.csv</file>
       </data>
     </table>
     <table id="personas_mes_contrato_sexo_table">
-      <column id="month" type="date" format="yyyy-MM"/>
-      <column id="contrato" type="string"/>
-      <column id="sexo" type="string"/>
-      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
-      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
-      <column id="remuneracion_imponible_promedio" type="float"/>
+      <column id.id="month" type.data.type="date" format="yyyy-MM"/>
+      <column id.id="contrato" type.data.type="string"/>
+      <column id.id="sexo" type.data.type="string"/>
+      <column id.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type.data.type="float"/>
+      <column id.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type.data.type="float"/>
+      <column id.id="remuneracion_imponible_promedio" type.data.type="float"/>
       <data>
         <file format="csv" encoding="utf8">personas_mes_contrato_sexo.csv</file>
       </data>
     </table>
     <table id="personas_mes_sexo_table">
-      <column id="month" type="date" format="yyyy-MM"/>
-      <column id="sexo" type="string"/>
-      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
-      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
+      <column id.id="month" type.data.type="date" format="yyyy-MM"/>
+      <column id.id="sexo" type.data.type="string"/>
+      <column id.id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type.data.type="float"/>
+      <column id.id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type.data.type="float"/>
       <data>
         <file format="csv" encoding="utf8">personas_mes_sexo.csv</file>
       </data>
     </table>
     <table id="sexos_table">
-      <column id="sexo" type="string"/>
-      <column id="name" type="string"/>
+      <column id.id="sexo" type.data.type="string"/>
+      <column id.id="name" type.data.type="string"/>
       <data>
         <file format="csv" encoding="utf8">sexos.csv</file>
       </data>
