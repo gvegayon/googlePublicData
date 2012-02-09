@@ -1,13 +1,13 @@
 require(XML)
 require(xlsx)
-setwd('c:/comandos_paquetes_librerias/r/rdspl/')
+#setwd('c:/comandos_paquetes_librerias/r/rdspl/')
 source('pde.r', encoding='UTF-8')
 
 pde <- compiler::cmpfun(pde)
  
 mydspl <- pde(
-  path='c:/comandos_paquetes_librerias/r/rdspl/series_sc/',
-  output='c:/comandos_paquetes_librerias/r/rdspl/series_sc/',
+  path=paste(getwd(),'series_sc',sep='/'),
+  output=paste(getwd(),'series_sc',sep='/'),
   replace=T,
   timeFormat='yyyy-MM',
   lang=c('en','es'),
