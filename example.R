@@ -6,8 +6,8 @@ source('pde.r', encoding='UTF-8')
 pde <- compiler::cmpfun(pde)
  
 mydspl <- pde(
-  path=paste(getwd(),'series_sc',sep='/'),
-  output=paste(getwd(),'series_sc',sep='/'),
+  path='c:/Users/George/Documents/Programacion/rdspl/series_sc/',
+  output='c:/Users/George/Documents/Programacion/rdspl/series_sc/',
   replace=T,
   timeFormat='yyyy-MM',
   lang=c('en','es'),
