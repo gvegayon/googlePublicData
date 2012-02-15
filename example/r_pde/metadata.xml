@@ -30,23 +30,6 @@
       <value>http://www.spensiones.cl/</value>
     </url>
   </provider>
-  <!--Topics definition-->
-  <topics>
-    <topic id="fondos_de_cesantia">
-      <info>
-        <name>
-          <value xml:lang="en">Fondos de Cesantía</value>
-        </name>
-      </info>
-    </topic>
-    <topic id="beneficiarios_del_sc">
-      <info>
-        <name>
-          <value xml:lang="en">Beneficiarios del SC</value>
-        </name>
-      </info>
-    </topic>
-  </topics>
   <!--Concepts Def-->
   <concepts>
     <concept id="acumulado_del_year_en_curso">
@@ -54,11 +37,7 @@
         <name>
           <value xml:lang="en">Acumulado del Agno en Curso</value>
         </name>
-        <description>
-          <value>Rentabilidad de los Fondos de Cesantía acumulada del año en curso</value>
-        </description>
       </info>
-      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="afiliacion" extends="entity:entity">
@@ -66,6 +45,12 @@
         <name>
           <value xml:lang="en">Afiliacion</value>
         </name>
+        <pluralName>
+          <value xml:lang="en">Afiliaciones</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Todas las Afiliaciones</value>
+        </totalName>
       </info>
       <type ref="string"/>
       <table ref="afiliaciones_table"/>
@@ -75,11 +60,7 @@
         <name>
           <value xml:lang="en">Afiliados que recibieron pago de la prestacion por cesantia</value>
         </name>
-        <description>
-          <value>Afiliados que recibieron el pago de la prestación por cesantía</value>
-        </description>
       </info>
-      <topic ref="beneficiarios_del_sc"/>
       <type ref="float"/>
     </concept>
     <concept id="contrato" extends="entity:entity">
@@ -87,6 +68,12 @@
         <name>
           <value xml:lang="en">Contrato</value>
         </name>
+        <pluralName>
+          <value xml:lang="en">Contratos</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Todos los Contratos</value>
+        </totalName>
       </info>
       <type ref="string"/>
       <table ref="contratos_table"/>
@@ -96,6 +83,12 @@
         <name>
           <value xml:lang="en">Fondo</value>
         </name>
+        <pluralName>
+          <value xml:lang="en">Fondos</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Total de los Fondos</value>
+        </totalName>
       </info>
       <type ref="string"/>
       <table ref="fondos_table"/>
@@ -105,11 +98,7 @@
         <name>
           <value xml:lang="en">Numero de Nuevos Afiliados en el Mes</value>
         </name>
-        <description>
-          <value>Número de nuevos afiliados en el mes</value>
-        </description>
       </info>
-      <topic ref="beneficiarios_del_sc"/>
       <type ref="float"/>
     </concept>
     <concept id="promedio_acumulado">
@@ -117,11 +106,7 @@
         <name>
           <value xml:lang="en">Promedio Acumulado</value>
         </name>
-        <description>
-          <value>Rentabilidad Promedio Acumulada</value>
-        </description>
       </info>
-      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="remuneracion_imponible_promedio">
@@ -129,11 +114,7 @@
         <name>
           <value xml:lang="en">Remuneracion imponible promedio</value>
         </name>
-        <description>
-          <value>Remuneración Imponible promedio (promedio simple)</value>
-        </description>
       </info>
-      <topic ref="beneficiarios_del_sc"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_de_los_ultimos_12_monthes">
@@ -141,11 +122,7 @@
         <name>
           <value xml:lang="en">Rentabilidad de los Ultimos 12 meses</value>
         </name>
-        <description>
-          <value>Rentabilidad de los Fondos de Cesantía en los últimos 12 meses</value>
-        </description>
       </info>
-      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_mensual">
@@ -153,11 +130,7 @@
         <name>
           <value xml:lang="en">Rentabilidad Mensual</value>
         </name>
-        <description>
-          <value>Rentabilidad Mensual de los Fondos de Cesantía</value>
-        </description>
       </info>
-      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_ultimo_quarter">
@@ -165,11 +138,7 @@
         <name>
           <value xml:lang="en">Rentabilidad Ultimo Trimestre</value>
         </name>
-        <description>
-          <value>Rentabilidad de los Fondos de Cesantía en el último trimestre</value>
-        </description>
       </info>
-      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_ultimo_semonthtre">
@@ -177,11 +146,7 @@
         <name>
           <value xml:lang="en">Rentabilidad Ultimo Semestre</value>
         </name>
-        <description>
-          <value>Rentabilidad de los Fondos de Cesantía en el último semestre</value>
-        </description>
       </info>
-      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="sexo" extends="entity:entity">
@@ -189,6 +154,12 @@
         <name>
           <value xml:lang="en">Sexo</value>
         </name>
+        <pluralName>
+          <value xml:lang="en">Sexos</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Ambos Sexos</value>
+        </totalName>
       </info>
       <type ref="string"/>
       <table ref="sexos_table"/>
@@ -199,10 +170,12 @@
           <value xml:lang="en">Solicitudes de prestaciones por cesantia efectivamente pagadas</value>
         </name>
         <description>
-          <value>Número de solicitudes de prestaciones por cesantía efectivamente pagadas</value>
+          <value xml:lang="en">Todo sobre esto en la dirección a continuación</value>
         </description>
+        <url>
+          <value xml:lang="en">http://www.spensiones.cl/573/article-2683.html</value>
+        </url>
       </info>
-      <topic ref="beneficiarios_del_sc"/>
       <type ref="float"/>
     </concept>
   </concepts>

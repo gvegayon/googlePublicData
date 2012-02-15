@@ -1,19 +1,15 @@
-id	label	description	topic
-8	fondo	Fondo	NA	NA
-9	rentabilidad_mensual	Rentabilidad Mensual	Rentabilidad Mensual de los Fondos de Cesantía	Fondos de Cesantía
-10	rentabilidad_ultimo_quarter	Rentabilidad Ultimo Trimestre	Rentabilidad de los Fondos de Cesantía en el último trimestre	Fondos de Cesantía
-11	rentabilidad_ultimo_semonthtre	Rentabilidad Ultimo Semestre	Rentabilidad de los Fondos de Cesantía en el último semestre	Fondos de Cesantía
-12	acumulado_del_year_en_curso	Acumulado del Agno en Curso	Rentabilidad de los Fondos de Cesantía acumulada del año en curso	Fondos de Cesantía
-13	rentabilidad_de_los_ultimos_12_monthes	Rentabilidad de los Ultimos 12 meses	Rentabilidad de los Fondos de Cesantía en los últimos 12 meses	Fondos de Cesantía
-14	promedio_acumulado	Promedio Acumulado	Rentabilidad Promedio Acumulada	Fondos de Cesantía
-16	solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas	Solicitudes de prestaciones por cesantia efectivamente pagadas	Número de solicitudes de prestaciones por cesantía efectivamente pagadas	Beneficiarios del SC
-17	afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia	Afiliados que recibieron pago de la prestacion por cesantia	Afiliados que recibieron el pago de la prestación por cesantía	Beneficiarios del SC
-18	numero_de_nuevos_afiliados_en_el_month	Numero de Nuevos Afiliados en el Mes	Número de nuevos afiliados en el mes	Beneficiarios del SC
-19	remuneracion_imponible_promedio	Remuneracion imponible promedio	Remuneración Imponible promedio (promedio simple)	Beneficiarios del SC
-20	tasa_de_desempleo_nene	Tasa de desempleo NENE	NA	Beneficiarios del SC
-21	tasa_de_desempleo_ene	Tasa de desempleo ENE	NA	Beneficiarios del SC
-22	tasa_de_desempleo_promedio_ult_4_years	Tasa de desempleo promedio ult 4 agnos	NA	Beneficiarios del SC
-23	tasa_desempleo_de_activacion	Tasa desempleo de activacion	NA	Beneficiarios del SC
-25	afiliacion	Afiliacion	NA	NA
-28	contrato	Contrato	NA	NA
-34	sexo	Sexo	NA	NA
+id	label	description	topic	url	totalName	pluralName
+8	fondo	Fondo	NA	NA	NA	Total de los Fondos	Fondos
+9	rentabilidad_mensual	Rentabilidad Mensual	NA	NA	NA	NA	NA
+10	rentabilidad_ultimo_quarter	Rentabilidad Ultimo Trimestre	NA	NA	NA	NA	NA
+11	rentabilidad_ultimo_semonthtre	Rentabilidad Ultimo Semestre	NA	NA	NA	NA	NA
+12	acumulado_del_year_en_curso	Acumulado del Agno en Curso	NA	NA	NA	NA	NA
+13	rentabilidad_de_los_ultimos_12_monthes	Rentabilidad de los Ultimos 12 meses	NA	NA	NA	NA	NA
+14	promedio_acumulado	Promedio Acumulado	NA	NA	NA	NA	NA
+16	solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas	Solicitudes de prestaciones por cesantia efectivamente pagadas	Todo sobre esto en la dirección a continuación	NA	http://www.spensiones.cl/573/article-2683.html	NA	NA
+17	afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia	Afiliados que recibieron pago de la prestacion por cesantia	NA	NA	NA	NA	NA
+18	numero_de_nuevos_afiliados_en_el_month	Numero de Nuevos Afiliados en el Mes	NA	NA	NA	NA	NA
+19	remuneracion_imponible_promedio	Remuneracion imponible promedio	NA	NA	NA	NA	NA
+21	afiliacion	Afiliacion	NA	NA	NA	Todas las Afiliaciones	Afiliaciones
+24	contrato	Contrato	NA	NA	NA	Todos los Contratos	Contratos
+30	sexo	Sexo	NA	NA	NA	Ambos Sexos	Sexos

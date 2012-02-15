@@ -1,7 +1,7 @@
 require(XML)
 require(xlsx)
 
-directory <- 'c:/comandos_paquetes_librerias/r/rdspl/series_sc'
+directory <- 'c:/comandos_paquetes_librerias/r/rdspl/example'
 funsource <- 'c:/comandos_paquetes_librerias/r/rdspl/pde.r'
 source(funsource, encoding='UTF-8')
 pde <- compiler::cmpfun(pde)
@@ -39,7 +39,7 @@ mydspl <- pde(
 mydspl # final message
 
 # Generating a descriptive TAB file for the concepts adding topics and descriptions
-genMoreInfo(directory, encoding='UTF-8', ext='xls', 
+genMoreInfo(directory, encoding='UTF-8', ext='xls', action='merge',
             output=paste(directory,'/config.tab',sep=''))
 
 # Output of the complete bundle adding a descriptive file (moreinfo)
