@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dspl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:quantity="http://www.google.com/publicdata/dataset/google/quantity" xmlns:entity="http://www.google.com/publicdata/dataset/google/entity" xmlns:geo="http://www.google.com/publicdata/dataset/google/geo" xmlns:time="http://www.google.com/publicdata/dataset/google/time" xmlns:unit="http://www.google.com/publicdata/dataset/google/unit" targetNamespace="" xmlns="http://schemas.google.com/dspl/2010">
+  <!--Lineas de importacion de conceptos-->
+  <import namespace="http://www.google.com/publicdata/dataset/google/quantity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/entity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/geo"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/time"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/unit"/>
+  <!--Lineas de informacion-->
+  <info>
+    <name>
+      <value xml:lang="en">Unemployment Insurance</value>
+      <value xml:lang="es">Seguro de Cesantía</value>
+    </name>
+    <description>
+      <value xml:lang="en">Some unemployment insurance statistics</value>
+      <value xml:lang="es">Algunas estadisticas de desempleo</value>
+    </description>
+    <url>
+      <value>http://www.spensiones.cl/safpstats/stats/</value>
+    </url>
+  </info>
+  <!--Data Provider-->
+  <provider>
+    <name>
+      <value xml:lang="en">Chilean Pension Supervisor</value>
+      <value xml:lang="es">Superintendencia de Pensiones, Chile</value>
+    </name>
+    <url>
+      <value>http://www.spensiones.cl/</value>
+    </url>
+  </provider>
+  <!--Topics definition-->
+  <topics>
+    <topic id="fondos_de_cesantia">
+      <info>
+        <name>
+          <value xml:lang="en">Fondos de Cesantía</value>
+        </name>
+      </info>
+    </topic>
+    <topic id="beneficiarios_del_sc">
+      <info>
+        <name>
+          <value xml:lang="en">Beneficiarios del SC</value>
+        </name>
+      </info>
+    </topic>
+  </topics>
+  <!--Concepts Def-->
+  <concepts>
+    <concept id="acumulado_del_year_en_curso">
+      <info>
+        <name>
+          <value xml:lang="en">Acumulado del Agno en Curso</value>
+        </name>
+        <description>
+          <value>Rentabilidad de los Fondos de Cesantía acumulada del año en curso</value>
+        </description>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="afiliacion" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Afiliacion</value>
+        </name>
+      </info>
+      <type ref="string"/>
+      <table ref="afiliaciones_table"/>
+    </concept>
+    <concept id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia">
+      <info>
+        <name>
+          <value xml:lang="en">Afiliados que recibieron pago de la prestacion por cesantia</value>
+        </name>
+        <description>
+          <value>Afiliados que recibieron el pago de la prestación por cesantía</value>
+        </description>
+      </info>
+      <topic ref="beneficiarios_del_sc"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="contrato" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Contrato</value>
+        </name>
+      </info>
+      <type ref="string"/>
+      <table ref="contratos_table"/>
+    </concept>
+    <concept id="fondo" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Fondo</value>
+        </name>
+      </info>
+      <type ref="string"/>
+      <table ref="fondos_table"/>
+    </concept>
+    <concept id="numero_de_nuevos_afiliados_en_el_month">
+      <info>
+        <name>
+          <value xml:lang="en">Numero de Nuevos Afiliados en el Mes</value>
+        </name>
+        <description>
+          <value>Número de nuevos afiliados en el mes</value>
+        </description>
+      </info>
+      <topic ref="beneficiarios_del_sc"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="promedio_acumulado">
+      <info>
+        <name>
+          <value xml:lang="en">Promedio Acumulado</value>
+        </name>
+        <description>
+          <value>Rentabilidad Promedio Acumulada</value>
+        </description>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="remuneracion_imponible_promedio">
+      <info>
+        <name>
+          <value xml:lang="en">Remuneracion imponible promedio</value>
+        </name>
+        <description>
+          <value>Remuneración Imponible promedio (promedio simple)</value>
+        </description>
+      </info>
+      <topic ref="beneficiarios_del_sc"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="rentabilidad_de_los_ultimos_12_monthes">
+      <info>
+        <name>
+          <value xml:lang="en">Rentabilidad de los Ultimos 12 meses</value>
+        </name>
+        <description>
+          <value>Rentabilidad de los Fondos de Cesantía en los últimos 12 meses</value>
+        </description>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="rentabilidad_mensual">
+      <info>
+        <name>
+          <value xml:lang="en">Rentabilidad Mensual</value>
+        </name>
+        <description>
+          <value>Rentabilidad Mensual de los Fondos de Cesantía</value>
+        </description>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="rentabilidad_ultimo_quarter">
+      <info>
+        <name>
+          <value xml:lang="en">Rentabilidad Ultimo Trimestre</value>
+        </name>
+        <description>
+          <value>Rentabilidad de los Fondos de Cesantía en el último trimestre</value>
+        </description>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="rentabilidad_ultimo_semonthtre">
+      <info>
+        <name>
+          <value xml:lang="en">Rentabilidad Ultimo Semestre</value>
+        </name>
+        <description>
+          <value>Rentabilidad de los Fondos de Cesantía en el último semestre</value>
+        </description>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="sexo" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Sexo</value>
+        </name>
+      </info>
+      <type ref="string"/>
+      <table ref="sexos_table"/>
+    </concept>
+    <concept id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas">
+      <info>
+        <name>
+          <value xml:lang="en">Solicitudes de prestaciones por cesantia efectivamente pagadas</value>
+        </name>
+        <description>
+          <value>Número de solicitudes de prestaciones por cesantía efectivamente pagadas</value>
+        </description>
+      </info>
+      <topic ref="beneficiarios_del_sc"/>
+      <type ref="float"/>
+    </concept>
+  </concepts>
+  <!--Slices Def-->
+  <slices>
+    <slice id="fondos_mensual_fondo_slice">
+      <dimension concept="time:month"/>
+      <dimension concept="fondo"/>
+      <metric concept="rentabilidad_mensual"/>
+      <metric concept="rentabilidad_ultimo_quarter"/>
+      <metric concept="rentabilidad_ultimo_semonthtre"/>
+      <metric concept="acumulado_del_year_en_curso"/>
+      <metric concept="rentabilidad_de_los_ultimos_12_monthes"/>
+      <metric concept="promedio_acumulado"/>
+      <table ref="fondos_mensual_fondo_table"/>
+    </slice>
+    <slice id="personas_mes_slice">
+      <dimension concept="time:month"/>
+      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <metric concept="numero_de_nuevos_afiliados_en_el_month"/>
+      <metric concept="remuneracion_imponible_promedio"/>
+      <table ref="personas_mes_table"/>
+    </slice>
+    <slice id="personas_mes_afiliacion_slice">
+      <dimension concept="time:month"/>
+      <dimension concept="afiliacion"/>
+      <metric concept="numero_de_nuevos_afiliados_en_el_month"/>
+      <table ref="personas_mes_afiliacion_table"/>
+    </slice>
+    <slice id="personas_mes_contrato_slice">
+      <dimension concept="time:month"/>
+      <dimension concept="contrato"/>
+      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <metric concept="remuneracion_imponible_promedio"/>
+      <table ref="personas_mes_contrato_table"/>
+    </slice>
+    <slice id="personas_mes_contrato_sexo_slice">
+      <dimension concept="time:month"/>
+      <dimension concept="contrato"/>
+      <dimension concept="sexo"/>
+      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <metric concept="remuneracion_imponible_promedio"/>
+      <table ref="personas_mes_contrato_sexo_table"/>
+    </slice>
+    <slice id="personas_mes_sexo_slice">
+      <dimension concept="time:month"/>
+      <dimension concept="sexo"/>
+      <metric concept="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas"/>
+      <metric concept="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia"/>
+      <table ref="personas_mes_sexo_table"/>
+    </slice>
+  </slices>
+  <!--Tables Def-->
+  <tables>
+    <table id="afiliaciones_table">
+      <column id="afiliacion" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf8">afiliaciones.csv</file>
+      </data>
+    </table>
+    <table id="contratos_table">
+      <column id="contrato" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf8">contratos.csv</file>
+      </data>
+    </table>
+    <table id="fondos_table">
+      <column id="fondo" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf8">fondos.csv</file>
+      </data>
+    </table>
+    <table id="fondos_mensual_fondo_table">
+      <column id="month" type="date" format="yyyy-MM"/>
+      <column id="fondo" type="string"/>
+      <column id="rentabilidad_mensual" type="float"/>
+      <column id="rentabilidad_ultimo_quarter" type="float"/>
+      <column id="rentabilidad_ultimo_semonthtre" type="float"/>
+      <column id="acumulado_del_year_en_curso" type="float"/>
+      <column id="rentabilidad_de_los_ultimos_12_monthes" type="float"/>
+      <column id="promedio_acumulado" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">fondos_mensual_fondo.csv</file>
+      </data>
+    </table>
+    <table id="personas_mes_table">
+      <column id="month" type="date" format="yyyy-MM"/>
+      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
+      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
+      <column id="numero_de_nuevos_afiliados_en_el_month" type="float"/>
+      <column id="remuneracion_imponible_promedio" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">personas_mes.csv</file>
+      </data>
+    </table>
+    <table id="personas_mes_afiliacion_table">
+      <column id="month" type="date" format="yyyy-MM"/>
+      <column id="afiliacion" type="string"/>
+      <column id="numero_de_nuevos_afiliados_en_el_month" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">personas_mes_afiliacion.csv</file>
+      </data>
+    </table>
+    <table id="personas_mes_contrato_table">
+      <column id="month" type="date" format="yyyy-MM"/>
+      <column id="contrato" type="string"/>
+      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
+      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
+      <column id="remuneracion_imponible_promedio" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">personas_mes_contrato.csv</file>
+      </data>
+    </table>
+    <table id="personas_mes_contrato_sexo_table">
+      <column id="month" type="date" format="yyyy-MM"/>
+      <column id="contrato" type="string"/>
+      <column id="sexo" type="string"/>
+      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
+      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
+      <column id="remuneracion_imponible_promedio" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">personas_mes_contrato_sexo.csv</file>
+      </data>
+    </table>
+    <table id="personas_mes_sexo_table">
+      <column id="month" type="date" format="yyyy-MM"/>
+      <column id="sexo" type="string"/>
+      <column id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas" type="float"/>
+      <column id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">personas_mes_sexo.csv</file>
+      </data>
+    </table>
+    <table id="sexos_table">
+      <column id="sexo" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf8">sexos.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>
