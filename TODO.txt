@@ -1,0 +1,22 @@
+################################################################################
+# TODO LIST
+################################################################################
+
+Checks features:
+  - Concepts repeated more than once in a table.
+  - There should be 2 dimensions at least per variable (including time).
+  - Concepts defined more than once as a result of multiple data type (e.g. float in
+    one table and integer in other).
+
+Important features:
+  - Translating data.frame lists to DSPL.
+
+'Working on it' features:
+  - Multilanguage support.
+  - is_percentage attr.
+  - is_money attr.
+  - Geographic dimensions.
+
+Advanced features:
+  - Hierarchical (nested) topics.
+  - Hierarchical (nested) dimensions.
