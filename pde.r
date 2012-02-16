@@ -112,7 +112,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
   
   # Makes the dir of output
   if (replace & !is.na(output)) {
-    output2 <- paste(output,'r_pde',sep='')
+    output2 <- paste(output,'r_pde',sep='/')
     ER <- try(dir.create(path=output2,showWarnings=F), silent=T)
     if (class(ER)=='try-error') {
       stop(paste('Couldn\'t create the folder r_pde in',output2))
@@ -139,7 +139,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
                header=F, nrows=1, encoding=y)
              
              cols <- as.character(cols)
-             data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec=',')
+             data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec='.')
              colnames(data) <- cols
            } else {
            # In the case of xls xlsx

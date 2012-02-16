@@ -1,15 +1,15 @@
 id	label	description	topic	url	totalName	pluralName
 8	fondo	Fondo	NA	NA	NA	Total de los Fondos	Fondos
-9	rentabilidad_mensual	Rentabilidad Mensual	NA	NA	NA	NA	NA
-10	rentabilidad_ultimo_quarter	Rentabilidad Ultimo Trimestre	NA	NA	NA	NA	NA
-11	rentabilidad_ultimo_semonthtre	Rentabilidad Ultimo Semestre	NA	NA	NA	NA	NA
-12	acumulado_del_year_en_curso	Acumulado del Agno en Curso	NA	NA	NA	NA	NA
-13	rentabilidad_de_los_ultimos_12_monthes	Rentabilidad de los Ultimos 12 meses	NA	NA	NA	NA	NA
-14	promedio_acumulado	Promedio Acumulado	NA	NA	NA	NA	NA
-16	solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas	Solicitudes de prestaciones por cesantia efectivamente pagadas	Todo sobre esto en la dirección a continuación	NA	http://www.spensiones.cl/573/article-2683.html	NA	NA
-17	afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia	Afiliados que recibieron pago de la prestacion por cesantia	NA	NA	NA	NA	NA
-18	numero_de_nuevos_afiliados_en_el_month	Numero de Nuevos Afiliados en el Mes	NA	NA	NA	NA	NA
-19	remuneracion_imponible_promedio	Remuneracion imponible promedio	NA	NA	NA	NA	NA
-21	afiliacion	Afiliacion	NA	NA	NA	Todas las Afiliaciones	Afiliaciones
+9	rentabilidad_mensual	Rentabilidad Mensual	NA	Fondos de Cesantía	NA	NA	NA
+10	rentabilidad_ultimo_quarter	Rentabilidad Ultimo Trimestre	NA	Fondos de Cesantía	NA	NA	NA
+11	rentabilidad_ultimo_semonthtre	Rentabilidad Ultimo Semestre	NA	Fondos de Cesantía	NA	NA	NA
+12	acumulado_del_year_en_curso	Acumulado del Agno en Curso	NA	Fondos de Cesantía	NA	NA	NA
+13	rentabilidad_de_los_ultimos_12_monthes	Rentabilidad de los Ultimos 12 meses	NA	Fondos de Cesantía	NA	NA	NA
+14	promedio_acumulado	Promedio Acumulado	NA	Fondos de Cesantía	NA	NA	NA
+16	solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas	Solicitudes de prestaciones por cesantia efectivamente pagadas	Todo sobre esto en la dirección a continuación	Beneficiarios del Fondo de Cesantía	http://www.spensiones.cl/573/article-2683.html	NA	NA
+17	afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia	Afiliados que recibieron pago de la prestacion por cesantia	NA	Beneficiarios del Fondo de Cesantía	NA	NA	NA
+19	remuneracion_imponible_promedio	Remuneracion imponible promedio	NA	Beneficiarios del Fondo de Cesantía	NA	NA	NA
 24	contrato	Contrato	NA	NA	NA	Todos los Contratos	Contratos
 30	sexo	Sexo	NA	NA	NA	Ambos Sexos	Sexos
+18	numero_de_nuevos_afiliados_en_el_month	Numero de Nuevos Afiliados en el Mes	A partir del informe de diciembre (reporta afiliados, cotizantes y remuneraciones de noviembre, solicitudes y beneficiarios de diciembre), las estadísticas son calculadas y reportadas directamente por la Superintendencia de Pensiones (con información de la Base de Datos del Seguro de Cesantía), ya que con fecha 30 de diciembre de 2011 se derogó la Circular N° 4 del Seguro de Cesantía y sus modificaciones que normaba el envío de las estadísticas del Seguro por parte de la Sociedad Administradora de Fondos de Cesantía	Beneficiarios del Fondo de Cesantía	NA	NA	NA
+21	afiliacion	Afiliacion	NA	NA	NA	Todas las Afiliaciones	Afiliaciones

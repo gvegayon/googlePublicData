@@ -30,6 +30,23 @@
       <value>http://www.spensiones.cl/</value>
     </url>
   </provider>
+  <!--Topics definition-->
+  <topics>
+    <topic id="fondos_de_cesantia">
+      <info>
+        <name>
+          <value xml:lang="en">Fondos de Cesantía</value>
+        </name>
+      </info>
+    </topic>
+    <topic id="beneficiarios_del_fondo_de_cesantia">
+      <info>
+        <name>
+          <value xml:lang="en">Beneficiarios del Fondo de Cesantía</value>
+        </name>
+      </info>
+    </topic>
+  </topics>
   <!--Concepts Def-->
   <concepts>
     <concept id="acumulado_del_year_en_curso">
@@ -38,6 +55,7 @@
           <value xml:lang="en">Acumulado del Agno en Curso</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="afiliacion" extends="entity:entity">
@@ -61,6 +79,7 @@
           <value xml:lang="en">Afiliados que recibieron pago de la prestacion por cesantia</value>
         </name>
       </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="contrato" extends="entity:entity">
@@ -98,7 +117,11 @@
         <name>
           <value xml:lang="en">Numero de Nuevos Afiliados en el Mes</value>
         </name>
+        <description>
+          <value xml:lang="en">A partir del informe de diciembre (reporta afiliados, cotizantes y remuneraciones de noviembre, solicitudes y beneficiarios de diciembre), las estadísticas son calculadas y reportadas directamente por la Superintendencia de Pensiones (con información de la Base de Datos del Seguro de Cesantía), ya que con fecha 30 de diciembre de 2011 se derogó la Circular N° 4 del Seguro de Cesantía y sus modificaciones que normaba el envío de las estadísticas del Seguro por parte de la Sociedad Administradora de Fondos de Cesantía</value>
+        </description>
       </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="promedio_acumulado">
@@ -107,6 +130,7 @@
           <value xml:lang="en">Promedio Acumulado</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="remuneracion_imponible_promedio">
@@ -115,6 +139,7 @@
           <value xml:lang="en">Remuneracion imponible promedio</value>
         </name>
       </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_de_los_ultimos_12_monthes">
@@ -123,6 +148,7 @@
           <value xml:lang="en">Rentabilidad de los Ultimos 12 meses</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_mensual">
@@ -131,6 +157,7 @@
           <value xml:lang="en">Rentabilidad Mensual</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_ultimo_quarter">
@@ -139,6 +166,7 @@
           <value xml:lang="en">Rentabilidad Ultimo Trimestre</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="rentabilidad_ultimo_semonthtre">
@@ -147,6 +175,7 @@
           <value xml:lang="en">Rentabilidad Ultimo Semestre</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="sexo" extends="entity:entity">
@@ -176,6 +205,7 @@
           <value xml:lang="en">http://www.spensiones.cl/573/article-2683.html</value>
         </url>
       </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
       <type ref="float"/>
     </concept>
   </concepts>
