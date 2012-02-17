@@ -22,7 +22,12 @@ getFilesNames <- function(path, extension='csv') {
 # DESCRIPTION:
 # As a function of a path and a file extension, gets all the file names there.
 ################################################################################  
-  files <- list.files(path=path,pattern=extension)
+  files <- list.files(path=path)
+  
+  files <- sapply(files, strsplit, split='.', fixed=T)
+  files <- sapply(files, function(x) x <- x[length(x)])
+  files <- names(files)[files==extension]
+  
   nfiles <- length(files)
   if (nfiles==0) {
     stop(nfiles, ' files found.\nCannot\' continue') 
@@ -125,9 +130,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
     stop(call='Folder already exists, you must make explicit the intention to replace it.')
   }
 
-  vars <- NULL
-  vars <- sapply(files,
-         function(x,y) {
+  FUN <- function(x,y) {
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
            
@@ -136,7 +139,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              
              cols <- read.table(
                paste(getwd(),'/',x,sep=''), sep=exts[exts[,1] == ext,2], 
-               header=F, nrows=1, encoding=y)
+               header=F, nrows=1, fileEncoding=y)
              
              cols <- as.character(cols)
              data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec='.')
@@ -155,32 +158,33 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
            fnames <- rep(fnames, length(cols))
            
            # Builds descriptive matrix
-           var <- c(
-             cleantext(cols),
-             cols,
-             fixType(unlist(lapply(data, typeof))),
-             fnames)
-           var <- matrix(var, ncol = 4)
            
+           var <- data.frame(
+             id=cleantext(cols),
+             label=cols,
+             type=fixType(unlist(lapply(data, typeof))),
+             slice=fnames)
+                      
            # Creates a new column of metric vs dimm
-           var <- cbind(var, 'metric')
+           var <- cbind(var, concept.type='metric')
            
            var[var[,1] %in% metrics[,1], 5] <- 'dimension' # If time
            var[var[,3] %in% 'string',5] <- 'dimension' # If string
            var[var[,1] %in% metrics[,1], 3] <- 'date' # If date
            
            # Identifies which dataset is a dimension dataset
-           var <- cbind(var, V6 = F)
-           if (all(var[,3] != 'date')) {var[,6] <- T}
+           var <- cbind(var, is.dim.tab = F)
+           if (all(var[,3] != 'date')) {var['is.dim.tab'] <- T}
            
            # Replaces the date-time colnames for those proper to PDE
-           for (i in 1:NROW(metrics)) {cols <- gsub(metrics[i,1], metrics[i,2], 
-                                                    cleantext(cols), fixed = T)}
+           for (i in 1:NROW(metrics)) {
+             cols <- gsub(metrics[i,1], metrics[i,2],cleantext(cols), fixed = T)
+            }
            
-           var[,1] <- cols
-
-           vars <- rbind(vars, var)
-
+           var['id'] <- cols
+           
+           #vars <- rbind(vars, var)
+           
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
              colnames(data) <- cols
@@ -197,15 +201,15 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
            else {
              cat(x,'analized correctly\n')
            }
-           return(vars)
-         }, y=encoding)
+           
+           return(var)
+         }
   
   # Puts it all into a single matrrx
-  
-  vars <- do.call('rbind', sapply(vars, unlist))
-  
+  vars <- do.call('rbind', lapply(files, FUN, y=encoding))
+    
   # Identifies where are the correspondant tables for each dimension
-  vars <- cbind(vars, V7 = NA)
+  vars <- cbind(vars, dim.tab.ref = NA)
   for (i in 1:NROW(vars)) {
     if (vars[i,5] == 'dimension' & vars[i,3] != 'date' & vars[i,6] != 'TRUE') {
       delta <- try(vars[vars[,1]==vars[i,1] & vars[,6] == 'TRUE',4])
@@ -213,15 +217,12 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
       if (length(delta) == 0) {
         stop('Error')
       } else {
-        vars[i,7] <- delta
+        if (length(delta) > 1) {stop('Delta is', delta)}
+        vars[i,7] <- try(delta)
       }
     }
   }
-  vars <- data.frame(vars)
-  
-  colnames(vars) <- c(
-    'id', 'label', 'type', 'slice', 'concept.type', 'is.dim.tab', 'dim.tab.ref'
-    )
+
   return(vars)
 }
 
@@ -283,6 +284,48 @@ checkSlices <- function(dims, by) {
       }
     }
   }
+}
+
+checkDuplConcepts <- function(concepts) {
+################################################################################
+# Checks if there's any concepts duplicated as a result of multiple data types
+# In the case of beeing all numeric, DSPL assumes the minumum common (float) and
+# fixes the error. Output = Warning
+################################################################################  
+  
+  # Frequency table
+  freq.tab <- as.data.frame(table(concepts$id), stringsAsFactors=F)
+  colnames(freq.tab) <- c('id','freq')  
+  dpl.concepts <- subset(freq.tab, freq > 1)
+  
+  # Number of duplicated concepts
+  ndpl.concepts <- NROW(dpl.concepts)
+  
+  # If there are any dpl concepts
+  if (ndpl.concepts > 0) {
+    
+    # Loop for each and one of the duplicated concepts
+    for (dpl in dpl.concepts$id) {
+      
+      # Testing if all the data types of the dpl concepts is numeric
+      test <- all(concepts[concepts$id == dpl,c('type')] %in% c('float', 'integer'))
+      
+      # Fixing the concept type
+      if (test) {
+        concepts[concepts$id == dpl,c('type')] <- 'float'
+        warning(dpl,' concept was fixed in ',
+                concepts[concepts$id == dpl, c('id','type')])
+      }
+      else {
+        stop('Duplicated concepts cannot be homogenized\n',dpl,
+             concepts[concepts$id == dpl, c('id','type')])
+      }
+      
+      # Rebuilding the concepts list
+      concepts <- unique(concepts)
+    }    
+  }
+  return(concepts)
 }
 
 fixType <- function(x) {
@@ -564,6 +607,8 @@ pde <- function(
     subset(vars,subset=type != 'date' & is.dim.tab==F, select=-slice)
     )
   
+  varConcepts <- checkDuplConcepts(concepts=varConcepts)
+  
   # Checks if there is a moreinfo file
   varConcepts <- getMoreInfo(source=moreinfo, target=varConcepts, 'UTF-8')
   
@@ -610,13 +655,12 @@ pde <- function(
                                       parent = provider)
   
   # TOPICS
-  if (!all(is.na(varConcepts$topicid))) {
+  if (all(colnames(varConcepts) %in% 'topicid')) {
     newXMLCommentNode('Topics definition', parent=dspl)
     topics <- newXMLNode('topics', parent=dspl)
     addTopics('topic', varConcepts[c('topic', 'topicid')], topics, lang)
   }
-  
-  
+    
   # CONCEPTS
   newXMLCommentNode('Concepts Def', parent=dspl)
   concepts <- newXMLNode('concepts', parent = dspl)
