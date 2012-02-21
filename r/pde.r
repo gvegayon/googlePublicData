@@ -1,9 +1,3 @@
-# Dependencies
-require(XML)
-require(xlsx)
-
-#archivo <- 'c:/rdspl/series_sc'
-
 checkPath <- function(x, type='output') {
 ################################################################################
 # DESCRIPTION:
@@ -620,11 +614,32 @@ pde <- function(
   tables <- newXMLNode('tables', parent = dspl)
   addTables(tableid=vars$slice,tableatt=vars,parent=tables, format=timeFormat)  
   
-  # If an output file is specified, it writes it on it
-  result <- structure(.Data=list(saveXML(archXML, encoding = 'UTF-8'),vars),
-                      .Names=c('dspl', 'concepts'))
+  # Building ouput
+  .dimtabs <- unique(subset(vars, subset=is.dim.tab, select=slice))
+  .slices <- unique(subset(vars, select=slice))
+  .concepts <- unique(subset(vars, select=label))
+  .dims <- unique(subset(vars, subset=is.dim.tab & !(label=='name'), select=label))
+  
+  lapply(c(.dimtabs, .slices, .concepts, .dims), function(x) names(x) <- 'Name')
+  
+  pde.statistics <- matrix(
+    c(
+      NROW(.slices),
+      NROW(.concepts),
+      NROW(.dims)
+    ), ncol=3)
+  
+  colnames(pde.statistics) <- c('slices','concepts','dimentions')
+  
+  result <- structure(.Data=
+    list(
+        saveXML(archXML, encoding = 'UTF-8'),vars, .dimtabs, .slices, .concepts,
+        .dims, pde.statistics
+    ), .Names=c('dspl', 'concepts.by.table', 'dimtabs', 'slices', 'concepts',
+                  'dimentions','statistics'))
   class(result) <- c('pde')
   
+  # If an output file is specified, it writes it on it
   if (is.na(output)) {
     return(result)
   

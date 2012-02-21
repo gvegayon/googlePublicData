@@ -29,5 +29,5 @@ colnames(joda.times) <- c('rexp','format','example')
 
 test <- c('02-03-2001', '1992', 'Ene-2008')
 
-lapply(joda.times[,1], function(X,Y) {grep(pattern=X,x=Y,invert=T)}, Y=test)
+#lapply(joda.times[,1], function(X,Y) {grep(pattern=X,x=Y,invert=T)}, Y=test)
 

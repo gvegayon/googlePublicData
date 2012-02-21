@@ -20,3 +20,14 @@ print.pde <- function(x, path=NULL, replace=F, ...) {
     cat(x$dspl, ...)
   }
 }
+
+summary.pde <- function(x) {
+  ################################################################################
+  # Summary method
+  ################################################################################  
+  cat('Attributes\n')
+  print(attributes(x))
+  cat('Dataset contents\n')
+  mydspl0[c('dimtabs', 'slices', 'concepts',
+            'dimentions','statistics')]
+}

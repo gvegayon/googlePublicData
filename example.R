@@ -1,13 +1,14 @@
+rm(list=ls())
 require(XML)
 require(xlsx)
 
 directory <- 'c:/comandos_paquetes_librerias/r/rdspl/example'
-funsource <- 'c:/comandos_paquetes_librerias/r/rdspl/pde.r'
-source(funsource, encoding='UTF-8')
+funsource <- 'c:/comandos_paquetes_librerias/r/rdspl/r'
+lapply(list.files(funsource, full.names=T), source, encoding='UTF-8')
 pde <- compiler::cmpfun(pde)
 
 # Basic DSPL
-mydspl <- pde(
+mydspl0 <- pde(
   path=directory,
   timeFormat='yyyy-MM',
   lang='en',
@@ -16,12 +17,11 @@ mydspl <- pde(
   extension='xls'
 )
 
-cat(mydspl2$xml) # Prints the XML file
-
-View(mydspl2$variables) # Views the variables
+mydspl0 # Prints the XML file (print method)
+summary(mydspl0) # Prints a summary of the dataset
 
 # Output of the complete bundle adding some more info
-mydspl <- pde(
+mydspl1 <- pde(
   path=directory,
   output=directory,
   replace=T,
@@ -36,14 +36,14 @@ mydspl <- pde(
   encoding='UTF-8'
 )
 
-mydspl # final message
+mydspl1 # final message
 
 # Generating a descriptive TAB file for the concepts adding topics and descriptions
 genMoreInfo(directory, encoding='UTF-8', ext='xls', action='merge',
             output=paste(directory,'/config.tab',sep=''))
 
 # Output of the complete bundle adding a descriptive file (moreinfo)
-mydspl <- pde(
+mydspl2 <- pde(
   path=directory,
   output=directory,
   replace=T,
@@ -57,3 +57,5 @@ mydspl <- pde(
   extension='xls',
   encoding='UTF-8',
   moreinfo=paste(directory,'config.tab',sep='/'))
+
+mydspl2

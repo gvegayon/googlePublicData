@@ -32,53 +32,79 @@
   </provider>
   <!--Concepts Def-->
   <concepts>
-    <concept id="fondo" extends="entity:entity">
-      <info>
-        <name>
-          <value xml:lang="en">Fondo</value>
-        </name>
-      </info>
-      <type ref="string"/>
-      <table ref="fondos_table"/>
-    </concept>
-    <concept id="rentabilidad_mensual">
-      <info>
-        <name>
-          <value xml:lang="en">Rentabilidad Mensual</value>
-        </name>
-      </info>
-      <type ref="float"/>
-    </concept>
-    <concept id="rentabilidad_ultimo_quarter">
-      <info>
-        <name>
-          <value xml:lang="en">Rentabilidad Ultimo Trimestre</value>
-        </name>
-      </info>
-      <type ref="float"/>
-    </concept>
-    <concept id="rentabilidad_ultimo_semonthtre">
-      <info>
-        <name>
-          <value xml:lang="en">Rentabilidad Ultimo Semestre</value>
-        </name>
-      </info>
-      <type ref="float"/>
-    </concept>
     <concept id="acumulado_del_year_en_curso">
       <info>
         <name>
           <value xml:lang="en">Acumulado del Agno en Curso</value>
         </name>
       </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
-    <concept id="rentabilidad_de_los_ultimos_12_monthes">
+    <concept id="afiliacion" extends="entity:entity">
       <info>
         <name>
-          <value xml:lang="en">Rentabilidad de los Ultimos 12 meses</value>
+          <value xml:lang="en">Afiliacion</value>
+        </name>
+        <pluralName>
+          <value xml:lang="en">Afiliaciones</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Todas las Afiliaciones</value>
+        </totalName>
+      </info>
+      <type ref="string"/>
+      <table ref="afiliaciones_table"/>
+    </concept>
+    <concept id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia">
+      <info>
+        <name>
+          <value xml:lang="en">Afiliados que recibieron pago de la prestacion por cesantia</value>
         </name>
       </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="contrato" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Contrato</value>
+        </name>
+        <pluralName>
+          <value xml:lang="en">Contratos</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Todos los Contratos</value>
+        </totalName>
+      </info>
+      <type ref="string"/>
+      <table ref="contratos_table"/>
+    </concept>
+    <concept id="fondo" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Fondo</value>
+        </name>
+        <pluralName>
+          <value xml:lang="en">Fondos</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Total de los Fondos</value>
+        </totalName>
+      </info>
+      <type ref="string"/>
+      <table ref="fondos_table"/>
+    </concept>
+    <concept id="numero_de_nuevos_afiliados_en_el_month">
+      <info>
+        <name>
+          <value xml:lang="en">Numero de Nuevos Afiliados en el Mes</value>
+        </name>
+        <description>
+          <value xml:lang="en">A partir del informe de diciembre (reporta afiliados, cotizantes y remuneraciones de noviembre, solicitudes y beneficiarios de diciembre), las estadísticas son calculadas y reportadas directamente por la Superintendencia de Pensiones (con información de la Base de Datos del Seguro de Cesantía), ya que con fecha 30 de diciembre de 2011 se derogó la Circular N° 4 del Seguro de Cesantía y sus modificaciones que normaba el envío de las estadísticas del Seguro por parte de la Sociedad Administradora de Fondos de Cesantía</value>
+        </description>
+      </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="promedio_acumulado">
@@ -87,30 +113,7 @@
           <value xml:lang="en">Promedio Acumulado</value>
         </name>
       </info>
-      <type ref="float"/>
-    </concept>
-    <concept id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas">
-      <info>
-        <name>
-          <value xml:lang="en">Solicitudes de prestaciones por cesantia efectivamente pagadas</value>
-        </name>
-      </info>
-      <type ref="float"/>
-    </concept>
-    <concept id="afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia">
-      <info>
-        <name>
-          <value xml:lang="en">Afiliados que recibieron pago de la prestacion por cesantia</value>
-        </name>
-      </info>
-      <type ref="float"/>
-    </concept>
-    <concept id="numero_de_nuevos_afiliados_en_el_month">
-      <info>
-        <name>
-          <value xml:lang="en">Numero de Nuevos Afiliados en el Mes</value>
-        </name>
-      </info>
+      <topic ref="fondos_de_cesantia"/>
       <type ref="float"/>
     </concept>
     <concept id="remuneracion_imponible_promedio">
@@ -119,34 +122,74 @@
           <value xml:lang="en">Remuneracion imponible promedio</value>
         </name>
       </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
       <type ref="float"/>
     </concept>
-    <concept id="afiliacion" extends="entity:entity">
+    <concept id="rentabilidad_de_los_ultimos_12_monthes">
       <info>
         <name>
-          <value xml:lang="en">Afiliacion</value>
+          <value xml:lang="en">Rentabilidad de los Ultimos 12 meses</value>
         </name>
       </info>
-      <type ref="string"/>
-      <table ref="afiliaciones_table"/>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
     </concept>
-    <concept id="contrato" extends="entity:entity">
+    <concept id="rentabilidad_mensual">
       <info>
         <name>
-          <value xml:lang="en">Contrato</value>
+          <value xml:lang="en">Rentabilidad Mensual</value>
         </name>
       </info>
-      <type ref="string"/>
-      <table ref="contratos_table"/>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="rentabilidad_ultimo_quarter">
+      <info>
+        <name>
+          <value xml:lang="en">Rentabilidad Ultimo Trimestre</value>
+        </name>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
+    </concept>
+    <concept id="rentabilidad_ultimo_semonthtre">
+      <info>
+        <name>
+          <value xml:lang="en">Rentabilidad Ultimo Semestre</value>
+        </name>
+      </info>
+      <topic ref="fondos_de_cesantia"/>
+      <type ref="float"/>
     </concept>
     <concept id="sexo" extends="entity:entity">
       <info>
         <name>
           <value xml:lang="en">Sexo</value>
         </name>
+        <pluralName>
+          <value xml:lang="en">Sexos</value>
+        </pluralName>
+        <totalName>
+          <value xml:lang="en">Ambos Sexos</value>
+        </totalName>
       </info>
       <type ref="string"/>
       <table ref="sexos_table"/>
+    </concept>
+    <concept id="solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas">
+      <info>
+        <name>
+          <value xml:lang="en">Solicitudes de prestaciones por cesantia efectivamente pagadas</value>
+        </name>
+        <description>
+          <value xml:lang="en">Todo sobre esto en la dirección a continuación</value>
+        </description>
+        <url>
+          <value xml:lang="en">http://www.spensiones.cl/573/article-2683.html</value>
+        </url>
+      </info>
+      <topic ref="beneficiarios_del_fondo_de_cesantia"/>
+      <type ref="float"/>
     </concept>
   </concepts>
   <!--Slices Def-->
@@ -208,48 +251,6 @@
       <column id="name" type="string"/>
       <data>
         <file format="csv" encoding="utf8">afiliaciones.csv</file>
-      </data>
-    </table>
-    <table id="afiliados_sistema_afp_table">
-      <column id="fecha" type="float"/>
-      <column id="sistema" type="float"/>
-      <column id="afp" type="string"/>
-      <column id="alameda" type="float"/>
-      <column id="aporta" type="float"/>
-      <column id="aporta_fomenta" type="float"/>
-      <column id="armoniza" type="float"/>
-      <column id="banguarday" type="float"/>
-      <column id="bannuestra" type="float"/>
-      <column id="bansander" type="float"/>
-      <column id="capital" type="float"/>
-      <column id="concorday" type="float"/>
-      <column id="cuprum" type="float"/>
-      <column id="el_libertador" type="float"/>
-      <column id="fomenta" type="float"/>
-      <column id="futuro" type="float"/>
-      <column id="genera" type="float"/>
-      <column id="habitat" type="float"/>
-      <column id="invierta" type="float"/>
-      <column id="laboral" type="float"/>
-      <column id="magister" type="float"/>
-      <column id="modelo" type="float"/>
-      <column id="norprevision" type="float"/>
-      <column id="planvital" type="float"/>
-      <column id="planvital" type="float"/>
-      <column id="planvital_" type="float"/>
-      <column id="previpan" type="float"/>
-      <column id="proteccion" type="float"/>
-      <column id="provida" type="float"/>
-      <column id="qualitas" type="float"/>
-      <column id="qualitas" type="float"/>
-      <column id="san_cristobal" type="float"/>
-      <column id="santa_maria" type="float"/>
-      <column id="summa" type="float"/>
-      <column id="summa_bansander" type="float"/>
-      <column id="union" type="float"/>
-      <column id="valora" type="float"/>
-      <data>
-        <file format="csv" encoding="utf8">afiliados_sistema_afp.csv</file>
       </data>
     </table>
     <table id="contratos_table">
