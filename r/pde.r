@@ -22,11 +22,20 @@ getFilesNames <- function(path, extension='csv') {
 # DESCRIPTION:
 # As a function of a path and a file extension, gets all the file names there.
 ################################################################################  
+  # Listing files
   files <- list.files(path=path)
   
-  files <- sapply(files, strsplit, split='.', fixed=T)
-  files <- sapply(files, function(x) x <- x[length(x)])
-  files <- names(files)[files==extension]
+  # Match pattern
+  if (extension %in% c('xls','xlsx')) {
+    pat <- '[.xls][a-z]{1}$'
+  }
+  else {
+    pat <- paste('[.',extension,']$',sep='')
+  }
+  
+  # Matching
+  valid <- grep(pattern=pat, files)
+  files <- files[valid]
   
   nfiles <- length(files)
   if (nfiles==0) {
@@ -50,7 +59,7 @@ genMoreInfo <- function(path, encoding='UTF-8', ext='csv', output=NA, action='me
   #checkPath(output, "output")
   
   # Generates the filelist acording to an specific extension
-  files <- getFilesNames(path, 'xls')
+  files <- getFilesNames(path, ext)
   
   # Reads and analices the files
   x <- seekTables(files=files, encoding=encoding, ext=ext)
@@ -257,75 +266,6 @@ getMoreInfo <- function(source,target, encoding='UTF-8') {
     target <- merge(target, source, by=c('id'))
   }
   target
-}
-
-checkSlices <- function(dims, by) {
-################################################################################
-# Checks if there's any pair of slices with the same dimentions (error)
-################################################################################
-  # Builds a list of dims by slice
-  slices.dims <- do.call(list,by(dims, by, function(x) unlist(x[order(x)])))
-  
-  # Generates a list of cohorts (unique) that shouldn't be store more than once
-  unique.dims <- unique(slices.dims)
-  
-  for (i in 1:length(unique.dims)) {
-    # Sets the counters
-    counter <- 0
-    fields <- NULL
-    for (j in names(slices.dims)) {
-      test <- identical(slices.dims[[j]], unique.dims[[i]])
-      
-      if (test) {counter <- counter + 1; fields <- paste(fields, j, sep=',')}
-      if (counter > 1) {
-        stop("Dimention(s) ", unlist(unique.dims[[i]]),
-             " apear more than once in the collection at ", fields,
-             ". Variables in those tables should be grouped in only one table.")
-      }
-    }
-  }
-}
-
-checkDuplConcepts <- function(concepts) {
-################################################################################
-# Checks if there's any concepts duplicated as a result of multiple data types
-# In the case of beeing all numeric, DSPL assumes the minumum common (float) and
-# fixes the error. Output = Warning
-################################################################################  
-  
-  # Frequency table
-  freq.tab <- as.data.frame(table(concepts$id), stringsAsFactors=F)
-  colnames(freq.tab) <- c('id','freq')  
-  dpl.concepts <- subset(freq.tab, freq > 1)
-  
-  # Number of duplicated concepts
-  ndpl.concepts <- NROW(dpl.concepts)
-  
-  # If there are any dpl concepts
-  if (ndpl.concepts > 0) {
-    
-    # Loop for each and one of the duplicated concepts
-    for (dpl in dpl.concepts$id) {
-      
-      # Testing if all the data types of the dpl concepts is numeric
-      test <- all(concepts[concepts$id == dpl,c('type')] %in% c('float', 'integer'))
-      
-      # Fixing the concept type
-      if (test) {
-        concepts[concepts$id == dpl,c('type')] <- 'float'
-        warning(dpl,' concept was fixed in ',
-                concepts[concepts$id == dpl, c('id','type')])
-      }
-      else {
-        stop('Duplicated concepts cannot be homogenized\n',dpl,
-             concepts[concepts$id == dpl, c('id','type')])
-      }
-      
-      # Rebuilding the concepts list
-      concepts <- unique(concepts)
-    }    
-  }
-  return(concepts)
 }
 
 fixType <- function(x) {
@@ -593,8 +533,8 @@ pde <- function(
   #if (!is.na(moreinfo)) checkPath(moreinfo, "input")
   
   # Gets the filenames
-  files <- getFilesNames(path, extension) 
-  
+  files <- getFilesNames(path, extension)
+    
   # Variables Lists and datatypes
   vars <- seekTables(files, encoding, extension, output, replace)
   dims <- subset(vars, concept.type=='dimension', select=c(id, slice, concept.type))
@@ -681,15 +621,16 @@ pde <- function(
   addTables(tableid=vars$slice,tableatt=vars,parent=tables, format=timeFormat)  
   
   # If an output file is specified, it writes it on it
+  result <- structure(.Data=list(saveXML(archXML, encoding = 'UTF-8'),vars),
+                      .Names=c('dspl', 'concepts'))
+  class(result) <- c('pde')
+  
   if (is.na(output)) {
-    result <- structure(.Data=list(saveXML(archXML, encoding = 'UTF-8'),vars),
-                        .Names=c('xml', 'variables'))
     return(result)
   
   } else {
-    result <- file(paste(output,'/r_pde/metadata.xml',sep=''), encoding='UTF-8')
-    cat(saveXML(archXML, encoding='UTF-8'), file=result)
-    close.connection(con=result)
+    path <- paste(output,'/r_pde/metadata.xml',sep='')
+    print.pde(x=result, path=path, replace=replace)
     return(paste('Metadata created successfully at ',output, 
                  'r_dspl/metadata.xml',sep=''))
   }
