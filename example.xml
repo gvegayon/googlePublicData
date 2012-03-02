@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<Module>
-  <ModulePrefs title="Gadget Form Example" />
-  <Content type="url" href="http://www.google.com/publicdata/embed?ds=z7j7rseag2fj1j_&amp;ctype=l&amp;strail=false&amp;bcs=d&amp;nselm=h&amp;met_y=solicitudes_de_prestaciones_por_cesantia_efectivamente_pagadas&amp;scale_y=lin&amp;ind_y=false&amp;rdim=contrato&amp;idim=contrato:01:02&amp;ifdim=contrato&amp;tdim=true&amp;tstart=1034737200000&amp;tend=1324004400000&amp;hl=en&amp;dl=en&amp;icfg" />
-</Module>

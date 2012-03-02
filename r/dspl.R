@@ -471,7 +471,7 @@ addTables <- function(tableid, tableatt, parent, format) {
      )
 }
 
-pde <- function(
+dspl <- function(
 ################################################################################
 # DESCRIPTION:
 # Based on an specific folder directory, the function seeks for files that match
@@ -637,7 +637,7 @@ pde <- function(
         .dims, pde.statistics
     ), .Names=c('dspl', 'concepts.by.table', 'dimtabs', 'slices', 'concepts',
                   'dimentions','statistics'))
-  class(result) <- c('pde')
+  class(result) <- c('dspl')
   
   # If an output file is specified, it writes it on it
   if (is.na(output)) {
