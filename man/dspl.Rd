@@ -1,6 +1,5 @@
 \name{dspl}
-\alias{dspl}
-\alias{pde}
+\alias{dspl}  
 \title{Builds DSPL metadata file}
 \description{Parsing CSV, TAB or XLS(X) files at a specific directory path, dspl
              generates a complete DSPL file ready to be uploaded to Googles

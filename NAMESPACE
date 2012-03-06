@@ -6,3 +6,6 @@ export(checkDuplConcepts, checkPath, checkSlices)
 export(fixType, cleantext, getFilesNames)
 export(genMoreInfo, getMoreInfo)
 export(dspl)
+
+S3method(print, dspl)
+S3method(summary, dspl)
