@@ -1,0 +1,3 @@
+[submodule "wiki"]
+	path = wiki
+	url = https://wiki.rdspl.googlecode.com/git/
