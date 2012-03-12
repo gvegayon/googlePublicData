@@ -1,3 +1,8 @@
 .Rproj.user
 .Rhistory
 .RData
+*.xls
+*.xlsx
+*.doc
+*.docx
+*.zip
