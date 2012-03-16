@@ -172,7 +172,8 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
            var <- cbind(var, concept.type='metric')
            
            var[var[,1] %in% metrics[,1], 5] <- 'dimension' # If time
-           var[var[,3] %in% 'string',5] <- 'dimension' # If string
+           var[var[,3] %in% c('string'),5] <- 'dimension' # If string
+           var[var[,3] %in% c('longitud','latitud','colour'),5] <- NA # If string
            var[var[,1] %in% metrics[,1], 3] <- 'date' # If date
            
            # Identifies which dataset is a dimension dataset
@@ -618,7 +619,13 @@ dspl <- function(
   .dimtabs <- unique(subset(vars, subset=is.dim.tab, select=slice))
   .slices <- unique(subset(vars, select=slice))
   .concepts <- unique(subset(vars, select=label))
-  .dims <- unique(subset(vars, subset=is.dim.tab & !(label=='name'), select=label))
+  .dims <- unique(
+    subset(
+      vars, 
+      subset=is.dim.tab & !(label %in% c('name', 'latitude','longitude','colour')),
+      select=label
+      )
+    )
   
   lapply(c(.dimtabs, .slices, .concepts, .dims), function(x) names(x) <- 'Name')
   
@@ -645,7 +652,7 @@ dspl <- function(
   
   } else {
     path <- paste(output,'/r_pde/metadata.xml',sep='')
-    print.pde(x=result, path=path, replace=replace)
+    print.dspl(x=result, path=path, replace=replace)
     return(paste('Metadata created successfully at ',output, 
                  'r_dspl/metadata.xml',sep=''))
   }
