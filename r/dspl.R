@@ -653,6 +653,10 @@ dspl <- function(
   } else {
     path <- paste(output,'/r_pde/metadata.xml',sep='')
     print.dspl(x=result, path=path, replace=replace)
+    
+    # Zipping the files
+    #zip('zip_de_prueba.zip',tozip,flags='-r9Xj')
+    
     return(paste('Metadata created successfully at ',output, 
                  'r_dspl/metadata.xml',sep=''))
   }
