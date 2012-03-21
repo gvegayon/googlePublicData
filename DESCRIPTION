@@ -11,7 +11,8 @@ Description: Provides a collection of functions oriented to parse CSV, TAB,
 Depends:
     R (>= 2.11.0),
     XML,
-    xlsx
+    xlsx,
+    utils
 License: GPL (>= 2)
 URL: http://code.google.com/p/rdspl/
 LazyLoad: yes
