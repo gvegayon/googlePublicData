@@ -118,19 +118,23 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
     'dia','day','semana','week','trimestre','quarter', 'mes','month','agno', 
     'year', 'year','year','month','month'), ncol = 2, byrow=T)
   
-  # Makes the dir of output
-  if (replace & !is.na(output)) {
+  if (!is.na(output)) {
     output2 <- paste(output,'r_pde',sep='/')
-    ER <- try(dir.create(path=output2,showWarnings=F), silent=T)
-    if (class(ER)=='try-error') {
-      stop(paste('Couldn\'t create the folder r_pde in',output2))
+  
+    # Makes the dir of output
+    if ((replace & file.exists(output2)) | (!replace & !file.exists(output2))) {
+      ER <- try(dir.create(path=output2,showWarnings=F), silent=T)
+      if (class(ER)=='try-error') {
+        stop(paste('Couldn\'t create the folder r_pde in',output2))
+      }
+      else {
+        cat('Output defined', 'Results will be saved at',output2,sep='\n')
+      }
+      
+    } 
+    else if (!replace & file.exists(output2)) {
+      stop(call='Folder already exists, you must make explicit the intention to replace it.')
     }
-    else {
-      cat('Output defined', 'Results will be saved at',output2,sep='\n')
-    }
-    
-  } else if (!replace & !is.na(output)) {
-    stop(call='Folder already exists, you must make explicit the intention to replace it.')
   }
 
   FUN <- function(x,y) {
@@ -513,8 +517,6 @@ dspl <- function(
   moreinfo = NA
   ) {
   # Depuracion de Errores
-  
-  
   description <- ifelse(!is.na(description),description,'No description')
   name <- ifelse(!is.na(name),name,'No name')
   providerName <- ifelse(!is.na(providerName),providerName,'No provider')
@@ -523,6 +525,7 @@ dspl <- function(
   options(stringsAsFactors=F)
   
   # Checking if output path is Ok
+  output <- gsub("[/]$", replacement="", output)
   checkPath(output, "output")
   checkPath(path, "input")
   #if (!is.na(moreinfo)) checkPath(moreinfo, "input")
@@ -655,9 +658,11 @@ dspl <- function(
     print.dspl(x=result, path=path, replace=replace)
     
     # Zipping the files
-    #zip('zip_de_prueba.zip',tozip,flags='-r9Xj')
+    output <- paste(output,'/r_pde',sep='')
+    tozip <- list.files(output, full.names=T)
+    zip(paste(output,'zip_de_prueba.zip',sep='/'),tozip,flags='-r9jm')
     
     return(paste('Metadata created successfully at ',output, 
-                 'r_dspl/metadata.xml',sep=''))
+                 '/metadata.xml',sep=''))
   }
 }
