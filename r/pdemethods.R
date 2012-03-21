@@ -9,7 +9,7 @@ print.dspl <- function(x, path=NULL, replace=F, ...) {
     }
     else if (replace & test) {
       file.remove(path)
-      warning('File ', path, 'will be replaced.')
+      warning('File ', path, ' will be replaced.')
     }
     
     result <- file(path, encoding='UTF-8')
