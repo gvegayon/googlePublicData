@@ -508,7 +508,13 @@ dspl <- function(
   # Checking if output path is Ok
   if (!is.na(output)) temp.path <- tempdir() else temp.path <- NA
   checkPath(path, "input")
-  #if (!is.na(moreinfo)) checkPath(moreinfo, "input")
+  if (!is.na(moreinfo)) checkPath(moreinfo, "input")
+  
+  # Checking if xls option is Ok
+  if (extension == 'xls') load.xlsx <- require(xlsx) else load.xlsx <- TRUE
+  
+  if (!load.xlsx) stop("In order to read MS Excel files ",
+                       "you need to get the package \'xlsx\' first.")
   
   # Gets the filenames
   files <- getFilesNames(path, extension)
