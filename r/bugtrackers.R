@@ -32,8 +32,12 @@ checkDuplConcepts <- function(concepts) {
   # fixes the error. Output = Warning
   ################################################################################  
   
+  concepts2 <- unique(
+    subset(concepts,subset=type != 'date' & is.dim.tab==F, select=-slice)
+    )
+  
   # Frequency table
-  freq.tab <- as.data.frame(table(concepts$id), stringsAsFactors=F)
+  freq.tab <- as.data.frame(table(concepts2$id), stringsAsFactors=F)
   colnames(freq.tab) <- c('id','freq')  
   dpl.concepts <- subset(freq.tab, freq > 1)
   
@@ -47,21 +51,19 @@ checkDuplConcepts <- function(concepts) {
     for (dpl in dpl.concepts$id) {
       
       # Testing if all the data types of the dpl concepts is numeric
-      test <- all(concepts[concepts$id == dpl,c('type')] %in% c('float', 'integer'))
+      test <- all(concepts$type[concepts$id == dpl] %in% c('float', 'integer'))
       
       # Fixing the concept type
       if (test) {
-        concepts[concepts$id == dpl,c('type')] <- 'float'
-        warning(dpl,' concept was fixed in ',
-                concepts[concepts$id == dpl, c('id','type')])
+        touse <- which(concepts$id == dpl)
+        concepts$type[touse] <- "float"
+        warning(dpl,' concept was fixed at slices: \n - ',
+                paste(unique(concepts$slice[touse]), collapse='\n - '))
       }
       else {
         stop('Duplicated concepts cannot be homogenized\n',dpl,
              concepts[concepts$id == dpl, c('id','type')])
       }
-      
-      # Rebuilding the concepts list
-      concepts <- unique(concepts)
     }    
   }
   return(concepts)
