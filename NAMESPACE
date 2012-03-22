@@ -1,5 +1,4 @@
 importFrom(XML)
-importFrom(xlsx)
 importFrom(utils,zip)
 
 export(addConcepts, addInfo, addSlices, addTables, addTopics)

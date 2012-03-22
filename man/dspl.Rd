@@ -12,7 +12,7 @@
 }
 \arguments{
   \item{path}{Full path to the folder where the tables are saved.}
-  \item{output}{Full path to the output folder (pde will create a subfolder call r_dspl).}
+  \item{output}{Optional. Full path to the output ZIP file.}
   \item{replace}{In the case of defining output, replaces the files.}
   \item{timeFormat}{The corresponding time format of the collection.}
   \item{lang}{A list of the languages supported by the dataset.}
@@ -27,7 +27,7 @@
   \item{moreinfo}{}
 }
 \value{
-  \code{dspl} returns list of \code{\link{class}}
+  If no \code{output} defined, \code{dspl} returns list of \code{\link{class}}
   "\code{dspl}".   
   
   An object of class "\code{dspl}" is a list containing:
@@ -38,6 +38,9 @@
   \item{\code{concepts}}{A DF concepts.}
   \item{\code{dimentions}}{A DF of dimentional concepts.}
   \item{\code{statistics}}{A matrix of statistics.}
+  
+  otherwise the function will build a ZIP file as specified in the output containing
+  the CSV and XML files.
 }
 \references{
   Google Public Data Explorer:
