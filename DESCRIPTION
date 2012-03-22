@@ -1,7 +1,7 @@
 Package: rdspl
 Type: Package
 Title: An R library to build Google's Public Data Explorer DSPL Metadata files
-Version: 0.12.03
+Version: 0.12.03.21
 Date: 2012-03-05
 Author: George Vega Yon
 Maintainer: George Vega Yon <g.vegayon@gmail.com>
