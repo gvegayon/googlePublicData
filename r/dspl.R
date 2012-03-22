@@ -117,25 +117,6 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
   metrics <- matrix(c(
     'dia','day','semana','week','trimestre','quarter', 'mes','month','agno', 
     'year', 'year','year','month','month'), ncol = 2, byrow=T)
-  
-  if (!is.na(output)) {
-    output2 <- paste(output,'r_pde',sep='/')
-  
-    # Makes the dir of output
-    if ((replace & file.exists(output2)) | (!replace & !file.exists(output2))) {
-      ER <- try(dir.create(path=output2,showWarnings=F), silent=T)
-      if (class(ER)=='try-error') {
-        stop(paste('Couldn\'t create the folder r_pde in',output2))
-      }
-      else {
-        cat('Output defined', 'Results will be saved at',output2,sep='\n')
-      }
-      
-    } 
-    else if (!replace & file.exists(output2)) {
-      stop(call='Folder already exists, you must make explicit the intention to replace it.')
-    }
-  }
 
   FUN <- function(x,y) {
            # Reads each file, gets the variables names and datatypes
@@ -202,7 +183,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              if (length(ord)!=0) data <- data[do.call(order,data[ord]),]
              
              # Writes the data into csv files
-             write.table(x=data, file=paste(output,'/r_pde/',var[1,4],'.csv',sep=''),
+             write.table(x=data, file=paste(output,'/',var[1,4],'.csv',sep=''),
                fileEncoding=y, na='', sep=',',quote=F,row.names=F,dec='.')
              cat(x,'analized correctly, ordered by ', ord,' and exported as csv\n')
            }
@@ -525,8 +506,7 @@ dspl <- function(
   options(stringsAsFactors=F)
   
   # Checking if output path is Ok
-  output <- gsub("[/]$", replacement="", output)
-  checkPath(output, "output")
+  if (!is.na(output)) temp.path <- tempdir() else temp.path <- NA
   checkPath(path, "input")
   #if (!is.na(moreinfo)) checkPath(moreinfo, "input")
   
@@ -534,7 +514,7 @@ dspl <- function(
   files <- getFilesNames(path, extension)
     
   # Variables Lists and datatypes
-  vars <- seekTables(files, encoding, extension, output, replace)
+  vars <- seekTables(files, encoding, extension, temp.path, replace)
   dims <- subset(vars, concept.type=='dimension', select=c(id, slice, concept.type))
   
   # Identifying if there is any duplicated slice
@@ -654,15 +634,13 @@ dspl <- function(
     return(result)
   
   } else {
-    path <- paste(output,'/r_pde/metadata.xml',sep='')
+    path <- paste(temp.path,'/metadata.xml',sep='')
     print.dspl(x=result, path=path, replace=replace)
     
     # Zipping the files
-    output <- paste(output,'/r_pde',sep='')
-    tozip <- list.files(output, full.names=T)
-    zip(paste(output,'zip_de_prueba.zip',sep='/'),tozip,flags='-r9jm')
+    tozip <- list.files(temp.path, full.names=T, pattern="csv$|xml$")
+    zip(output ,tozip,flags='-r9jm')
     
-    return(paste('Metadata created successfully at ',output, 
-                 '/metadata.xml',sep=''))
+    return(paste('Metadata created successfully at', output))
   }
 }
