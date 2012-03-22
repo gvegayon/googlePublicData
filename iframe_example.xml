@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<Module>
-  <ModulePrefs title="Example" />
-  <Content type="url" href="http://www.google.com/publicdata/embed?ds=z7j7rseag2fj1j_&amp;ctype=l&amp;strail=false&amp;bcs=d&amp;nselm=h&amp;met_y=afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia&amp;scale_y=lin&amp;ind_y=false&amp;rdim=contrato&amp;idim=contrato:01:02&amp;ifdim=contrato&amp;tdim=true&amp;tstart=1035255600000&amp;tend=1324522800000&amp;hl=en_US&amp;dl=en_US" />
-</Module>
