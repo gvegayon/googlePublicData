@@ -1,1 +1,5 @@
-<script src="//www.gmodules.com/ig/ifr?url=http://hosting.gmodules.com/ig/gadgets/file/117808631063490062819/url.xml&amp;up_Url=http%3A%2F%2Fwww.google.com%2Fpublicdata%2Fembed%3Fds%3Dz7j7rseag2fj1j_%26amp%3Bctype%3Dl%26amp%3Bstrail%3Dfalse%26amp%3Bbcs%3Dd%26amp%3Bnselm%3Dh%26amp%3Bmet_y%3Dafiliados_que_recibieron_pago_de_la_prestacion_por_cesantia%26amp%3Bscale_y%3Dlin%26amp%3Bind_y%3Dfalse%26amp%3Brdim%3Dcontrato%26amp%3Bidim%3Dcontrato%3A01%3A02%26amp%3Bifdim%3Dcontrato%26amp%3Btdim%3Dtrue%26amp%3Btstart%3D1035255600000%26amp%3Btend%3D1324522800000%26amp%3Bhl%3Den_US%26amp%3Bdl%3Den_US&amp;up_Title=example&amp;up_height=325&amp;up_refresh=60&amp;up_Version=New&amp;synd=open&amp;w=500&amp;h=325&amp;title=Example&amp;border=http%3A%2F%2Fwww.gmodules.com%2Fig%2Fimages%2F&amp;output=js"></script>
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Example" />
+  <Content type="url" href="http://www.google.com/publicdata/embed?ds=z7j7rseag2fj1j_&amp;ctype=l&amp;strail=false&amp;bcs=d&amp;nselm=h&amp;met_y=afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia&amp;scale_y=lin&amp;ind_y=false&amp;rdim=contrato&amp;idim=contrato:01:02&amp;ifdim=contrato&amp;tdim=true&amp;tstart=1035255600000&amp;tend=1324522800000&amp;hl=en_US&amp;dl=en_US" />
+</Module>
