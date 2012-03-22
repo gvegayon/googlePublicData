@@ -162,12 +162,14 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
            
            var[var[,1] %in% metrics[,1], 5] <- 'dimension' # If time
            var[var[,3] %in% c('string'),5] <- 'dimension' # If string
-           var[var[,3] %in% c('longitud','latitud','colour'),5] <- NA # If string
+           var[var[,1] %in% c('longitud','latitud','colour'),5] <- NA # If string
            var[var[,1] %in% metrics[,1], 3] <- 'date' # If date
-           
+            
            # Identifies which dataset is a dimension dataset
            var <- cbind(var, is.dim.tab = F)
            if (all(var[,3] != 'date')) {var['is.dim.tab'] <- T}
+           
+           # Identifies which concept extends geo:location
            
            # Replaces the date-time colnames for those proper to PDE
            for (i in 1:NROW(metrics)) {
@@ -175,8 +177,6 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
             }
            
            var['id'] <- cols
-           
-           #vars <- rbind(vars, var)
            
            # In the case of output, it creates a new folder
            if (!is.na(output)) {
@@ -216,6 +216,18 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
       }
     }
   }
+  
+  # Setting which concepts extends geo:location
+  
+  geo <-subset(vars, is.dim.tab == T, select=c(id, slice))
+  geo <- by(
+    geo, geo$slice, 
+    function(x) all(c('longitude', 'latitude') %in% unlist(x['id']))
+  )
+  
+  geo <- names(which(geo))
+  vars <- cbind(vars, extends.geo=F)
+  vars$extends.geo[vars$dim.tab.ref==geo] <- T
 
   return(vars)
 }
@@ -322,6 +334,8 @@ addConcepts <- function(val,parent,lang) {
 # Function to create and populate the concepts
 ################################################################################  
   colnames(val)[3] <- 'ref'
+  colnames(val)[7] <- 'geo'
+  
   if (NCOL(val) > 1) {
     fun <- function(x, ...) {apply(x, MARGIN = 1,...)}
   } else {
@@ -330,7 +344,12 @@ addConcepts <- function(val,parent,lang) {
   
   fun(val, FUN= 
     function(x) {
+      x['is.dim.tab'] <- gsub(' ','',x['is.dim.tab'])
+      x['geo'] <- gsub(' ','',x['geo'])
+      
       if (x['ref'] == 'string') {ATT <- c(x['id'], extends='entity:entity')}
+      assign('MYGEO', value=x, envir=.GlobalEnv)
+      if (x['ref'] == 'string' && x['geo']=='TRUE') {ATT <- c(x['id'], extends='geo:location')}
       if (x['ref'] != 'string') {ATT <- c(x['id'])}
       
       # in the case of not being a dimensional concept
@@ -531,12 +550,12 @@ dspl <- function(
   # Identifying if there is any duplicated slice
   checkSlices(dims=dims$id, by=dims$slice)
   
+  vars <- checkDuplConcepts(concepts=vars)
+  
   # Creates a unique concept list
   varConcepts <- unique(
     subset(vars,subset=type != 'date' & is.dim.tab==F, select=-slice)
     )
-  
-  varConcepts <- checkDuplConcepts(concepts=varConcepts)
   
   # Checks if there is a moreinfo file
   varConcepts <- getMoreInfo(source=moreinfo, target=varConcepts, 'UTF-8')
