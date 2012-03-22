@@ -1,4 +1,4 @@
-checkPath <- function(x, type='output') {
+.checkPath <- function(x, type='output') {
 ################################################################################
 # DESCRIPTION:
 # Checks if the output path exists, otherwise stops the routine.
@@ -49,8 +49,7 @@ genMoreInfo <- function(path, encoding='UTF-8', ext='csv', output=NA, action='me
 ################################################################################  
   
   # Checks if the path exists
-  checkPath(path, "input")
-  #checkPath(output, "output")
+  .checkPath(path, "input")
   
   # Generates the filelist acording to an specific extension
   files <- getFilesNames(path, ext)
@@ -127,10 +126,15 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              
              cols <- read.table(
                paste(getwd(),'/',x,sep=''), sep=exts[exts[,1] == ext,2], 
-               header=F, nrows=1, fileEncoding=y)
+               header=F, nrows=1, encoding=y, strip.white=T
+             )
              
              cols <- as.character(cols)
-             data <- read.table(x,sep=exts[exts[,1] == ext,2], skip=1, header=F,dec='.')
+             data <- read.table(allowEscapes=T,
+               paste(getwd(),'/',x,sep=''), sep=exts[exts[,1] == ext,2],skip=1,
+               header=F,dec='.', strip.white=T
+             )
+             
              colnames(data) <- cols
            } else {
            # In the case of xls xlsx
@@ -183,8 +187,9 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              if (length(ord)!=0) data <- data[do.call(order,data[ord]),]
              
              # Writes the data into csv files
-             write.table(x=data, file=paste(output,'/',var[1,4],'.csv',sep=''),
-               fileEncoding=y, na='', sep=',',quote=F,row.names=F,dec='.')
+             write.table( 
+               x=data, file=paste(output,'/',var[1,4],'.csv',sep=''),
+               fileEncoding='UTF-8', na='', sep=',',quote=F,row.names=F,dec='.')
              cat(x,'analized correctly, ordered by ', ord,' and exported as csv\n')
            }
            else {
@@ -507,8 +512,8 @@ dspl <- function(
   
   # Checking if output path is Ok
   if (!is.na(output)) temp.path <- tempdir() else temp.path <- NA
-  checkPath(path, "input")
-  if (!is.na(moreinfo)) checkPath(moreinfo, "input")
+  .checkPath(path, "input")
+  if (!is.na(moreinfo)) .checkPath(moreinfo, "input")
   
   # Checking if xls option is Ok
   if (extension == 'xls') load.xlsx <- require(xlsx) else load.xlsx <- TRUE

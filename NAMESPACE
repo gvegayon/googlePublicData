@@ -2,7 +2,7 @@ importFrom(XML)
 importFrom(utils,zip)
 
 export(addConcepts, addInfo, addSlices, addTables, addTopics)
-export(checkDuplConcepts, checkPath, checkSlices)
+export(checkDuplConcepts, .checkPath, checkSlices)
 export(fixType, cleantext, getFilesNames)
 export(genMoreInfo, getMoreInfo)
 export(dspl)

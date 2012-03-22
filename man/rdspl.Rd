@@ -1,4 +1,4 @@
-\name{rdspl-package}
+\name{rdspl}
 \alias{rdpls-package}
 \alias{rdspl}
 \docType{package}
