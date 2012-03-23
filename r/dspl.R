@@ -227,7 +227,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
   
   geo <- names(which(geo))
   vars <- cbind(vars, extends.geo=F)
-  vars$extends.geo[vars$dim.tab.ref==geo] <- T
+  vars$extends.geo[which(vars$dim.tab.ref %in% geo)] <- T
 
   return(vars)
 }
