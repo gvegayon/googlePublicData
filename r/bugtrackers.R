@@ -33,7 +33,7 @@ checkDuplConcepts <- function(concepts) {
   ################################################################################  
   
   concepts2 <- unique(
-    subset(concepts,subset=type != 'date' & is.dim.tab==F, select=-slice)
+    subset(concepts,subset=type != 'date' & is.dim.tab==F, select=c(id, label, type))
     )
   
   # Frequency table
