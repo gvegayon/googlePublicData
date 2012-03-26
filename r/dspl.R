@@ -27,8 +27,8 @@ getFilesNames <- function(path, extension='csv') {
     pat <- paste('[.',extension,']$',sep='')
   }
   
-  # Matching
-  valid <- grep(pattern=pat, files)
+  # Matching excluding windows "backup" files
+  valid <- grepl(pattern=pat, files) & !grepl("^[~$].*", files)
   files <- files[valid]
   
   nfiles <- length(files)
@@ -205,13 +205,13 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
   # Identifies where are the correspondant tables for each dimension
   vars <- cbind(vars, dim.tab.ref = NA)
   for (i in 1:NROW(vars)) {
-    if (vars[i,5] == 'dimension' & vars[i,3] != 'date' & vars[i,6] != 'TRUE') {
+    if (vars$concept.type[i] == 'dimension' & vars$type[i] != 'date' & 
+      vars$is.dim.tab[i] != 'TRUE') {
       delta <- try(vars[vars[,1]==vars[i,1] & vars[,6] == 'TRUE',4])
       
       if (length(delta) == 0) {
-        stop('Error')
+        stop('The dimension ', vars$label[i],' needs a code (key) tab')
       } else {
-        if (length(delta) > 1) {stop('Delta is', delta)}
         vars[i,7] <- try(delta)
       }
     }
@@ -283,7 +283,8 @@ cleantext <- function(x) {
                     "gn", "ý", "y"), ncol = 2, byrow = T)
   
   sym <- matrix(c("$", "money", "°", "grad", "#", "n", "%", "pcent", "…", 
-                  "___", " ", "_", ".", "", ",", "_", ";", "_", ":", "_"), 
+                  "___", " ", "_", ".", "", ",", "_", ";", "_", ":", "_",
+                  "(","_",")","_"), 
                 ncol = 2, byrow = T)
   
   x <- tolower(x)
@@ -671,6 +672,6 @@ dspl <- function(
     tozip <- list.files(temp.path, full.names=T, pattern="csv$|xml$")
     zip(output ,tozip,flags='-r9jm')
     
-    return(paste('Metadata created successfully at', output))
+    return(paste('Metadata created successfully at:', output))
   }
 }
