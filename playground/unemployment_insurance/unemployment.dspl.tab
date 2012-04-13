@@ -1,0 +1,16 @@
+id	label	description	topic	url	totalName	pluralName
+10	afiliados_month_anterior	Last Month New Affiliates	NA	NA	NA	NA	NA
+11	afiliaciones	Afiliaciones	NA	NA	NA	NA	NA
+12	desafiliaciones	Desafiliaciones	NA	NA	NA	NA	NA
+13	afiliados	Afiliados	NA	NA	NA	NA	NA
+14	cotizantes	Cotizantes	NA	NA	NA	NA	NA
+15	desempleo_nene	Desempleo NENE	NA	NA	NA	NA	NA
+16	desempleo_ene	Desempleo ENE	NA	NA	NA	NA	NA
+17	monto_total_de_prestaciones__money_	Monto Total de Prestaciones ($)	NA	NA	NA	NA	NA
+18	afiliados_que_reciben_pago_de_cesantia_en_el_month	Afiliados que Reciben Pago de Cesant?a en el Mes	NA	NA	NA	NA	NA
+20	cuenta	Cuenta	NA	NA	NA	NA	NA
+23	tipo_de_afiliacion	Tipo de Afiliaci?n	NA	NA	NA	NA	NA
+28	sexo	Sexo	NA	NA	NA	NA	NA
+30	monto_de_prestaciones_pagadas__month__money	Monto de Prestaciones Pagadas (mes) $	NA	NA	NA	NA	NA
+33	tipo_de_contrato	Tipo de Contrato	NA	NA	NA	NA	NA
+43	remuneracion_imponible_promedio__money_	Remuneracion Imponible Promedio ($)	NA	NA	NA	NA	NA
