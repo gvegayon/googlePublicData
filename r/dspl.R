@@ -4,7 +4,7 @@
 # Checks if the output path exists, otherwise stops the routine.
 ################################################################################  
   if (!is.na(x)) {
-    ER <- try(setwd(x), silent=T)
+    ER <- try(file.exists(x), silent=T)
     if (class(ER) == 'try-error') {
       stop('Incorrect ', type,' path:\n\t\t\t', x, '\n\t\t couldn\'t be found')
     } 
@@ -297,6 +297,9 @@ cleantext <- function(x) {
     x <- gsub(sym[i,1], sym[i,2], x, fixed = T)
   }
   
+  # Extracts 
+  x <- 
+    
   return(x)
 }
 
@@ -559,7 +562,7 @@ dspl <- function(
     )
   
   # Checks if there is a moreinfo file
-  varConcepts <- getMoreInfo(source=moreinfo, target=varConcepts, 'UTF-8')
+  varConcepts <- getMoreInfo(source=moreinfo, target=varConcepts, "")
   
   # Armado de xml
   archXML <- newXMLDoc()
