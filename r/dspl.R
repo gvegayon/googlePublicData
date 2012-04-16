@@ -17,7 +17,7 @@ getFilesNames <- function(path, extension='csv') {
 # As a function of a path and a file extension, gets all the file names there.
 ################################################################################  
   # Listing files
-  files <- list.files(path=path)
+  files <- list.files(path=path, full.names=T)
   
   # Match pattern
   if (extension %in% c('xls','xlsx')) {
@@ -125,14 +125,14 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
            if (ext %in% exts[,1]) {
              
              cols <- read.table(
-               paste(getwd(),'/',x,sep=''), sep=exts[exts[,1] == ext,2], 
-               header=F, nrows=1, encoding=y, strip.white=T
+               x,sep=exts[exts[,1] == ext,2], header=F, nrows=1, encoding=y, 
+               strip.white=T
              )
              
              cols <- as.character(cols)
-             data <- read.table(allowEscapes=T,
-               paste(getwd(),'/',x,sep=''), sep=exts[exts[,1] == ext,2],skip=1,
-               header=F,dec='.', strip.white=T
+             data <- read.table(
+               allowEscapes=T, x, sep=exts[exts[,1] == ext,2], skip=1, header=F,
+               dec='.', strip.white=T
              )
              
              colnames(data) <- cols
@@ -143,10 +143,9 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000,encoding=y)
            }
            
-           fnames <- x
-           for (i in c('.csv','.tab','.xlsx','.xls')) {
-            fnames <- gsub(i, '', fnames, fixed=T)
-           }
+           fnames <- gsub("\\.[[:alpha:]]*","",x)
+           fnames <- gsub(".*(/|\\\\)", "", x)
+
            fnames <- rep(fnames, length(cols))
            
            # Builds descriptive matrix
@@ -155,7 +154,8 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              id=cleantext(cols),
              label=cols,
              type=fixType(unlist(lapply(data, typeof))),
-             slice=fnames)
+             slice=fnames
+           )
                       
            # Creates a new column of metric vs dimm
            var <- cbind(var, concept.type='metric')
@@ -190,7 +190,7 @@ seekTables <- function(files, encoding='UTF-8', ext='csv', output = NA, replace 
              write.table( 
                x=data, file=paste(output,'/',var[1,4],'.csv',sep=''),
                fileEncoding='UTF-8', na='', sep=',',quote=F,row.names=F,dec='.')
-             cat(x,'analized correctly, ordered by ', ord,' and exported as csv\n')
+             cat(gsub(".*(/|\\\\)","",x),'analized correctly, ordered by ', ord,' and exported as csv\n')
            }
            else {
              cat(x,'analized correctly\n')
@@ -675,6 +675,6 @@ dspl <- function(
     tozip <- list.files(temp.path, full.names=T, pattern="csv$|xml$")
     zip(output ,tozip,flags='-r9jm')
     
-    return(paste('Metadata created successfully at:', output))
+    return(paste('Metadata created successfully at:', output)
   }
 }

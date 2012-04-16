@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dspl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:quantity="http://www.google.com/publicdata/dataset/google/quantity" xmlns:entity="http://www.google.com/publicdata/dataset/google/entity" xmlns:geo="http://www.google.com/publicdata/dataset/google/geo" xmlns:time="http://www.google.com/publicdata/dataset/google/time" xmlns:unit="http://www.google.com/publicdata/dataset/google/unit" targetNamespace="" xmlns="http://schemas.google.com/dspl/2010">
+  <!--Lineas de importacion de conceptos-->
+  <import namespace="http://www.google.com/publicdata/dataset/google/quantity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/entity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/geo"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/time"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/unit"/>
+  <!--Lineas de informacion-->
+  <info>
+    <name>
+      <value xml:lang="en">Chilean Unemployment Insurance Statistics</value>
+    </name>
+    <description>
+      <value xml:lang="en">Builded using "rdspl" library</value>
+    </description>
+  </info>
+  <!--Data Provider-->
+  <provider>
+    <name>
+      <value xml:lang="en">Chilean Pension Supervisor</value>
+    </name>
+    <url>
+      <value>http://www.spensiones.cl</value>
+    </url>
+  </provider>
+  <!--Concepts Def-->
+  <concepts>
+    <concept id="afiliaciones">
+      <info>
+        <name>
+          <value xml:lang="en">Afiliaciones</value>
+        </name>
+      </info>
+      <type ref="float"/>
+    </concept>
+    <concept id="afiliados">
+      <info>
+        <name>
+          <value xml:lang="en">Afiliados</value>
+        </name>
+      </info>
+      <type ref="float"/>
+    </concept>
+    <concept id="afiliados_month_anterior">
+      <info>
+        <name>
+          <value xml:lang="en">Afiliados mes anterior</value>
+        </name>
+      </info>
+      <type ref="float"/>
+    </concept>
+    <concept id="tipo_de_afiliacion" extends="entity:entity">
+      <info>
+        <name>
+          <value xml:lang="en">Tipo de Afiliación</value>
+        </name>
+      </info>
+      <type ref="string"/>
+      <table ref="affiliations.xlsx_table"/>
+    </concept>
+  </concepts>
+  <!--Slices Def-->
+  <slices>
+    <slice id="monthly_afil.xls_slice">
+      <dimension concept="time:month"/>
+      <dimension concept="tipo_de_afiliacion"/>
+      <metric concept="afiliaciones"/>
+      <metric concept="afiliados_month_anterior"/>
+      <metric concept="afiliados"/>
+      <table ref="monthly_afil.xls_table"/>
+    </slice>
+  </slices>
+  <!--Tables Def-->
+  <tables>
+    <table id="affiliations.xlsx_table">
+      <column id="tipo_de_afiliacion" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf8">affiliations.xlsx.csv</file>
+      </data>
+    </table>
+    <table id="monthly_afil.xls_table">
+      <column id="month" type="date" format="yyyy-mm"/>
+      <column id="tipo_de_afiliacion" type="string"/>
+      <column id="afiliaciones" type="float"/>
+      <column id="afiliados_month_anterior" type="float"/>
+      <column id="afiliados" type="float"/>
+      <data>
+        <file format="csv" encoding="utf8">monthly_afil.xls.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>

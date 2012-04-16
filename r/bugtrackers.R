@@ -1,7 +1,7 @@
 checkSlices <- function(dims, by) {
-  ################################################################################
-  # Checks if there's any pair of slices with the same dimentions (error)
-  ################################################################################
+################################################################################
+# Checks if there's any pair of slices with the same dimentions (error)
+################################################################################
   # Builds a list of dims by slice
   slices.dims <- do.call(list,by(dims, by, function(x) unlist(x[order(x)])))
   
@@ -26,11 +26,11 @@ checkSlices <- function(dims, by) {
 }
 
 checkDuplConcepts <- function(concepts) {
-  ################################################################################
-  # Checks if there's any concepts duplicated as a result of multiple data types
-  # In the case of beeing all numeric, DSPL assumes the minumum common (float) and
-  # fixes the error. Output = Warning
-  ################################################################################  
+################################################################################
+# Checks if there's any concepts duplicated as a result of multiple data types
+# In the case of beeing all numeric, DSPL assumes the minumum common (float) and
+# fixes the error. Output = Warning
+################################################################################  
   
   concepts2 <- unique(
     subset(concepts,subset=type != 'date' & is.dim.tab==F, select=c(id, label, type))
@@ -56,7 +56,7 @@ checkDuplConcepts <- function(concepts) {
       # Fixing the concept type
       if (test) {
         touse <- which(concepts$id == dpl)
-        concepts$type[touse] <- "float"
+        #concepts$type[touse] <- "float"
         warning(dpl,' concept was fixed at slices: \n - ',
                 paste(unique(concepts$slice[touse]), collapse='\n - '))
       }
