@@ -56,7 +56,7 @@ checkDuplConcepts <- function(concepts) {
       # Fixing the concept type
       if (test) {
         touse <- which(concepts$id == dpl)
-        #concepts$type[touse] <- "float"
+        concepts$type[touse] <- "float"
         warning(dpl,' concept was fixed at slices: \n - ',
                 paste(unique(concepts$slice[touse]), collapse='\n - '))
       }
