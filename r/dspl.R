@@ -41,7 +41,7 @@ getFilesNames <- function(path, extension='csv') {
   return(files)
 }
 
-genMoreInfo <- function(path, encoding='UTF-8', ext='csv', output=NA, action='merge') {
+genMoreInfo <- function(path, encoding="unknown", ext="csv", output=NA, action="merge") {
 ################################################################################
 # DESCRIPTION:
 # Reads .csv and .xls(x) files, outputs a descriptive dataframe of the data and
@@ -124,25 +124,22 @@ seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replac
            # In the case of csv, tab 
            if (ext %in% exts[,1]) {
              
-             cols <- read.table(
-               x,sep=exts[exts[,1] == ext,2], header=F, nrows=1, strip.white=T,
-               fileEncoding="UTF-8", encoding=y,fill=T
+             data <- read.table(
+               x, sep=exts[exts[,1] == ext,2], strip.white=T, fileEncoding="UTF-8",
+               encoding=y, fill=T, dec=".", header=T
              )
              
-             cols <- as.character(cols)
-             
-             data <- read.table(skip=1,
-               allowEscapes=T, file=x, sep=exts[exts[,1] == ext,2], header=F,
-               dec=".", strip.white=T
-             )
-             
-             colnames(data) <- cols
            } else {
            # In the case of xls xlsx
-             cols <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=0:1,encoding=y)
-             cols <- as.character(cols,deparse=T)
-             data <- read.xlsx(x, sheetIndex=1, header=F,rowIndex=2:2000,encoding=y)
+             data <- read.xlsx(x, sheetIndex=1, header=T, encoding=y)
            }
+           
+           cols <- colnames(data)
+           cols <- gsub(".", " ", cols, fixed = T)
+           cols <- gsub("^[[:space:]]*|[[:space:]]*$", "", cols)
+           cols <- gsub("[^[:graph:]][[:space:]]*"," ", cols)
+           
+           colnames(data) <- cols
            
            fnames <- gsub("\\.[[:alpha:]]*$","",x)
            fnames <- gsub(".*(/|\\\\)", "", fnames)
@@ -616,7 +613,7 @@ dspl <- function(
   
   # TOPICS
   View(varConcepts)
-  if (any(colnames(varConcepts) %in% 'topicid')) {
+  if (!all(is.na(varConcepts$topicid))) {
     newXMLCommentNode('Topics definition', parent=dspl)
     topics <- newXMLNode('topics', parent=dspl)
     addTopics('topic', varConcepts[c('topic', 'topicid')], topics, lang)

@@ -5,11 +5,10 @@ library(xlsx)
 
 setwd("c:/comandos_paquetes_librerias/r/rdspl/playground/")
 
-genMoreInfo(action="replace",
+moreinfosc <- genMoreInfo(action="replace",
   path="unemployment_insurance/",
   encoding="UTF-8",
-  ext="xls",
-  output="unemployment.dspl.tab"
+  ext="xls"
   )
 
 dspl(
@@ -24,7 +23,7 @@ dspl(
   extension="xls", 
   encoding="UTF-8",
   timeFormat="yyyy-mm",
-  moreinfo="unemployment_insurance/unemployment.dspl.tab"
+  moreinfo=moreinfosc
   )
   
 
