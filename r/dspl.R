@@ -539,8 +539,8 @@ dspl <- function(
   # Checking if output path is Ok
   if (!is.na(output)) temp.path <- tempdir() else temp.path <- NA
   .checkPath(path, "input")
-  if (class(moreinfo) != "data.frame") {
-    if (!is.na(moreinfo)) .checkPath(moreinfo, "input")
+  if (!is.null(moreinfo)) {
+    if (class(moreinfo) != "data.frame") .checkPath(moreinfo, "input")
   }
   
   # Checking if xls option is Ok
@@ -612,7 +612,6 @@ dspl <- function(
                                       parent = provider)
   
   # TOPICS
-  View(varConcepts)
   if (!all(is.na(varConcepts$topicid))) {
     newXMLCommentNode('Topics definition', parent=dspl)
     topics <- newXMLNode('topics', parent=dspl)

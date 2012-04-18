@@ -2,6 +2,7 @@ rm(list=ls())
 
 library(rdspl)
 library(xlsx)
+library(XML)
 
 setwd("c:/comandos_paquetes_librerias/r/rdspl/playground/")
 
@@ -11,14 +12,14 @@ moreinfosc <- genMoreInfo(action="replace",
   ext="xls"
   )
 
-dspl(
+x <- dspl(
   providerURL="http://www.spensiones.cl",
-  description= "Builded using \"rdspl\" library",
+  description= "Builded using \"rdspl\" library (http://code.google.com/p/rdspl)",
   lang="es",
   name="Chilean Unemployment Insurance Statistics",
   providerName="Chilean Pension Supervisor",
   path="unemployment_insurance/", 
-  output="mi_dspl_sc.zip", 
+  #output="mi_dspl_sc.zip", 
   replace=T, 
   extension="xls", 
   encoding="UTF-8",
@@ -34,7 +35,7 @@ moreinfocasen <- genMoreInfo(
   ext="csv"
   )
 
-# Cleaning some
+# Filling some info
 moreinfocasen$label <- gsub("pob_", "población_", moreinfocasen$label)
 moreinfocasen$label <- gsub("promedio_", "promedio_", moreinfocasen$label)
 moreinfocasen$label <- gsub("_", " ", moreinfocasen$label)
@@ -62,4 +63,18 @@ dspl(
   encoding="UTF-8",
   timeFormat="yyyy",
   moreinfo=moreinfocasen
+  )
+
+dspl(
+  providerURL="http://www.spensiones.cl",
+  description= "Builded using \"rdspl\" library",
+  lang="es",
+  name="Chilean Pension System",
+  providerName="Chilean Pension Supervisor",
+  path="pensions/", 
+  output="mi_dspl_pension.zip", 
+  replace=T, 
+  extension="xls",
+  encoding="UTF-8",
+  timeFormat="yyyy-mm"
   )
