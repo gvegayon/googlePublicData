@@ -1,16 +1,3 @@
-.checkPath <- function(x, type='output') {
-################################################################################
-# DESCRIPTION:
-# Checks if the output path exists, otherwise stops the routine.
-################################################################################  
-  if (!is.na(x)) {
-    ER <- try(file.exists(x), silent=T)
-    if (class(ER) == 'try-error') {
-      stop('Incorrect ', type,' path:\n\t\t\t', x, '\n\t\t couldn\'t be found')
-    } 
-  }
-}
-
 getFilesNames <- function(path, extension='csv') {
 ################################################################################
 # DESCRIPTION:
@@ -41,21 +28,24 @@ getFilesNames <- function(path, extension='csv') {
   return(files)
 }
 
-genMoreInfo <- function(path, encoding="unknown", ext="csv", output=NA, action="merge") {
+genMoreInfo <- function(path, encoding=getOption("encoding"), ext="csv", 
+                        output=NA, action="merge", dec=".") {
 ################################################################################
 # DESCRIPTION:
 # Reads .csv and .xls(x) files, outputs a descriptive dataframe of the data and
 # builds a config file.
 ################################################################################  
   
+  options(stringsAsFactors=F)
+  
   # Checks if the path exists
-  .checkPath(path, "input")
+  checkPath(path, "input")
   
   # Generates the filelist acording to an specific extension
   files <- getFilesNames(path, ext)
   
   # Reads and analices the files
-  x <- seekTables(files=files, encoding=encoding, ext=ext)
+  x <- seekTables(files=files, encoding=encoding, ext=ext, dec=dec)
     
   # Extracts the unique list of variables
   x <- unique(
@@ -105,19 +95,24 @@ genMoreInfo <- function(path, encoding="unknown", ext="csv", output=NA, action="
   }
 }
 
-seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replace = T) {
+seekTables <- function(files, encoding, ext, output = NA, replace = T, dec) {
 ################################################################################
 # DESCRIPTION:
 # Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive da
 # taframe. Also determinates which field is dim or metric.
 ################################################################################  
+  # Checking if xls option is Ok
+  if (ext == 'xls') load.xlsx <- require(XLConnect) else load.xlsx <- TRUE
+  
+  if (!load.xlsx) stop("In order to read MS Excel files ",
+                       "you need to get the package \'XLConnect\' first.")  
   
   # Timeframe metrics
   metrics <- matrix(c(
-    'dia','day','semana','week','trimestre','quarter', 'mes','month','agno', 
+    'dia','day','semana','week','trimestre','quarter', 'mes','month','ano', 
     'year', 'year','year','month','month'), ncol = 2, byrow=T)
 
-  FUN <- function(x,y) {
+  FUN <- function(x,y,z) {
            # Reads each file, gets the variables names and datatypes
            exts <- matrix(c('csv', ',', 'tab', '\t'),ncol=2,byrow=T)
            
@@ -125,16 +120,16 @@ seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replac
            if (ext %in% exts[,1]) {
              
              data <- read.table(
-               x, sep=exts[exts[,1] == ext,2], strip.white=T, fileEncoding="UTF-8",
-               encoding=y, fill=T, dec=".", header=T
+               x, sep=exts[exts[,1] == ext,2], strip.white=T, encoding=y, fill=T,
+               dec=z, header=T
              )
              
            } else {
-           # In the case of xls xlsx
-             data <- read.xlsx(x, sheetIndex=1, header=T, encoding=y)
+              data <- readWorksheetFromFile(x, header=T, sheet=1)
            }
            
            cols <- colnames(data)
+           
            cols <- gsub(".", " ", cols, fixed = T)
            cols <- gsub("^[[:space:]]*|[[:space:]]*$", "", cols)
            cols <- gsub("[^[:graph:]][[:space:]]*"," ", cols)
@@ -154,7 +149,7 @@ seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replac
              type=fixType(unlist(lapply(data, typeof))),
              slice=fnames
            )
-                      
+           
            # Creates a new column of metric vs dimm
            var <- cbind(var, concept.type='metric')
            
@@ -185,8 +180,7 @@ seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replac
              # Writes the data into csv files
              con <- file(paste(output,'/',var[1,4],'.csv',sep=''), encoding="UTF-8")
              write.table(
-               x=data, file=con, na='', 
-               sep=',',quote=F,row.names=F,dec='.', fileEncoding="UTF-8"
+               x=data, file=con, na='', sep=',',quote=F,row.names=F,dec='.'
                )
 
              cat(
@@ -201,11 +195,10 @@ seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replac
          }
   
   # Puts it all into a single matrrx
-  vars <- do.call('rbind', lapply(files, FUN, y=encoding))
-
+  vars <- do.call('rbind', lapply(files, FUN, y=encoding, z=dec))
+  
   # Identifies where are the correspondant tables for each dimension  
   vars <- cbind(vars, dim.tab.ref = NA)
-  
   for (i in 1:NROW(vars)) {
     if (vars$concept.type[i] == 'dimension' & vars$type[i] != 'date' & 
       vars$is.dim.tab[i] != 'TRUE') {
@@ -230,7 +223,7 @@ seekTables <- function(files, encoding="unknown", ext="csv", output = NA, replac
   geo <- names(which(geo))
   vars <- cbind(vars, extends.geo=F)
   vars$extends.geo[which(vars$dim.tab.ref %in% geo)] <- T
-
+  
   return(vars)
 }
 
@@ -239,6 +232,8 @@ getMoreInfo <- function(source,target, encoding="unknown") {
 # Reads from a tab file generated by genMoreInfo as a complement info to concepts
 ################################################################################  
   if (!is.null(source)) {
+    
+    options(stringsAsFactors=F)
     
     # If a file, reads the moreinfo file
     if (class(source) != "data.frame") {
@@ -267,7 +262,7 @@ getMoreInfo <- function(source,target, encoding="unknown") {
     source <- subset(source, select=-label)
     target <- merge(target, source, by=c('id'))
   }
-  target
+  return(target)
 }
 
 fixType <- function(x) {
@@ -284,8 +279,6 @@ cleantext <- function(x) {
 ################################################################################
 # Adapts labels to IDs
 ################################################################################  
-  lcase <- matrix(c("á", "a", "é", "e", "í", "i", 'ó', 'o', "ú", "u", "ñ", 
-                    "gn", "ý", "y"), ncol = 2, byrow = T)
   
   sym <- matrix(c("$", "money", "°", "grad", "#", "n", "%", "pcent", "…", 
                   "___", " ", "_", ".", "", ",", "_", ";", "_", ":", "_",
@@ -294,9 +287,7 @@ cleantext <- function(x) {
   
   x <- tolower(x)
   
-  for (i in 1:NROW(lcase)) {
-    x <- gsub(lcase[i,1], lcase[i,2], x, fixed = T)
-  }
+  x <- iconv(x, to="ASCII//TRANSLIT")
   
   for (i in 1:NROW(sym)) {
     x <- gsub(sym[i,1], sym[i,2], x, fixed = T)
@@ -308,7 +299,7 @@ cleantext <- function(x) {
   return(x)
 }
 
-addInfo <- function(nodename,values,parent,lang) {
+.addInfo <- function(nodename,values,parent,lang) {
 ################################################################################
 # Function to add information and provider nodes y multiple languages
 ################################################################################  
@@ -317,7 +308,7 @@ addInfo <- function(nodename,values,parent,lang) {
                suppressNamespaceWarning=T)}))
 }
 
-addTopics <- function(nodename, values, parent, lang) {
+.addTopics <- function(nodename, values, parent, lang) {
 ################################################################################
 # Function to create and populate the topics
 ################################################################################  
@@ -338,7 +329,7 @@ addTopics <- function(nodename, values, parent, lang) {
   )
 }
 
-addConcepts <- function(val,parent,lang) {
+.addConcepts <- function(val,parent,lang) {
 ################################################################################
 # Function to create and populate the concepts
 ################################################################################  
@@ -357,7 +348,6 @@ addConcepts <- function(val,parent,lang) {
       x['geo'] <- gsub(' ','',x['geo'])
       
       if (x["ref"] == 'string') {ATT <- c(x['id'], extends='entity:entity')}
-      assign('MYGEO', value=x, envir=.GlobalEnv)
       if (x['ref'] == 'string' && x['geo']=='TRUE') {ATT <- c(x['id'], extends='geo:location')}
       if (x['ref'] != 'string') {ATT <- c(x['id'])}
       
@@ -446,7 +436,7 @@ addConcepts <- function(val,parent,lang) {
   )
 }
 
-addSlices <- function(tableid, sliceatt, parent) {
+.addSlices <- function(tableid, sliceatt, parent) {
 ################################################################################
 # Function to create and populate the slices
 ################################################################################
@@ -469,7 +459,7 @@ addSlices <- function(tableid, sliceatt, parent) {
     )
 }
 
-addTables <- function(tableid, tableatt, parent, format) {
+.addTables <- function(tableid, tableatt, parent, format) {
 ################################################################################
 # Function to create and populate the tables
 ################################################################################
@@ -525,35 +515,39 @@ dspl <- function(
   providerName = NA,
   providerURL = NA,
   extension = "csv",
-  encoding = "unknown",
+  dec=".",
+  encoding = getOption("encoding"),
   moreinfo = NULL
   ) {
-  # Depuracion de Errores
+  options(stringsAsFactors=F)
+  
+  # Initial checks
   description <- ifelse(!is.na(description),description,'No description')
   name <- ifelse(!is.na(name),name,'No name')
   providerName <- ifelse(!is.na(providerName),providerName,'No provider')
   
-  # Parametros iniciales
-  options(stringsAsFactors=F)
-  
   # Checking if output path is Ok
-  if (!is.na(output)) temp.path <- tempdir() else temp.path <- NA
-  .checkPath(path, "input")
+  if (!is.na(output)) {
+    temp.path <- tempdir()
+    .checkPath(path, "input")
+  }
+  else temp.path <- NA
   if (!is.null(moreinfo)) {
     if (class(moreinfo) != "data.frame") .checkPath(moreinfo, "input")
   }
   
-  # Checking if xls option is Ok
-  if (extension == 'xls') load.xlsx <- require(xlsx) else load.xlsx <- TRUE
-  
-  if (!load.xlsx) stop("In order to read MS Excel files ",
-                       "you need to get the package \'xlsx\' first.")
-  
+  # Checking timeFormat
+  timeOk <- checkTimeFormat(timeFormat)
+  if (!timeOk) stop("Undefined \'joda-time\' definition ", timeFormat,
+                    "\nFor more information checkout\n",
+                    "http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html")
   # Gets the filenames
   files <- getFilesNames(path, extension)
     
   # Variables Lists and datatypes
-  vars <- seekTables(files, encoding, extension, temp.path, replace)
+  vars <- seekTables(files=files, encoding=encoding, ext=extension, 
+                     output=temp.path, replace=replace, dec=dec)
+  
   dims <- subset(vars, concept.type=='dimension', select=c(id, slice, concept.type))
   
   # Identifying if there is any duplicated slice
@@ -599,34 +593,40 @@ dspl <- function(
   # INFO
   newXMLCommentNode('Lineas de informacion', parent=dspl)
   info <- newXMLNode('info', parent = dspl)
-  addInfo('name', name, info, lang)
-  addInfo('description', description, info, lang)
+  .addInfo('name', name, info, lang)
+  .addInfo('description', description, info, lang)
   if (!is.na(url)) newXMLNode('url', newXMLNode('value', url), 
                               parent = info)
   
   # PROVIDER
   newXMLCommentNode('Data Provider', parent=dspl)
   provider <- newXMLNode('provider', parent = dspl)
-  addInfo('name', providerName, provider, lang)
+  .addInfo('name', providerName, provider, lang)
   if (!is.na(providerURL)) newXMLNode('url', newXMLNode('value', providerURL), 
                                       parent = provider)
   
   # TOPICS
-  if (!all(is.na(varConcepts$topicid))) {
+  if ("topicid" %in% colnames(varConcepts)) {
+    test <- !all(is.na(varConcepts$topicid))
+  }
+  else {
+    test <- F
+  }
+  if (test) {
     newXMLCommentNode('Topics definition', parent=dspl)
     topics <- newXMLNode('topics', parent=dspl)
-    addTopics('topic', varConcepts[c('topic', 'topicid')], topics, lang)
+    .addTopics('topic', varConcepts[c('topic', 'topicid')], topics, lang)
   }
     
   # CONCEPTS
   newXMLCommentNode('Concepts Def', parent=dspl)
   concepts <- newXMLNode('concepts', parent = dspl)
-  addConcepts(varConcepts,concepts, lang)
+  .addConcepts(varConcepts,concepts, lang)
   
   # SLICES
   newXMLCommentNode('Slices Def', parent=dspl)
   slices <- newXMLNode('slices', parent = dspl)
-  addSlices(
+  .addSlices(
     tableid=subset(vars, is.dim.tab != T, slice),
     sliceatt=subset(vars, is.dim.tab != T),
     parent=slices
@@ -635,7 +635,7 @@ dspl <- function(
   # TABLES
   newXMLCommentNode('Tables Def', parent=dspl)
   tables <- newXMLNode('tables', parent = dspl)
-  addTables(tableid=vars$slice,tableatt=vars,parent=tables, format=timeFormat)  
+  .addTables(tableid=vars$slice,tableatt=vars,parent=tables, format=timeFormat)  
   
   # Building ouput
   .dimtabs <- unique(subset(vars, subset=is.dim.tab, select=slice))

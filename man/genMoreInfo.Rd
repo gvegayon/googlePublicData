@@ -2,18 +2,17 @@
 \alias{genMoreInfo}
 \title{Generates a dataframe used to complement a DSPL bundle}
 \description{
-  Parsing CSV, TAB or XLS(X) files at a specific directory path, genMore info
-  generates a dataframe used to complete a DSPL bundle with a more
-  complete concepts definition including description, url, etc..
+  Parsing \emph{csv}, \emph{tab} or \emph{xls(x)} files at a specific directory path, genMore info generates a dataframe used to complete a DSPL bundle with a more complete concepts definition including description, url, etc..
 }
 \usage{
-  genMoreInfo(path, encoding='UTF-8', ext='csv', output=NA, action='merge')
+  genMoreInfo(path, encoding=getOption("encoding"), ext='csv', output=NA,
+              action='merge', dec=".")
 }
 \arguments{
-  \item{path}{Full path to the folder where the tables are saved.}
+  \item{path}{String. Path to the folder where the tables are saved.}
   \item{encoding}{The enconding of the files to be parsed.}
-  \item{ext}{The extension of the files to be parsed.}
-  \item{output}{If defined, the place where to save the dataframe as tab file.}
+  \item{ext}{The extension of the files to be parsed. For more info check out the function \code{\link{dspl}}}
+  \item{output}{If defined, the place where to save the dataframe as tab file. Otherwise it returns a data frame object.}
   \item{action}{Tells the function what to do if there's a copy of the file.}
 }
 \details{
@@ -22,7 +21,7 @@
   
   In the case of defining a output, the function writes a tab file with the
   dataframe described above. The user may recycle this file writing ``append''
-  in the \code{action} argument
+  in the \code{action} argument.
 }
 \value{
   If no \code{output} defined, \code{genMoreInfo} returns a dataframe with the following columns.
@@ -38,7 +37,7 @@
   Google Public Data Explorer:
     \url{http://publicdata.google.com} 
 }
-\author{George Vega Yon <g.vega@gmail.com>}
+\author{George Vega Yon <george.vega@nodoschile.org>}
 
 \seealso{
   See also \code{\link{dspl}}

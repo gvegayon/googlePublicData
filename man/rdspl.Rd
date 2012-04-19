@@ -17,13 +17,13 @@
   \tabular{ll}{
     Package: \tab rdspl\cr
     Type: \tab Package\cr
-    Version: \tab 0.12.03\cr
-    Date: \tab 2012-03-05\cr
+    Version: \tab 0.12.04.19\cr
+    Date: \tab 2012-04-19\cr
     License: \tab GPL version 2 or later\cr
   }
 }
 \author{
-  George Vega
+  George Vega Yon <george.vega@nodoschile.org>
 }
 \note{
   See the DSPL code site for more info:
@@ -37,8 +37,6 @@
   }
 }
 \examples{
-  \dontrun{
     demo(dspl)
-  }
 }
 \keyword{ package }

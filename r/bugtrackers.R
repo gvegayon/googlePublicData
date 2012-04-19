@@ -38,6 +38,7 @@ checkDuplConcepts <- function(concepts) {
   
   # Frequency table
   freq.tab <- as.data.frame(table(concepts2$id), stringsAsFactors=F)
+  
   colnames(freq.tab) <- c('id','freq')  
   dpl.concepts <- subset(freq.tab, freq > 1)
   
@@ -67,4 +68,17 @@ checkDuplConcepts <- function(concepts) {
     }    
   }
   return(concepts)
+}
+
+checkPath <- function(x, type='output') {
+################################################################################
+# DESCRIPTION:
+# Checks if the output path exists, otherwise stops the routine.
+################################################################################  
+  if (!is.na(x)) {
+    ER <- try(file.exists(x), silent=T)
+    if (class(ER) == 'try-error') {
+      stop('Incorrect ', type,' path:\n\t\t\t', x, '\n\t\t couldn\'t be found')
+    } 
+  }
 }

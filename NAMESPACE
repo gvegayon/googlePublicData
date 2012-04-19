@@ -1,8 +1,8 @@
 importFrom(XML)
 importFrom(utils,zip)
 
-export(addConcepts, addInfo, addSlices, addTables, addTopics)
-export(checkDuplConcepts, .checkPath, checkSlices)
+export(.addConcepts, .addInfo, .addSlices, .addTables, .addTopics)
+export(checkDuplConcepts, checkPath, checkSlices, checkTimeFormat, .joda.times)
 export(fixType, cleantext, getFilesNames)
 export(genMoreInfo, getMoreInfo)
 export(dspl)
