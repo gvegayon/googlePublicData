@@ -39,6 +39,21 @@
 }
 \author{George Vega Yon <george.vega@nodoschile.org>}
 
-\seealso{
-  See also \code{\link{dspl}}
+\examples{
+  \dontrun{
+    # Parsing some xlsx files at "my stats folder" to gen a "moreinfo" dataframe
+    INFO <- genMoreInfo(path="my stats folder/", ext="xls")
+    
+    # Rows 1 to 10 are about "Poverty" and rows 11 to 20 about "Education"
+    # So we fill the "topic" column with it.
+    INFO$topic[1:10] <- "Poverty"
+    INFO$topic[11:20] <- "Education"
+    
+    # Finally, we build the DSPL ZIP including more info
+    dspl(path="my stats folder/", ext="xls", moreinfo=INFO)
+    
+  }
 }
+\keyword{ summary }
+\keyword{ methods }
+\keyword{ print }

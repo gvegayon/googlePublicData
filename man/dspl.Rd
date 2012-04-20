@@ -40,7 +40,7 @@
   "\code{dspl}".   
   
   An object of class "\code{dspl}" is a list containing:
-  \item{\code{dspl}}{A character printed version of the DSPL file.}
+  \item{\code{dspl}}{A character string containing the DSPL XML document as defined by the \code{\link{saveXML}} function.}
   \item{\code{concepts.by.table}}{A data frame object of concepts stored by table.}
   \item{\code{dimtabs}}{A data frame containing dimentional tables.}
   \item{\code{slices}}{A data frame of slices.}
@@ -52,8 +52,7 @@
   the CSV and XML files.
 }
 \references{
-  Google Public Data Explorer:
-  \url{http://publicdata.google.com} 
+  Google Public Data Explorer: \url{http://publicdata.google.com}
 }
 \author{George Vega Yon <george.vega@nodoschile.org>}
 

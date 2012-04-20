@@ -1,13 +1,14 @@
+################################################################################
+# EXAMPLE SESION
+# In this session we'll the package capabilities doing the following:
+#  1) 
+#
+################################################################################
 rm(list=ls())
 
 library(rdspl)
 
 setwd("c:/comandos_paquetes_librerias/r/rdspl/playground/")
-
-moreinfosc <- genMoreInfo(action="replace",
-  path="unemployment_insurance/",
-  ext="xls"
-  )
 
 dspl(
   providerURL="http://www.spensiones.cl",
@@ -18,8 +19,7 @@ dspl(
   path="unemployment_insurance/", 
   output="mi_dspl_sc.zip", 
   replace=T,
-  extension="xls", 
-  moreinfo=moreinfosc,
+  extension="xls",
   timeFormat="yyyy-MM"
   )
   
@@ -31,7 +31,7 @@ moreinfocasen <- genMoreInfo(
   ext="csv"
   )
 
-# Filling some info
+# The column names come aren't as we would like to. So the 
 moreinfocasen$label <- gsub("pob_", "población_", moreinfocasen$label)
 moreinfocasen$label <- gsub("promedio_", "promedio_", moreinfocasen$label)
 moreinfocasen$label <- gsub("_", " ", moreinfocasen$label)
@@ -46,30 +46,17 @@ moreinfocasen$topic[grep("partici|ocupa|activ|trabaj", moreinfocasen$label)] <- 
 moreinfocasen$topic[-51:-54][is.na(moreinfocasen[-51:-54]$topic)] <- "Empleo"
 
 
-dspl(
+x <- dspl(
   providerURL="http://www.mideplan.cl",
   description= "Builded using \"rdspl\" library",
   lang="es",
   name="CASEN",
   providerName="MDS",
   path="casen/", 
-  output="mi_dspl_casen.zip", 
+  #output="mi_dspl_casen.zip", 
   replace=T, 
   extension="csv", 
   encoding="UTF-8",
   timeFormat="yyyy",
   moreinfo=moreinfocasen
-  )
-
-dspl(
-  providerURL="http://www.spensiones.cl",
-  description= "Builded using \"rdspl\" library",
-  lang="es",
-  name="Chilean Pension System",
-  providerName="Chilean Pension Supervisor",
-  path="pensions/", 
-  output="mi_dspl_pension.zip", 
-  replace=T, 
-  extension="xls",
-  timeFormat="yyyy-MM"
   )
