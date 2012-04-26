@@ -1,10 +1,10 @@
-importFrom(XML)
-importFrom(utils,zip)
-
+import(XML)
+import(XLConnect)
+importFrom("utils",zip)
 export(.addConcepts, .addInfo, .addSlices, .addTables, .addTopics)
-export(checkDuplConcepts, checkPath, checkSlices, checkTimeFormat, .joda.times)
-export(fixType, cleantext, getFilesNames)
-export(genMoreInfo, getMoreInfo)
+export(.checkDuplConcepts, .checkPath, .checkSlices, checkTimeFormat, .joda.times)
+export(.fixType, .cleantext, .getFilesNames)
+export(genMoreInfo, .getMoreInfo)
 export(dspl)
 
 S3method(print, dspl)

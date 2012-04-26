@@ -28,13 +28,13 @@ print.dspl <- function(x, path=NULL, replace=F, ...) {
   }
 }
 
-summary.dspl <- function(x) {
+summary.dspl <- function(object, ...) {
   ################################################################################
   # Summary method
   ################################################################################  
   cat('Attributes\n')
-  print(attributes(x))
+  print(attributes(object))
   cat('Dataset contents\n')
-  x[c('dimtabs', 'slices', 'concepts',
+  object[c('dimtabs', 'slices', 'concepts',
             'dimentions','statistics')]
 }

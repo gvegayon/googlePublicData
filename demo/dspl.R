@@ -13,7 +13,7 @@ data.path <- paste(.libPaths()[1],'/rdspl/data',sep='')
 pause()
 
 # First Simplest example, 
-mydspl <- dspl(path=data.path, extension='csv')
+mydspl <- dspl(path=data.path, sep=";")
 
 # Printing the data
 pause()

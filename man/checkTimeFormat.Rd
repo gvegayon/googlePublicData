@@ -13,8 +13,9 @@
   \item{fmt}{String representing a time format to be verified.}
 }
 \details{
+  Public Data Explorer currently supports daily, monthly and yearly distributed data. Joda-time, the corresponding time format on wich DSPL times is based, allows declaring time formats using small case "d" (for days), capitalized "M" (for months) and small case "y" for years. Some examples:
   \tabular{ll}{
-    Format \tab Example\cr
+    Format Specification \tab Data Example\cr
     "yyyy" \tab 1988\cr
     "yyyy-MM" \tab 1988-03\cr
     "yyyy-MMM" \tab 1988-Mar\cr
@@ -26,14 +27,18 @@
 }
 \references{
   \itemize{
-    \item Google Public Data Explorer: \url{https://developers.google.com/public-data/docs/canonical/time?hl=es}
+    \item Google Public Data Explorer DSPL time definition: \url{https://developers.google.com/public-data/docs/canonical/time?hl=es}
+    \item Google Public Data Explorer Cookbook for time definitions: \url{https://developers.google.com/public-data/docs/cookbook#time_recipes}
     \item Joda Time 2.1 API: \url{http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html}   
   }
 }
-\author{George Vega Yon <george.vega@nodoschile.org>}
+\author{George Vega Yon \email{george.vega@nodoschile.org}}
 \examples{
-    checkTimeFormat("yyyy-MM")
+    checkTimeFormat("yyyy-MM") # TRUE
+    checkTimeFormat("MMMyyyy") # TRUE
+    checkTimeFormat("mmmyyyy") # FALSE
 }
 \seealso{
   See also \code{\link{dspl}}
 }
+\keyword{utilities}

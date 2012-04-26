@@ -1,6 +1,6 @@
 citHeader("To cite the 'rdspl' package in publications use:")
 
-citEntry(entry="Maual",
+citEntry(entry="Manual",
          title = "rdspl: An R library to build Google's Public Data Explorer DSPL Metadata file",
          author = as.person("George Vega Yon"),
          #journal = "The R Journal",
@@ -13,6 +13,6 @@ citEntry(entry="Maual",
          
          textVersion = 
            paste("George Vega Y..",
-                 "An R library to build Google's Public Data Explorer DSPL Metadata file.",
+                 "An R library to build Google's Public Data Explorer DSPL Metadata files."
                  #"The R Journal, 3(2):40-44, December 2011."
                  ))

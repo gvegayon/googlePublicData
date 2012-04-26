@@ -5,23 +5,22 @@
   Parsing \emph{csv}, \emph{tab} or \emph{xls(x)} files at a specific directory path, genMore info generates a dataframe used to complete a DSPL bundle with a more complete concepts definition including description, url, etc..
 }
 \usage{
-  genMoreInfo(path, encoding=getOption("encoding"), ext='csv', output=NA,
-              action='merge', dec=".")
+  genMoreInfo(path, encoding=getOption("encoding"), sep=";", output=NA,
+              action="merge", dec=".")
 }
 \arguments{
   \item{path}{String. Path to the folder where the tables are saved.}
   \item{encoding}{The enconding of the files to be parsed.}
-  \item{ext}{The extension of the files to be parsed. For more info check out the function \code{\link{dspl}}}
+  \item{sep}{The separation character of the tables in the 'path' folder. Currently supports introducing the following arguments: ``,'' or ``;'' (for .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts excel files); the last one using \code{\link[XLConnect]{XLConnect}} library.}
   \item{output}{If defined, the place where to save the dataframe as tab file. Otherwise it returns a data frame object.}
-  \item{action}{Tells the function what to do if there's a copy of the file.}
+  \item{action}{Tells the function what to do if there's a copy of the file. Available actions are ``merge'' and ``replace''.}
+  \item{dec}{String. Decimal point.}
 }
 \details{
-  If no output is defiend the function returns a dataframe containing concepts
-  as observations. Using this, the user may add more descripting info about concepts.
-  
-  In the case of defining a output, the function writes a tab file with the
-  dataframe described above. The user may recycle this file writing ``append''
-  in the \code{action} argument.
+  If there isn't any output defiend (\code{NA}) the function returns a dataframe
+  containing concepts as observations. Using this, the user may add more descripting
+  info about concepts. In turn it writes a tab file with the dataframe described 
+  above. The user may recycle this file writing ``append'' in the \code{action} argument.
 }
 \value{
   If no \code{output} defined, \code{genMoreInfo} returns a dataframe with the following columns.
@@ -37,12 +36,12 @@
   Google Public Data Explorer:
     \url{http://publicdata.google.com} 
 }
-\author{George Vega Yon <george.vega@nodoschile.org>}
+\author{George Vega Yon \email{george.vega@nodoschile.org}}
 
 \examples{
   \dontrun{
     # Parsing some xlsx files at "my stats folder" to gen a "moreinfo" dataframe
-    INFO <- genMoreInfo(path="my stats folder/", ext="xls")
+    INFO <- genMoreInfo(path="my stats folder/", sep="xls")
     
     # Rows 1 to 10 are about "Poverty" and rows 11 to 20 about "Education"
     # So we fill the "topic" column with it.
@@ -50,10 +49,8 @@
     INFO$topic[11:20] <- "Education"
     
     # Finally, we build the DSPL ZIP including more info
-    dspl(path="my stats folder/", ext="xls", moreinfo=INFO)
+    dspl(path="my stats folder/", sep="xls", moreinfo=INFO)
     
   }
 }
-\keyword{ summary }
-\keyword{ methods }
-\keyword{ print }
+\keyword{IO}

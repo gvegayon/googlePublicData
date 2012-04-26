@@ -1,4 +1,4 @@
-checkSlices <- function(dims, by) {
+.checkSlices <- function(dims, by) {
 ################################################################################
 # Checks if there's any pair of slices with the same dimentions (error)
 ################################################################################
@@ -25,7 +25,7 @@ checkSlices <- function(dims, by) {
   }
 }
 
-checkDuplConcepts <- function(concepts) {
+.checkDuplConcepts <- function(concepts) {
 ################################################################################
 # Checks if there's any concepts duplicated as a result of multiple data types
 # In the case of beeing all numeric, DSPL assumes the minumum common (float) and
@@ -70,7 +70,7 @@ checkDuplConcepts <- function(concepts) {
   return(concepts)
 }
 
-checkPath <- function(x, type='output') {
+.checkPath <- function(x, type='output') {
 ################################################################################
 # DESCRIPTION:
 # Checks if the output path exists, otherwise stops the routine.

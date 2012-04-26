@@ -4,16 +4,13 @@ Title: An R library to build Google's Public Data Explorer DSPL Metadata files
 Version: 0.12.04.20
 Date: 2012-04-20
 Author: George Vega Yon
-Maintainer: George Vega Yon <g.vegayon@gmail.com>
-Description: Provides a collection of functions oriented to parse CSV, TAB,
-  XLS or XLSX files in order to automatically build DSPL metadata files all
-  ready to publish them at Public Data Explorer
+Maintainer: George Vega Yon <george.vegayon@nodoschile.org>
+Description: package provides a collection of functions to set up Google Public Data Explorer data visualization tool with your own data, building automaticaly the corresponding DSPL (XML) metadata file jointly with the CSV files. All zipped up and ready to be published at Public Data Explorer.
 Depends:
     R (>= 2.11.0),
     XML,
-    utils
-Suggests:
-    xlsx
+    utils,
+    XLConnect
 License: GPL (>= 2)
 URL: http://code.google.com/p/rdspl/
 LazyLoad: yes

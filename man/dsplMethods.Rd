@@ -11,10 +11,11 @@
 \usage{  
   \method{print}{dspl}(x, path=NULL, replace=F, ...)
   
-  \method{summary}{dspl}(x)
+  \method{summary}{dspl}(object, ...)
 }
 \arguments{
-  \item{x}{An object of class \code{dspl}.}
+  \item{x}{An object of class \code{dspl} to be printed.}
+  \item{object}{An object of class \code{dspl} to be summarized.}
   \item{path}{String. Output path where to save the XML DSPL file.}	
   \item{replace}{Logical. If \code{path} exists, \code{TRUE} would replace the file.}
   \item{\dots}{arguments passed on to \code{\link{cat}} (\code{print.dspl})}
@@ -28,7 +29,7 @@
 
 \item{\code{summary.dspl}}{Returns the class attributes and a list containing as defined by \code{\link{dspl}} function. For more information see its value section.}
 }
-\author{George Vega Yon <george.vega@nodoschile.org>}
+\author{George Vega Yon \email{george.vega@nodoschile.org}}
 
 \seealso{
   See also \code{\link{dspl}}
@@ -46,6 +47,4 @@
     
   }
 }
-\keyword{ summary }
 \keyword{ methods }
-\keyword{ print }

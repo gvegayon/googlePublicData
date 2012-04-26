@@ -6,10 +6,11 @@
   An R library to build Google's Public Data Explorer DSPL Metadata
 }
 \description{
-  \code{rdspl} package provides a collection of functions to generate Google Public Data Explorer DSPL metadata files. Also includes several data structure verifiers in order to avoid surprises when loading your ZIP file to Public Data Explorer page.
+\code{rdspl} package provides a collection of functions to set up Google Public Data Explorer data visualization tool with your own data, building automaticaly the corresponding DSPL (XML) metadata file jointly with the CSV files. All zipped up and ready to be published at Public Data Explorer. 
+
+Also includes several data structure verifiers in order to avoid surprises while loading your ZIP file to Public Data Explorer page.
   
-  Please visit the project home for more information:
-    \url{https://code.google.com/p/rdspl}.
+Please visit the project home for more information and examples: \url{https://code.google.com/p/rdspl}.
 } 
 \details{
   \tabular{ll}{
@@ -21,21 +22,20 @@
   }
 }
 \author{
-  George Vega Yon <george.vega@nodoschile.org>
-}
-\note{
-  See the DSPL code site for more info:
-    \url{https://developers.google.com/public-data/}
+  George Vega Yon \email{george.vega@nodoschile.org}
 }
 \references{
   \itemize{
     \item rdspl project site: \url{https://code.google.com/p/rdspl}
     \item Public Data Explorer site: \url{http://publicdata.google.com/}
+    \item Public Data Explorer Developers site: \url{https://developers.google.com/public-data/}
     \item DSPL Code site: \url{http://code.google.com/p/dspl/}
     \item googleVis package: \url{http://code.google.com/p/google-motion-charts-with-r/}
   }
 }
 \examples{
+  \dontrun{
     demo(dspl)
+    }
 }
 \keyword{ package }

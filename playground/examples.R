@@ -28,7 +28,7 @@ moreinfocasen <- genMoreInfo(
   action="replace",
   path="casen/",
   encoding="UTF-8",
-  ext="csv"
+  sep=","
   )
 
 # The column names come aren't as we would like to. So the 
@@ -53,9 +53,9 @@ x <- dspl(
   name="CASEN",
   providerName="MDS",
   path="casen/", 
-  #output="mi_dspl_casen.zip", 
+  output="mi_dspl_casen.zip", 
   replace=T, 
-  extension="csv", 
+  sep=",", 
   encoding="UTF-8",
   timeFormat="yyyy",
   moreinfo=moreinfocasen
