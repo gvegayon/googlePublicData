@@ -20,9 +20,6 @@
   \item{replace}{Logical. If \code{path} exists, \code{TRUE} would replace the file.}
   \item{\dots}{arguments passed on to \code{\link{cat}} (\code{print.dspl})}
 }
-
-\details{
-}
                            
 \value{
 \item{\code{print.dspl}}{ None (invisible \code{NULL}).}

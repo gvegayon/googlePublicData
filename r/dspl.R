@@ -69,7 +69,7 @@ genMoreInfo <- function(path, encoding=getOption("encoding"), sep=";",
     
     if (target.exists) {
       # Merge of the tables
-      x0 <- read.table(file=output, na='NA', sep='\t')
+      x0 <- read.table(file=output, na.strings='NA', sep='\t')
       x <- subset(x, !(x$id %in% x0$id))
       x <- rbind(x0,x)
     }

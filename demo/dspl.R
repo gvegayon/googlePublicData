@@ -8,8 +8,10 @@ pause <- function() {
   invisible(readline("\nPress <return> to continue: ")) 
 }
 
-# Complete directory path where the data is saved
-data.path <- paste(.libPaths()[1],'/rdspl/data',sep='')
+# Complete directory path where the data is saved (in this case, where the
+# package is installed)
+data.path <-try(paste(.libPaths()[1],'/googlePublicData/data',sep=''), silent=T)
+if (class(data.path) == "try-error") data.path <-paste(.libPaths()[2],'/googlePublicData/data',sep='')
 pause()
 
 # First Simplest example, 
