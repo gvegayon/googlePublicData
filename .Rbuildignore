@@ -5,3 +5,4 @@
 ^.*[.]Rproj$
 ^wiki$
 ^playground$
+^.*\.Rproj$
