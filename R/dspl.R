@@ -1,4 +1,4 @@
-.getFilesNames <- function(path, sep=';') {
+.getFilesNames <- function(path, sep=";") {
 ################################################################################
 # DESCRIPTION:
 # As a function of a path and a file extension, gets all the file names there.
@@ -7,8 +7,8 @@
   files <- list.files(path=path, full.names=T)
   
   # Match pattern
-  if (sep %in% c('xls','xlsx')) {
-    pat <- '[.xls][a-z]{1}$'
+  if (sep %in% c("xls","xlsx")) {
+    pat <- "[.xls][a-z]{1}$"
   }
   else {
     if (sep %in% c(";", ",")) sep <- "csv"
@@ -25,7 +25,7 @@
     stop(nfiles, ' files found.\nCannot\' continue') 
   }
   else {
-    cat(nfiles, 'files found...\n')
+    message(nfiles, ' files found...')
   }
   return(files)
 }
@@ -78,10 +78,10 @@ genMoreInfo <- function(path, encoding=getOption("encoding"), sep=";",
     }
     ERR<-try(write.table(x, file=output, quote=F, na="NA", sep='\t'))
     if (class(ERR)!='try-error') {
-      cat('DSPL Configfile written correctly at',output,'\n')
+      message("DSPL Configfile written correctly at\n",normalizePath(output))
     }
     else {
-      cat('An error has occurred during the file writing at',output,'\n')
+      stop("An error has occurred during the file writing at:\n",normalizePath(output))
     }
   }
   
@@ -89,10 +89,10 @@ genMoreInfo <- function(path, encoding=getOption("encoding"), sep=";",
   else if (action %in% c('replace','merge')) {
     ERR<-try(write.table(x, file=output, quote=F, na="NA", sep='\t'))
     if (class(ERR)!='try-error') {
-      cat('DSPL Configfile written correctly at',output,'\n')
+      message("DSPL Configfile written correctly at:\n",normalizePath(output))
     }
     else {
-      cat('An error has occurred during the file writing at',output,'\n')
+      stop("An error has occurred during the file writing at:\n",normalizePath(output))
     }
   }
 }
@@ -182,13 +182,13 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
                x=data, file=con, na='', sep=',',quote=F,row.names=F,dec='.'
                )
 
-             cat(
-               gsub(".*(/|\\\\)","",x),'analized correctly, ordered by ', ord,
-               ' and exported as csv\n'
+             message(
+               gsub(".*(/|\\\\)","",x),"analized correctly, ordered by ", ord,
+               " and exported as csv"
                )
            }
            else {
-             cat(x,'analized correctly\n')
+             message(x,"analized correctly")
            }
            return(var)
          }
@@ -665,7 +665,7 @@ dspl <- function(
         .dims, pde.statistics
     ), .Names=c('dspl', 'concepts.by.table', 'dimtabs', 'slices', 'concepts',
                   'dimentions','statistics'))
-  class(result) <- c('dspl')
+  class(result) <- c("dspl")
   
   # If an output file is specified, it writes it on it
   if (is.na(output)) {
@@ -679,6 +679,6 @@ dspl <- function(
     tozip <- list.files(temp.path, full.names=T, pattern="csv$|xml$")
     zip(output ,tozip,flags='-r9jm')
     
-    return(paste('Metadata created successfully at:', output))
+    message("Metadata created successfully at:\n", normalizePath(output))
   }
 }

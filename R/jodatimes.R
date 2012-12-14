@@ -28,11 +28,11 @@ checkTimeFormat <- function(fmt) {
   result <- sum(unlist(result)) == 1
   return(result)
 }
-checkTimeFormat("yyyy")
-checkTimeFormat("yyyyMM")
-checkTimeFormat("yyyy-MM")
-checkTimeFormat("yyyy/MM")
-checkTimeFormat("yyyy, MM")
+#checkTimeFormat("yyyy")
+#checkTimeFormat("yyyyMM")
+#checkTimeFormat("yyyy-MM")
+#checkTimeFormat("yyyy/MM")
+#checkTimeFormat("yyyy, MM")
 #.joda.times <- as.data.frame(joda.times, stringsAsFactors = F)
 # Example vector
 # x <- c(1998, '2010-01', '2010-01-01')

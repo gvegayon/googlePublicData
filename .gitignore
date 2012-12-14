@@ -1,8 +1,10 @@
-.Rproj.user
-.Rhistory
-.RData
+*.[R|r]proj.user
+*.[R|r]proj
+.[R|r]history
+.[R|r][D|d]ata
 *.xls
 *.xlsx
 *.doc
 *.docx
 *.zip
+*.xml

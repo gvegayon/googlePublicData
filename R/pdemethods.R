@@ -23,7 +23,7 @@ print.dspl <- function(x, path=NULL, replace=F, quiet=F, ...) {
     cat(x$dspl, file=con)
     close.connection(con)
     
-    message(paste("XML successfully stored at", normalizePath(path)))
+    if (!quiet) message("XML successfully stored at\n", normalizePath(path))
   } 
   else {
     cat(x$dspl, ...)
