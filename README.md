@@ -53,3 +53,5 @@ sexos.xlsx analized correctly, ordered by  sexo name  and exported as csv
 [Check out the resulting XML](https://code.google.com/p/rdspl/source/browse/example/r_pde/metadata.xml) and the [PDE output](http://www.google.com/publicdata/explore?ds=z7j7rseag2fj1j_&ctype=l&strail=false&bcs=d&nselm=h&met_y=afiliados_que_recibieron_pago_de_la_prestacion_por_cesantia&scale_y=lin&ind_y=false&rdim=sexo&idim=sexo:H:M:NA&ifdim=sexo&tdim=true&tstart=1035082800000&tend=1324350000000)
 
 [one pretty example](http://www.google.com/publicdata/explore?ds=k9eg0lf9k0fgj_&ctype=b&strail=false&bcs=d&nselm=s&met_y=prom_de_escolaridad&scale_y=lin&ind_y=false&met_x=porc_familias_pobres&scale_x=lin&ind_x=false&met_c=porc_de_menores_de_6_agnos_con_sobrepeso_u_obeso&scale_c=lin&ind_c=false&met_s=tasa_de_inactividad&scale_s=lin&ind_s=false&ifdim=region&tunit=Y&pit=1143187200000&hl=es&dl=es&ind=false&icfg&iconSize=0.5&draft)
+
+[and here is another one (multilanguage)](http://www.google.com/publicdata/explore?ds=lt98u9rd734rn_)
