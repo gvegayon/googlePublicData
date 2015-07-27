@@ -2,7 +2,7 @@
 \title{googlePublicData NEWS}
 \encoding{UTF-8}
 
-\section{CHANGES IN googlePublicData version 0.15.07 [2015-07-26]}{
+\section{CHANGES IN googlePublicData version 0.15.07.27 [2015-07-27]}{
   \subsection{DEVELOPMENT}{
     \itemize{
       \item Taking googlePublicData back to CRAN (replacing email...).

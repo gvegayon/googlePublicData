@@ -16,9 +16,9 @@ Please visit the project home for more information and examples: \url{http://git
   \tabular{ll}{
     Package: \tab googlePublicData\cr
     Type: \tab Package\cr
-    Version: \tab 0.15.26\cr
-    Date: \tab 2012-07-26\cr
-    License: \tab GPL version 2 or later\cr
+    Version: \tab 0.15.27\cr
+    Date: \tab 2012-07-27\cr
+    License: \tab MIT + file LICENSE\cr
   }
 }
 \author{George G. Vega Yon \email{gvegayon@caltech.edu}}

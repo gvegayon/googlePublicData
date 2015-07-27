@@ -187,7 +187,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
                )
 
              message(
-               gsub(".*(/|\\\\)","",x),"analized correctly, ordered by ", ord,
+               gsub(".*(/|\\\\)","",x)," analized correctly, ordered by ", ord,
                " and exported as csv"
                )
            }

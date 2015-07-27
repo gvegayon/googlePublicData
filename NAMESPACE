@@ -1,7 +1,7 @@
 importFrom(XML, newXMLNode, newXMLDoc, 
            newXMLCommentNode,saveXML,newXMLNamespace, xmlAttrs)
 importFrom(XLConnect,readWorksheetFromFile)
-importFrom("utils",zip)
+importFrom(utils, read.table, write.table, zip)
 export(.addConcepts, .addInfo, .addSlices, .addTables, .addTopics)
 export(.checkDuplConcepts, .checkPath, .checkSlices, checkTimeFormat, .joda.times)
 export(.fixType, .cleantext, .getFilesNames)
