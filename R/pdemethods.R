@@ -1,4 +1,4 @@
-print.dspl <- function(x, path=NULL, replace=F, quiet=F, ...) {
+print.dspl <- function(x, path=NULL, replace=FALSE, quiet=FALSE, ...) {
 ################################################################################
 # Printing method
 ################################################################################  

@@ -32,18 +32,25 @@
 # fixes the error. Output = Warning
 ################################################################################  
   
+  # Partial fix (should work, need to see
+  # http://stackoverflow.com/questions/23475309/in-r-is-it-possible-to-suppress-note-no-visible-binding-for-global-variable)
+  # type <- is.dim.tab <- id <- label <- freq <- NULL
+  
   concepts2 <- unique(
-    subset(concepts,subset=type != 'date' & is.dim.tab==F, select=c(id, label, type))
+    # subset(concepts,subset=type != 'date' & is.dim.tab==F, select=c(id, label, type))
+    concepts[
+      with(concepts, type!='date' & is.dim.tab == FALSE),
+      colnames(concepts) %in% c('id','label','type'),FALSE]
     )
   
   # Frequency table
   freq.tab <- as.data.frame(table(concepts2$id), stringsAsFactors=F)
   
   colnames(freq.tab) <- c('id','freq')  
-  dpl.concepts <- subset(freq.tab, freq > 1)
+  dpl.concepts <- freq.tab[freq.tab[["freq"]] > 1,,FALSE]
   
   # Number of duplicated concepts
-  ndpl.concepts <- NROW(dpl.concepts)
+  ndpl.concepts <- nrow(dpl.concepts)
   
   # If there are any dpl concepts
   if (ndpl.concepts > 0) {

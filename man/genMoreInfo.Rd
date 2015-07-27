@@ -36,7 +36,7 @@
   Google Public Data Explorer:
     \url{http://publicdata.google.com} 
 }
-\author{George Vega Yon \email{george.vega@nodoschile.org}}
+\author{George G. Vega Yon \email{gvegayon@caltech.edu}}
 
 \examples{
   \dontrun{

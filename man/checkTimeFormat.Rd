@@ -32,7 +32,7 @@
     \item Joda Time 2.1 API: \url{http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html}   
   }
 }
-\author{George Vega Yon \email{george.vega@nodoschile.org}}
+\author{George G. Vega Yon \email{gvegayon@caltech.edu}}
 \examples{
     checkTimeFormat("yyyy-MM") # TRUE
     checkTimeFormat("MMMyyyy") # TRUE

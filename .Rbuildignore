@@ -6,3 +6,6 @@
 ^wiki$
 ^playground$
 ^.*\.Rproj$
+^README[.]md$
+^googlePublicData[.]Rcheck$
+^makefile$

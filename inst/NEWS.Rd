@@ -2,6 +2,16 @@
 \title{googlePublicData NEWS}
 \encoding{UTF-8}
 
+\section{CHANGES IN googlePublicData version 0.15.07 [2015-07-26]}{
+  \subsection{DEVELOPMENT}{
+    \itemize{
+      \item Taking googlePublicData back to CRAN (replacing email...).
+      \item Documentation updates. Mostly email and websites!
+      \item Changing \code{Depends} to \code{Imports} (nicer).
+      \item complying CRAN's new policies.
+    }
+  }
+}
 \section{CHANGES IN googlePublicData version 0.12.05 [2012-05-15]}{
   \subsection{NEW FEATURES}{
     \itemize{

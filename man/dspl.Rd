@@ -79,7 +79,7 @@
     \item Google Public Data Explorer Tutorial: \url{https://developers.google.com/public-data/docs/tutorial}
   }
 }
-\author{George Vega Yon \email{george.vega@nodoschile.org}}
+\author{George G. Vega Yon \email{gvegayon@caltech.edu}}
 
 \examples{
   \dontrun{

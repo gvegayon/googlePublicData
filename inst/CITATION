@@ -1,11 +1,11 @@
 citHeader("To cite the 'googlePublicData' package in publications use:")
 
 citEntry(entry="Manual",
-         title = "googlePublicData: An R library to build Google's Public Data Explorer DSPL Metadata file",
-         author = as.person("George Vega Yon"),
-         year         = 2012,
-         month 	      = "May",
-         url          = "http://code.google.com/rdspl",
+         title = "googlePublicData: Working with Google's Public Data Explorer DSPL Metadata Files",
+         author = person("George", "Vega Yon", email="gvegayon@caltech.edu", role=c("aut","cre")),
+         year         = 2015,
+         month 	      = "July",
+         url          = "http://github.com/gvegayon/googlePublicData",
          textVersion = 
-           paste("George Vega Y..",
-                 "An R library to build Google's Public Data Explorer DSPL Metadata files."))
+           paste("George G. Vega Yon",
+                 "Working with Google's Public Data Explorer DSPL Metadata Files"))

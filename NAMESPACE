@@ -1,5 +1,6 @@
-import(XML)
-import(XLConnect)
+importFrom(XML, newXMLNode, newXMLDoc, 
+           newXMLCommentNode,saveXML,newXMLNamespace, xmlAttrs)
+importFrom(XLConnect,readWorksheetFromFile)
 importFrom("utils",zip)
 export(.addConcepts, .addInfo, .addSlices, .addTables, .addTopics)
 export(.checkDuplConcepts, .checkPath, .checkSlices, checkTimeFormat, .joda.times)
