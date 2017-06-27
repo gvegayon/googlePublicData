@@ -49,8 +49,8 @@
 #' @param encoding The enconding of the files to be parsed.
 #' @param sep The separation character of the tables in the 'path' folder.
 #' Currently supports introducing the following arguments: ``,'' or ``;'' (for
-#' .csv files), ``\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
-#' excel files); the last one using \code{\link[XLConnect]{XLConnect}} library.
+#' .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
+#' excel files); the last one using \code{XLConnect} library.
 #' @param output If defined, the place where to save the dataframe as tab file.
 #' Otherwise it returns a data frame object.
 #' @param action Tells the function what to do if there's a copy of the file.
@@ -181,7 +181,8 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
              )
              
            } else {
-              data <- readWorksheetFromFile(x, header=T, sheet=1)
+              # data <- readWorksheetFromFile(x, header=T, sheet=1)
+             stop("xls not supported for now...")
            }
            
            cols <- colnames(data)
@@ -364,8 +365,8 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 ################################################################################
 # Function to add information and provider nodes y multiple languages
 ################################################################################  
-  newXMLNode(nodename, parent=parent, sapply(values, function(x) {
-    newXMLNode('value',attrs=c('xml:lang'=lang[which(values==x)]), x,
+  XML::newXMLNode(nodename, parent=parent, sapply(values, function(x) {
+    XML::newXMLNode('value',attrs=c('xml:lang'=lang[which(values==x)]), x,
                suppressNamespaceWarning=T)}))
 }
 
@@ -381,10 +382,10 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
   
   fun(values, FUN=
     function(x) {
-      tempnode0 <- newXMLNode(nodename, parent=parent, attrs=c(x['id']))
-      tempnode1 <- newXMLNode('info', parent=tempnode0)
-      tempnode2 <- newXMLNode('name', parent=tempnode1)
-      newXMLNode('value', parent=tempnode2, attrs=c('xml:lang'=lang[1]),
+      tempnode0 <- XML::newXMLNode(nodename, parent=parent, attrs=c(x['id']))
+      tempnode1 <- XML::newXMLNode('info', parent=tempnode0)
+      tempnode2 <- XML::newXMLNode('name', parent=tempnode1)
+      XML::newXMLNode('value', parent=tempnode2, attrs=c('xml:lang'=lang[1]),
                  x['label'], suppressNamespaceWarning=T)
     }
   )
@@ -419,82 +420,82 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
     
     # in the case of not being a dimensional concept
     if (x["concept.type"]!="dimension") {
-      tempnode0 <- newXMLNode('concept', attrs=ATT, parent=parent)
+      tempnode0 <- XML::newXMLNode('concept', attrs=ATT, parent=parent)
       
       # Starts Adding info
-      tempnode1 <- newXMLNode('info', parent=tempnode0)
+      tempnode1 <- XML::newXMLNode('info', parent=tempnode0)
       
-      tempnode2 <- newXMLNode('name', parent=tempnode1)
+      tempnode2 <- XML::newXMLNode('name', parent=tempnode1)
       
       # Adds a description
       if (!is.na(x['description'])) {
         description <- as.character(x['description'])
-        tempnode3 <- newXMLNode('description', parent=tempnode1)
-        newXMLNode('value', parent=tempnode3, attrs=c('xml:lang'=lang[1]), description)
+        tempnode3 <- XML::newXMLNode('description', parent=tempnode1)
+        XML::newXMLNode('value', parent=tempnode3, attrs=c('xml:lang'=lang[1]), description)
       }
       
       # URL node
       if (!is.na(x['url'])) {
         url <- as.character(x['url'])
-        tempnode4 <- newXMLNode('url', parent=tempnode1)
-        newXMLNode('value', parent=tempnode4, attrs=c('xml:lang'=lang[1]), url)
+        tempnode4 <- XML::newXMLNode('url', parent=tempnode1)
+        XML::newXMLNode('value', parent=tempnode4, attrs=c('xml:lang'=lang[1]), url)
       }
       
       # Here should start the multilanguage loop
-      newXMLNode('value', parent=tempnode2, attrs=c('xml:lang'=lang[1]),
+      XML::newXMLNode('value', parent=tempnode2, attrs=c('xml:lang'=lang[1]),
                  suppressNamespaceWarning=T, x['label'])
       
       # Adds a topic category
       if (!is.na(x['topicid'])) {
         topicref <- as.character(x['topicid'])
-        newXMLNode('topic', parent=tempnode0, attrs=c(ref=topicref))
+        XML::newXMLNode('topic', parent=tempnode0, attrs=c(ref=topicref))
       }
       
       # Adds the data type specification
-      newXMLNode('type', attrs=c(x['ref']), parent=tempnode0)
+      XML::newXMLNode('type', attrs=c(x['ref']), parent=tempnode0)
       
       # in the case of being a dimensional concept
     } else {
-      tempnode0 <- newXMLNode('concept', attrs=ATT, parent=parent)
+      tempnode0 <- XML::newXMLNode('concept', attrs=ATT, parent=parent)
       
       # Starts adding info
-      tempnode1 <- newXMLNode('info', parent=tempnode0)
+      tempnode1 <- XML::newXMLNode('info', parent=tempnode0)
       
       # Name Node
-      tempnode2 <- newXMLNode('name', parent=tempnode1)
-      newXMLNode('value', parent=tempnode2, attrs=c('xml:lang'=lang[1]),
+      tempnode2 <- XML::newXMLNode('name', parent=tempnode1)
+      XML::newXMLNode('value', parent=tempnode2, attrs=c('xml:lang'=lang[1]),
                  suppressNamespaceWarning=T, x['label'])
       
       # Description node
       if (!is.na(x['description'])) {
         description <- as.character(x['description'])
-        tempnode3 <- newXMLNode('description', parent=tempnode1)
-        newXMLNode('value', parent=tempnode3, attrs=c('xml:lang'=lang[1]), description)
+        tempnode3 <- XML::newXMLNode('description', parent=tempnode1)
+        XML::newXMLNode('value', parent=tempnode3, attrs=c('xml:lang'=lang[1]), description)
       }
       
       # URL node
       if (!is.na(x['url'])) {
         url <- as.character(x['url'])
-        tempnode4 <- newXMLNode('url', parent=tempnode1)
-        newXMLNode('value', parent=tempnode4, attrs=c('xml:lang'=lang[1]), url)
+        tempnode4 <- XML::newXMLNode('url', parent=tempnode1)
+        XML::newXMLNode('value', parent=tempnode4, attrs=c('xml:lang'=lang[1]), url)
       }
       
       # Plural name node
       if (!is.na(x['totalName'])) {
         pluralName <- as.character(x['pluralName'])
-        tempnode6 <- newXMLNode('pluralName', parent=tempnode1)
-        newXMLNode('value', parent=tempnode6, attrs=c('xml:lang'=lang[1]), pluralName)
+        tempnode6 <- XML::newXMLNode('pluralName', parent=tempnode1)
+        XML::newXMLNode('value', parent=tempnode6, attrs=c('xml:lang'=lang[1]), pluralName)
       }        
       
       # Total name node
       if (!is.na(x['totalName'])) {
         totalName <- as.character(x['totalName'])
-        tempnode5 <- newXMLNode('totalName', parent=tempnode1)
-        newXMLNode('value', parent=tempnode5, attrs=c('xml:lang'=lang[1]),totalName)
+        tempnode5 <- XML::newXMLNode('totalName', parent=tempnode1)
+        XML::newXMLNode('value', parent=tempnode5, attrs=c('xml:lang'=lang[1]),totalName)
       }
       
-      newXMLNode('type', parent=tempnode0, attrs=c(x['ref']))
-      newXMLNode('table', parent=tempnode0, attrs=
+      XML::newXMLNode('type', parent=tempnode0, attrs=c(x['ref']))
+      XML::newXMLNode('table', parent=tempnode0, attrs=
                    c(ref=paste(x['dim.tab.ref'],'_table',sep='')))
       
     }
@@ -508,18 +509,18 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
   colnames(sliceatt)[1] <- 'concept'
   by(data=sliceatt, INDICES=tableid,FUN=
     function(x) {
-      newXMLNode(name='slice', attrs=c(id=paste(x$slice[1],'_slice',sep='')),
+      XML::newXMLNode(name='slice', attrs=c(id=paste(x$slice[1],'_slice',sep='')),
                  parent=parent, apply(x, MARGIN = 1,FUN=
                    function(z){
                      #z <- as.character(z)
                      # In the case of dates-time
                      if (z['type'] == 'date') {
-                       newXMLNode(name=z['concept.type'], 
+                       XML::newXMLNode(name=z['concept.type'], 
                                   attrs=c(concept=paste('time:',z['concept'],sep='')))
                        # Otherwise
                      } else {
-                       newXMLNode(name=z['concept.type'], attrs=c(z['concept']))
-                     }}), newXMLNode('table', attrs=c(ref=paste(x$slice[1],'_table',sep=''))))
+                       XML::newXMLNode(name=z['concept.type'], attrs=c(z['concept']))
+                     }}), XML::newXMLNode('table', attrs=c(ref=paste(x$slice[1],'_table',sep=''))))
     }
     )
 }
@@ -530,15 +531,15 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 ################################################################################
   by(data=tableatt, INDICES=tableid,FUN=
     function(x) {
-      newXMLNode(name='table', attrs=c(id=paste(x$slice[1],'_table',sep='')),parent=
+      XML::newXMLNode(name='table', attrs=c(id=paste(x$slice[1],'_table',sep='')),parent=
         parent, apply(X=x, 
                       MARGIN = 1, FUN=
                         function(z){
                           if (z['type'] == 'date') {
-                            newXMLNode(name='column', attrs=c(z['id'], z['type'], format=format))  
+                            XML::newXMLNode(name='column', attrs=c(z['id'], z['type'], format=format))  
                           } else {
-                            newXMLNode(name='column', attrs=c(z['id'], z['type']))
-                          }}), newXMLNode(name='data', newXMLNode('file', attrs=c(format=
+                            XML::newXMLNode(name='column', attrs=c(z['id'], z['type']))
+                          }}), XML::newXMLNode(name='data', XML::newXMLNode('file', attrs=c(format=
                             'csv', encoding='utf8'),paste(x$slice[1],'.csv',sep='')))
                  )
     }
@@ -603,8 +604,8 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 #' @param providerURL List of strings. The data provider website url.
 #' @param sep The separation character of the tables in the 'path' folder.
 #' Currently supports introducing the following arguments: ``,'' or ``;'' (for
-#' .csv files), ``\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
-#' excel files); the last one using \code{\link[XLConnect]{XLConnect}} library.
+#' .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
+#' excel files); the last one using \code{XLConnect} library.
 #' @param dec String. Decimal point.
 #' @param encoding The char encoding of the input tables. Currently ignored for
 #' microsoft excel files.
@@ -728,8 +729,8 @@ dspl <- function(
   varConcepts <- .getMoreInfo(source=moreinfo, target=varConcepts, "")
   
   # Armado de xml
-  archXML <- newXMLDoc()
-  dspl <- newXMLNode(name='dspl', doc=archXML, attrs=c(
+  archXML <- XML::newXMLDoc()
+  dspl <- XML::newXMLNode(name='dspl', doc=archXML, attrs=c(
     targetNamespace=targetNamespace), namespace=c(xsi=
       'http://www.w3.org/2001/XMLSchema-instance'))
   
@@ -742,32 +743,32 @@ dspl <- function(
   
   sapply(imports,
          function(x) {
-           newXMLNamespace(node=dspl, prefix=x,namespace=paste(
+           XML::newXMLNamespace(node=dspl, prefix=x,namespace=paste(
              'http://www.google.com/publicdata/dataset/google/',x,sep=''))
          })
   # Concepts import lines
-  newXMLCommentNode('Concepts imports', parent=dspl)
+  XML::newXMLCommentNode('Concepts imports', parent=dspl)
   
   imports <- paste(
     "http://www.google.com/publicdata/dataset/google/",
     imports, sep = '')
   
   sapply(X = imports,
-         FUN = function(x) newXMLNode(attrs=c(namespace=x), name = 'import',
+         FUN = function(x) XML::newXMLNode(attrs=c(namespace=x), name = 'import',
                                       parent = dspl))
   # INFO
-  newXMLCommentNode('Info lines', parent=dspl)
-  info <- newXMLNode('info', parent = dspl)
+  XML::newXMLCommentNode('Info lines', parent=dspl)
+  info <- XML::newXMLNode('info', parent = dspl)
   .addInfo('name', name, info, lang)
   .addInfo('description', description, info, lang)
-  if (!is.na(url)) newXMLNode('url', newXMLNode('value', url), 
+  if (!is.na(url)) XML::newXMLNode('url', XML::newXMLNode('value', url), 
                               parent = info)
   
   # PROVIDER
-  newXMLCommentNode('Data Provider', parent=dspl)
-  provider <- newXMLNode('provider', parent = dspl)
+  XML::newXMLCommentNode('Data Provider', parent=dspl)
+  provider <- XML::newXMLNode('provider', parent = dspl)
   .addInfo('name', providerName, provider, lang)
-  if (!is.na(providerURL)) newXMLNode('url', newXMLNode('value', providerURL), 
+  if (!is.na(providerURL)) XML::newXMLNode('url', XML::newXMLNode('value', providerURL), 
                                       parent = provider)
   
   # TOPICS
@@ -778,19 +779,19 @@ dspl <- function(
     test <- F
   }
   if (test) {
-    newXMLCommentNode('Topics definition', parent=dspl)
-    topics <- newXMLNode('topics', parent=dspl)
+    XML::newXMLCommentNode('Topics definition', parent=dspl)
+    topics <- XML::newXMLNode('topics', parent=dspl)
     .addTopics('topic', varConcepts[c('topic', 'topicid')], topics, lang)
   }
     
   # CONCEPTS
-  newXMLCommentNode('Concepts Definitions', parent=dspl)
-  concepts <- newXMLNode('concepts', parent = dspl)
+  XML::newXMLCommentNode('Concepts Definitions', parent=dspl)
+  concepts <- XML::newXMLNode('concepts', parent = dspl)
   .addConcepts(varConcepts,concepts, lang)
   
   # SLICES
-  newXMLCommentNode('Slices Definitions', parent=dspl)
-  slices <- newXMLNode('slices', parent = dspl)
+  XML::newXMLCommentNode('Slices Definitions', parent=dspl)
+  slices <- XML::newXMLNode('slices', parent = dspl)
   .addSlices(
     tableid  = vars[with(vars, !is.dim.tab),, FALSE][['slice']],
     sliceatt = vars[with(vars, !is.dim.tab),, FALSE], # subset(vars, is.dim.tab != T),
@@ -798,8 +799,8 @@ dspl <- function(
     )
   
   # TABLES
-  newXMLCommentNode('Tables Definitios', parent=dspl)
-  tables <- newXMLNode('tables', parent = dspl)
+  XML::newXMLCommentNode('Tables Definitios', parent=dspl)
+  tables <- XML::newXMLNode('tables', parent = dspl)
   .addTables(tableid=vars$slice,tableatt=vars,parent=tables, format=timeFormat)  
   
   # Building ouput

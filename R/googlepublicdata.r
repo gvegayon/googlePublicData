@@ -1,4 +1,6 @@
-
+#' @import XML
+#' @importFrom utils zip read.table write.table
+NULL
 
 #' World countries example data set
 #' 

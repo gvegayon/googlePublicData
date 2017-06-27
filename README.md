@@ -1,4 +1,7 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/googlePublicData?color=brightgreen)](http://cran.rstudio.com/package=googlePublicData)
+[![Travis-CI Build Status](https://travis-ci.org/gvegayon/googlePublicData.svg?branch=master)](https://travis-ci.org/gvegayon/googlePublicData)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/gvegayon/googlePublicData?branch=master&svg=true)](https://ci.appveyor.com/project/gvegayon/googlePublicData)
+
 
 #googlePublicData#
 An *R* Library (trying to) to build *Google's* _Data Sets Publication Language_ (DSPL) metadata input for *Public Data Explorer*. Based on the XML package and xlsx package to get full integration with MS Office.

@@ -45,6 +45,7 @@ colnames(.joda.times) <- c('regex','format','example')
 #' \url{http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html}
 #' }
 #' @keywords utilities
+#' @export
 #' @examples
 #' 
 #'     checkTimeFormat("yyyy-MM") # TRUE
