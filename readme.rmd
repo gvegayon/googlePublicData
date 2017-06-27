@@ -1,0 +1,58 @@
+---
+author: "George G. Vega Yon"
+date: paste("Compiled on", Sys.date())
+output: 
+  md_document:
+    variant: markdown_github
+---
+
+# googlePublicData
+
+[![Downloads](http://cranlogs.r-pkg.org/badges/googlePublicData?color=brightgreen)](http://cran.rstudio.com/package=googlePublicData)
+[![Travis-CI Build Status](https://travis-ci.org/gvegayon/googlePublicData.svg?branch=master)](https://travis-ci.org/gvegayon/googlePublicData)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/gvegayon/googlePublicData?branch=master&svg=true)](https://ci.appveyor.com/project/gvegayon/googlePublicData)
+
+An *R* package for building *Google's* _Data Sets Publication Language_ (DSPL) metadata files used in *Public Data Explorer*.
+
+Features:
+
+*   Reads tab, csv ~~, xls and xlsx~~ from a folder.
+
+*   Identifies data types and distinguishes between dimentional and metric concepts.
+
+*   Identifies dimentional data tabs.
+
+*   Auto generates conceps id.
+
+*   Auto data sorting on dimentional (no time) concepts.
+
+*   Prints XML and csv files to upload to Public Data Explorer.
+
+*   Some bug trackers before final printing XML.
+
+*   Builds ZIP file containing CSV and XML files.
+
+
+So you don't need to mess with the XML coding at all!
+
+```{r, split=FALSE}
+library(googlePublicData)
+
+# This path has some csv files that we will use
+data.path <-try(paste(.libPaths()[1],'/googlePublicData/data',sep=''), silent=T)
+data.path
+
+# The dspl function looks for csv files in that paths, and analyzes them
+mydspl <- dspl(path=data.path, sep=";")
+
+# If we wanted to write the zip file... ready to be uploaded to
+# http://publicdata.google.com
+# dspl(path=data.path, sep=";", output= "mydspl.zip")
+
+# Printing the data
+mydspl
+
+# Summary of the dspl class object
+summary(mydspl)
+```
+

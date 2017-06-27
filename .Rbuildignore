@@ -12,3 +12,5 @@
 ^appveyor\.yml$
 ^\.travis\.yml$
 ^ChangeLog$
+^readme\.rmd$
+^README\.md$
