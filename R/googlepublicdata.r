@@ -57,7 +57,7 @@ NULL
 #' \item{list("summary.dspl")}{Returns the class attributes and a list
 #' containing as defined by \code{\link{dspl}} function. For more information
 #' see its value section.}
-#' @author George G. Vega Yon \email{gvegayon@@caltech.edu}
+#' @author George G. Vega Yon 
 #' @seealso See also \code{\link{dspl}}
 #' @keywords methods
 #' @examples
@@ -73,7 +73,7 @@ NULL
 #'     print(mydspl, path="my stats folder/mydspl.xml")
 #'     
 #'   }
-#' 
+#' @name dspl-methods
 NULL
 
 
@@ -137,7 +137,7 @@ NULL
 #' @name googlePublicData
 #' @aliases googlePublicData-package googlePublicData
 #' @docType package
-#' @author George G. Vega Yon \email{gvegayon@@caltech.edu}
+#' @author George G. Vega Yon 
 #' @references \itemize{ \item googlePublicData project site:
 #' \url{http://github.com/gvegayon/googlePublicData} \item Public Data Explorer
 #' site: \url{http://publicdata.google.com/} \item Public Data Explorer

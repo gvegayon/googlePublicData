@@ -34,7 +34,7 @@ colnames(.joda.times) <- c('regex','format','example')
 #' @aliases checkTimeFormat timeFormat joda-times
 #' @param fmt String representing a time format to be verified.
 #' @return Logical. \code{TRUE} if the string passes the test.
-#' @author George G. Vega Yon \email{gvegayon@@caltech.edu}
+#' @author George G. Vega Yon 
 #' @seealso See also \code{\link{dspl}}
 #' @references \itemize{ \item Google Public Data Explorer DSPL time
 #' definition:

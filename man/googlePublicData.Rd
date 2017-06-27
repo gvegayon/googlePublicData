@@ -40,6 +40,6 @@ googleVis package:
 \url{http://code.google.com/p/google-motion-charts-with-r/} }
 }
 \author{
-George G. Vega Yon \email{gvegayon@caltech.edu}
+George G. Vega Yon
 }
 \keyword{package}

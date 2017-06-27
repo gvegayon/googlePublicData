@@ -64,7 +64,7 @@
 #' to get more info} \item{totalName}{A total name as specified by DSPL languge
 #' (works for dimentional concepts)} \item{pluralName}{A total name as
 #' specified by DSPL language (works for dimentional concepts)}
-#' @author George G. Vega Yon \email{gvegayon@@caltech.edu}
+#' @author George G. Vega Yon 
 #' @references Google Public Data Explorer: \url{http://publicdata.google.com}
 #' @keywords IO
 #' @examples
@@ -410,7 +410,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 }
 
 .addConcepts_sub <- function(x,parent,lang) {
-  function(x) {
+  # function(x) {
     x['is.dim.tab'] <- gsub(' ','',x['is.dim.tab'])
     x['geo'] <- gsub(' ','',x['geo'])
     
@@ -499,7 +499,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
                    c(ref=paste(x['dim.tab.ref'],'_table',sep='')))
       
     }
-  }
+  # }
 }
 
 .addSlices <- function(tableid, sliceatt, parent) {
@@ -626,7 +626,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 #' 
 #' otherwise the function will build a ZIP file as specified in the output
 #' containing the CSV and DSPL (XML) files.
-#' @author George G. Vega Yon \email{gvegayon@@caltech.edu}
+#' @author George G. Vega Yon 
 #' @references \itemize{ \item Google Public Data Explorer Tutorial:
 #' \url{https://developers.google.com/public-data/docs/tutorial} }
 #' @keywords IO
@@ -731,14 +731,11 @@ dspl <- function(
   # Armado de xml
   archXML <- XML::newXMLDoc()
   dspl <- XML::newXMLNode(name='dspl', doc=archXML, attrs=c(
-    targetNamespace=targetNamespace), namespace=c(xsi=
-      'http://www.w3.org/2001/XMLSchema-instance'))
+    targetNamespace=targetNamespace),
+    namespaceDefinitions = 'http://schemas.google.com/dspl/2010')
   
-  tmpattrs <- xmlAttrs(dspl)
-  try(tmpattrs['xmlns'] <- 'http://schemas.google.com/dspl/2010', silent=T)
   
   # Definiciones dspl
-  
   imports <- c('quantity', 'entity', 'geo', 'time', 'unit')
   
   sapply(imports,
@@ -832,7 +829,7 @@ dspl <- function(
   
   result <- structure(.Data=
     list(
-        saveXML(archXML, encoding="UTF-8"), vars, .dimtabs, .slices, .concepts,
+        XML::saveXML(archXML, encoding="UTF-8"), vars, .dimtabs, .slices, .concepts,
         .dims, pde.statistics
     ), .Names=c('dspl', 'concepts.by.table', 'dimtabs', 'slices', 'concepts',
                   'dimentions','statistics'))
@@ -848,7 +845,7 @@ dspl <- function(
     
     # Zipping the files
     tozip <- list.files(temp.path, full.names=T, pattern="csv$|xml$")
-    zip(output ,tozip,flags='-r9jm')
+    utils::zip(output ,tozip,flags='-r9jm')
     
     message("Metadata created successfully at:\n", normalizePath(output))
   }

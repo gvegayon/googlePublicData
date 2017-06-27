@@ -3,9 +3,12 @@ Type: Package
 Title: Working with Google's Public Data Explorer DSPL Metadata Files
 Version: 0.16.99
 Date: 2017-06-27
-Authors@R: person("George", "Vega Yon", email="gvegayon@caltech.edu",
+Authors@R: person("George", "Vega Yon", email="g.vegayon@gmail.com",
 	role =c("aut","cre"))
-Description: Provides a collection of functions to set up 'Google Public Data Explorer' data visualization tool with your own data, building automaticaly the corresponding DSPL (XML) metadata file jointly with the CSV files. All zipped up and ready to be published in 'Public Data Explorer'.
+Description: Provides a collection of functions to set up 'Google Public Data Explorer'
+  data visualization tool with your own data, building automaticaly the corresponding DSPL (XML)
+  metadata file jointly with the CSV files. All zip-up and ready to be published in
+  'Public Data Explorer'.
 Depends:
     R (>= 3.2.0)
 Imports: XML, utils

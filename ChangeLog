@@ -1,0 +1,3 @@
+2017-06-27  George G. Vega Yon <g.vegayon@gmail.com>:
+	* :Restart of the project.
+	* R/dspl.R: Fixed bug and tested dspl in google... works.

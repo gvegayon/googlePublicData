@@ -11,3 +11,4 @@
 ^makefile$
 ^appveyor\.yml$
 ^\.travis\.yml$
+^ChangeLog$
