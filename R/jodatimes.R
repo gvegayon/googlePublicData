@@ -16,6 +16,41 @@
 colnames(.joda.times) <- c('regex','format','example')
 .joda.times <- as.data.frame(.joda.times, stringsAsFactors=F)
 
+
+
+#' DSPL time format verification
+#' 
+#' Checks if a string fulfills the joda-times class specifications supported by
+#' DSPL language.
+#' 
+#' Public Data Explorer currently supports daily, monthly and yearly
+#' distributed data. Joda-time, the corresponding time format on wich DSPL
+#' times is based, allows declaring time formats using small case "d" (for
+#' days), capitalized "M" (for months) and small case "y" for years. Some
+#' examples: \tabular{ll}{ Format Specification \tab Data Example\cr "yyyy"
+#' \tab 1988\cr "yyyy-MM" \tab 1988-03\cr "yyyy-MMM" \tab 1988-Mar\cr
+#' "dd-MM-yyyy" \tab 02-03-1988 }
+#' 
+#' @aliases checkTimeFormat timeFormat joda-times
+#' @param fmt String representing a time format to be verified.
+#' @return Logical. \code{TRUE} if the string passes the test.
+#' @author George G. Vega Yon \email{gvegayon@@caltech.edu}
+#' @seealso See also \code{\link{dspl}}
+#' @references \itemize{ \item Google Public Data Explorer DSPL time
+#' definition:
+#' \url{https://developers.google.com/public-data/docs/canonical/time?hl=es}
+#' \item Google Public Data Explorer Cookbook for time definitions:
+#' \url{https://developers.google.com/public-data/docs/cookbook#time_recipes}
+#' \item Joda Time 2.1 API:
+#' \url{http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html}
+#' }
+#' @keywords utilities
+#' @examples
+#' 
+#'     checkTimeFormat("yyyy-MM") # TRUE
+#'     checkTimeFormat("MMMyyyy") # TRUE
+#'     checkTimeFormat("mmmyyyy") # FALSE
+#' 
 checkTimeFormat <- function(fmt) {
 ################################################################################
 # Checks if the specified timeFormat is supported by DSPL
