@@ -1,5 +1,6 @@
-#' @import XML
+#' @importFrom XML newXMLNode newXMLDoc newXMLNamespace newXMLCommentNode saveXML
 #' @importFrom utils zip read.table write.table
+#' @importFrom readxl read_excel
 NULL
 
 #' World countries example data set
@@ -130,9 +131,6 @@ NULL
 #' Please visit the project home for more information and examples:
 #' \url{http://github.com/gvegayon/googlePublicData}.
 #' 
-#' \tabular{ll}{ Package: \tab googlePublicData\cr Type: \tab Package\cr
-#' Version: \tab 0.15.27\cr Date: \tab 2012-07-27\cr License: \tab MIT + file
-#' LICENSE\cr }
 #' 
 #' @name googlePublicData
 #' @aliases googlePublicData-package googlePublicData

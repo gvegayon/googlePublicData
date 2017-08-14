@@ -1,8 +1,13 @@
-# Changes in version 0.16.99 (2017-06-27)
+# Changes in version 0.16.99 (2017-08-13)
+
+## Development
+
+*   MS Excel files are now read using readxl::read_excel.
 
 ## Bug Fixes
 
-*   Getting back to work...
+*   Fixing XML parsing error: "XML parsing error...
+    Cannot find the declaration of element 'dspl' with status "Fail".".
 
 
 # Changes in version 0.15.07.27

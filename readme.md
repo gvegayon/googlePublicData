@@ -1,7 +1,7 @@
 googlePublicData
 ================
 
-[![Downloads](http://cranlogs.r-pkg.org/badges/googlePublicData?color=brightgreen)](http://cran.rstudio.com/package=googlePublicData) [![Travis-CI Build Status](https://travis-ci.org/gvegayon/googlePublicData.svg?branch=master)](https://travis-ci.org/gvegayon/googlePublicData) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/gvegayon/googlePublicData?branch=master&svg=true)](https://ci.appveyor.com/project/gvegayon/googlePublicData)
+[![Downloads](http://cranlogs.r-pkg.org/badges/googlePublicData?color=brightgreen)](http://cran.rstudio.com/package=googlePublicData) [![Travis-CI Build Status](https://travis-ci.org/gvegayon/googlePublicData.svg?branch=master)](https://travis-ci.org/gvegayon/googlePublicData) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/gvegayon/googlePublicData?branch=master&svg=true)](https://ci.appveyor.com/project/gvegayon/googlePublicData) [![codecov](https://codecov.io/gh/gvegayon/googlePublicData/branch/master/graph/badge.svg)](https://codecov.io/gh/gvegayon/googlePublicData)
 
 An *R* package for building *Google's* *Data Sets Publication Language* (DSPL) metadata files used in *Public Data Explorer*.
 
@@ -33,26 +33,29 @@ data.path <-try(paste(.libPaths()[1],'/googlePublicData/data',sep=''), silent=T)
 data.path
 ```
 
-    ## [1] "/usr/local/lib/R/site-library/googlePublicData/data"
+    ## [1] "/home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data"
 
 ``` r
 # The dspl function looks for csv files in that paths, and analyzes them
 mydspl <- dspl(path=data.path, sep=";")
 ```
 
+    ## Warning in is.na(moreinfo): is.na() applied to non-(list or vector) of type
+    ## 'NULL'
+
     ## 6 files found...
 
-    ## /usr/local/lib/R/site-library/googlePublicData/data/countries.csvanalized correctly
+    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/countries.csv analyzed correctly
 
-    ## /usr/local/lib/R/site-library/googlePublicData/data/country_slice.csvanalized correctly
+    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/country_slice.csv analyzed correctly
 
-    ## /usr/local/lib/R/site-library/googlePublicData/data/gender_country_slice.csvanalized correctly
+    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/gender_country_slice.csv analyzed correctly
 
-    ## /usr/local/lib/R/site-library/googlePublicData/data/genders.csvanalized correctly
+    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/genders.csv analyzed correctly
 
-    ## /usr/local/lib/R/site-library/googlePublicData/data/states.csvanalized correctly
+    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/states.csv analyzed correctly
 
-    ## /usr/local/lib/R/site-library/googlePublicData/data/state_slice.csvanalized correctly
+    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/state_slice.csv analyzed correctly
 
 ``` r
 # If we wanted to write the zip file... ready to be uploaded to

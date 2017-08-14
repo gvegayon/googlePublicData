@@ -50,6 +50,17 @@ in the \code{action} argument.
 }
 \examples{
 
+# Getting the path where all the datasets are
+path <- system.file("data", package="googlePublicData")
+info <- genMoreInfo(path) # This is a dataframe
+
+# Setting the 5th concept as topic "Demographics"
+info[5, "topic"] <- "Demographics"
+
+# Generating the dspl file
+ans <- dspl(path, moreinfo = info)
+ans
+
   \dontrun{
     # Parsing some xlsx files at "my stats folder" to gen a "moreinfo" dataframe
     INFO <- genMoreInfo(path="my stats folder/", sep="xls")
@@ -63,7 +74,6 @@ in the \code{action} argument.
     dspl(path="my stats folder/", sep="xls", moreinfo=INFO)
     
   }
-
 }
 \references{
 Google Public Data Explorer: \url{http://publicdata.google.com}

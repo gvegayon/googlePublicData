@@ -19,10 +19,6 @@ while loading your ZIP file to Public Data Explorer page.
 
 Please visit the project home for more information and examples:
 \url{http://github.com/gvegayon/googlePublicData}.
-
-\tabular{ll}{ Package: \tab googlePublicData\cr Type: \tab Package\cr
-Version: \tab 0.15.27\cr Date: \tab 2012-07-27\cr License: \tab MIT + file
-LICENSE\cr }
 }
 \examples{
 

@@ -2,12 +2,22 @@
 % Please edit documentation in R/dspl.r
 \name{dspl}
 \alias{dspl}
-\title{Builds DSPL metadata file}
+\alias{GooglePublicData}
+\alias{dspl}
+\alias{new_dspl}
+\title{Builds Dataset Publication Language (DSPL) metadata file}
 \usage{
 dspl(path, output = NA, replace = F, targetNamespace = "",
   timeFormat = "yyyy", lang = c("es", "en"), name = NA,
   description = NA, url = NA, providerName = NA, providerURL = NA,
-  sep = ";", dec = ".", encoding = getOption("encoding"), moreinfo = NA)
+  sep = ";", dec = ".", encoding = getOption("encoding"),
+  moreinfo = NULL)
+
+new_dspl(path, output = NA, replace = F, targetNamespace = "",
+  timeFormat = "yyyy", lang = c("es", "en"), name = NA,
+  description = NA, url = NA, providerName = NA, providerURL = NA,
+  sep = ";", dec = ".", encoding = getOption("encoding"),
+  moreinfo = NULL)
 }
 \arguments{
 \item{path}{String. Path to the folder where the tables (csv|tab|xls) are
@@ -60,14 +70,15 @@ with more specifications such as description, topic, url, etc.}
 If there isn't any \code{output} defined, \code{dspl} returns list
 of \code{\link{class}} "\code{dspl}".
 
-An object of class "\code{dspl}" is a list containing: \item{list("dspl")}{A
-character string containing the DSPL XML document as defined by the
-\code{\link{saveXML}} function.} \item{list("concepts.by.table")}{A data
-frame object of concepts stored by table.} \item{list("dimtabs")}{A data
-frame containing dimentional tables.} \item{list("slices")}{A data frame of
-slices.} \item{list("concepts")}{A data frame of concepts (all of them).}
-\item{list("dimentions")}{A data frame of dimentional concepts.}
-\item{list("statistics")}{A matrix of statistics.}
+An object of class "\code{dspl}" is a list containing:
+\item{dspl}{A character string containing the DSPL XML document as defined
+by the \code{\link[XML:saveXML]{saveXML}} function.} 
+\item{concepts.by.table}{A data frame object of concepts stored by table.} 
+\item{dimtabs}{A data frame containing dimentional tables.} 
+\item{slices}{A data frame of slices.} 
+\item{concepts}{A data frame of concepts (all of them).}
+\item{dimentions}{A data frame of dimentional concepts.}
+\item{statistics}{A matrix of statistics.}
 
 otherwise the function will build a ZIP file as specified in the output
 containing the CSV and DSPL (XML) files.
@@ -86,30 +97,38 @@ file containing a all the necesary to be uploaded at
 \url{publicdata.google.com} (a collection of csv files and the XML DSPL
 written file) and a message (character object).
 
-Internally, the parsing process consists on the following steps: (1) Loading
-the data, (2) generating each column corresponding id, (3) Identifying the
-data types, (4) building concepts, (5) Identifying dimentional concepts and
-distinguishing between categorical, geographical and time dimentions, and
-finally (6) executing internal checks.
+Internally, the parsing process consists on the following steps:
+\enumerate{
+\item Loading the data, 
+\item Generating each column corresponding id, 
+\item Identifying the data types, 
+\item Building concepts, 
+\item Identifying dimentional concepts and distinguishing between categorical,
+geographical and time dimentions, and
+\item Executing internal checks.
+}
 
 In order to properly load the zip file (DSPL file plus CSV data files), the
 function executes a series of internal checks upon the data structure. The
-detailed list: \itemize{ \item Slices with the same dimentions: DSPL
+detailed list:
+\itemize{
+\item \strong{Slices with the same dimentions}: DSPL
 requires that each slice represents one dimentional cut, this is, there
-shouldn't be more than one data table with the same dimensions.  \item
-Duplicated concetps: As a result of multiple data types, e.g a single
+shouldn't be more than one data table with the same dimensions.
+\item \strong{Duplicated concetps}: As a result of multiple data types, e.g a single
 concept (statistic) as integer in one table and float in other, \code{dspl}
 may get confused, so during the parsing process, if there is a chance, it
 collapses duplicated concepts into only one concept and assigns it the
-common data type (float).  \item Correct time format definition: Using
-\code{\link{checkTimeFormat}} ensures that the time format specified is
-compatible with DSPL.  }
+common data type (float).
+\item \strong{Correct time format definition}: Using \code{\link{checkTimeFormat}}
+ensures that the time format specified is
+compatible with DSPL.
+}
 }
 \examples{
 
-  \dontrun{
-  demo(dspl)
-  }
+demo(dspl)
+  
 
 }
 \references{

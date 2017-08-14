@@ -1,5 +1,5 @@
 ################################################################################
-# rdspl demo
+# googlePublicData demo
 # In this demo, we'll use the Public Data Explorer tutorial data available at:
 #   https://developers.google.com/public-data/docs/tutorial
 #
@@ -10,8 +10,7 @@ pause <- function() {
 
 # Complete directory path where the data is saved (in this case, where the
 # package is installed)
-data.path <-try(paste(.libPaths()[1],'/googlePublicData/data',sep=''), silent=T)
-if (class(data.path) == "try-error") data.path <-paste(.libPaths()[2],'/googlePublicData/data',sep='')
+data.path <- system.file("data", package="googlePublicData")
 pause()
 
 # First Simplest example, 

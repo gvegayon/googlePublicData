@@ -14,3 +14,4 @@
 ^ChangeLog$
 ^readme\.rmd$
 ^README\.md$
+^codecov\.yml$

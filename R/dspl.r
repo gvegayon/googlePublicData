@@ -69,6 +69,17 @@
 #' @keywords IO
 #' @examples
 #' 
+#' # Getting the path where all the datasets are
+#' path <- system.file("data", package="googlePublicData")
+#' info <- genMoreInfo(path) # This is a dataframe
+#' 
+#' # Setting the 5th concept as topic "Demographics"
+#' info[5, "topic"] <- "Demographics"
+#' 
+#' # Generating the dspl file
+#' ans <- dspl(path, moreinfo = info)
+#' ans
+#' 
 #'   \dontrun{
 #'     # Parsing some xlsx files at "my stats folder" to gen a "moreinfo" dataframe
 #'     INFO <- genMoreInfo(path="my stats folder/", sep="xls")
@@ -82,6 +93,7 @@
 #'     dspl(path="my stats folder/", sep="xls", moreinfo=INFO)
 #'     
 #'   }
+#' @export 
 #' 
 genMoreInfo <- function(path, encoding=getOption("encoding"), sep=";", 
                         output=NA, action="merge", dec=".") {
@@ -91,7 +103,9 @@ genMoreInfo <- function(path, encoding=getOption("encoding"), sep=";",
 # builds a config file.
 ################################################################################  
   
-  options(stringsAsFactors=F)
+  oldopt <- options()$stringsAsFactors
+  options(stringsAsFactors=FALSE)
+  on.exit(options(stringsAsFactors = oldopt))
   
   # Checks if the path exists
   .checkPath(path, "input")
@@ -160,12 +174,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 # Reads .csv and .xls(x) files, exports them as csv and outputs a descriptive da
 # taframe. Also determinates which field is dim or metric.
 ################################################################################  
-  # Checking if xls option is Ok
-  #if (sep == 'xls') load.xlsx <- require(XLConnect) else load.xlsx <- TRUE
-  
-  #if (!load.xlsx) stop("In order to read MS Excel files ",
-  #                     "you need to get the package \'XLConnect\' first.")  
-  
+
   # Timeframe metrics
   metrics <- matrix(c(
     'dia','day','semana','week','trimestre','quarter', 'mes','month','ano', 
@@ -175,14 +184,13 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
            # In the case of csv, tab 
            if (!(sep %in% c("xls", "xlsx"))) {
              
-             data <- read.table(
+             data <- utils::read.table(
                x, sep=sep, strip.white=T, encoding=y, fill=T,
                dec=z, header=T
              )
              
            } else {
-              # data <- readWorksheetFromFile(x, header=T, sheet=1)
-             stop("xls not supported for now...")
+              data <- readxl::read_excel(x, col_names = T, sheet = 1)
            }
            
            cols <- colnames(data)
@@ -236,17 +244,24 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
              
              # Writes the data into csv files
              con <- file(paste(output,'/',var[1,4],'.csv',sep=''), encoding="UTF-8")
+             
              write.table(
-               x=data, file=con, na='', sep=',',quote=F,row.names=F,dec='.'
+               x         = data,
+               file      = con,
+               na        = '',
+               sep       = ',',
+               quote     = FALSE,
+               row.names = FALSE,
+               dec       = '.'
                )
 
              message(
-               gsub(".*(/|\\\\)","",x)," analized correctly, ordered by ", ord,
+               gsub(".*(/|\\\\)","",x)," analyzed correctly, ordered by ", ord,
                " and exported as csv"
                )
            }
            else {
-             message(x,"analized correctly")
+             message(x," analyzed correctly")
            }
            return(var)
          }
@@ -271,15 +286,15 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
   
   # Setting which concepts extends geo:location
   
-  geo <-vars[with(vars, is.dim.tab == T), colnames(vars) %in% c("id", "slice"), FALSE]
+  geo <-vars[with(vars, is.dim.tab == TRUE), colnames(vars) %in% c("id", "slice"), FALSE]
   geo <- by(
     geo, geo$slice, 
     function(x) all(c('longitude', 'latitude') %in% unlist(x['id']))
   )
   
   geo <- names(which(geo))
-  vars <- cbind(vars, extends.geo=F)
-  vars$extends.geo[which(vars$dim.tab.ref %in% geo)] <- T
+  vars <- cbind(vars, extends.geo=FALSE)
+  vars$extends.geo[which(vars$dim.tab.ref %in% geo)] <- TRUE
   
   return(vars)
 }
@@ -293,13 +308,16 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
   # http://stackoverflow.com/questions/23475309/in-r-is-it-possible-to-suppress-note-no-visible-binding-for-global-variable)
   # type <- is.dim.tab <- id <- label <- freq <- NULL
   
-  if (!is.na(source)) {
-    
-    options(stringsAsFactors=F)
+  if (length(source)) {
     
     # If a file, reads the moreinfo file
-    if (class(source) != "data.frame") {
-      source <- read.table(file=source, header=T, sep='\t', na.strings='NA',
+    if (inherits(source, "data.frame")) {
+      
+      oldopt <- options()$stringsAsFactors
+      options(stringsAsFactors=FALSE)
+      on.exit(options(stringsAsFactors = oldopt))
+      
+      source <- utils::read.table(file=source, header=TRUE, sep='\t', na.strings='NA',
                              encoding=encoding)
     }
     
@@ -345,14 +363,14 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
   sym <- matrix(c("$", "money", "??", "grad", "#", "n", "%", "pcent",
                   " ", "_", ".", "", ",", "_", ";", "_", ":", "_",
                   "(","_",")","_"), 
-                ncol = 2, byrow = T)
+                ncol = 2, byrow = TRUE)
   
   x <- tolower(x)
   
   x <- iconv(x, to="ASCII//TRANSLIT")
   
   for (i in 1:NROW(sym)) {
-    x <- gsub(sym[i,1], sym[i,2], x, fixed = T)
+    x <- gsub(sym[i,1], sym[i,2], x, fixed = TRUE)
   }
   
   # Extracts 
@@ -367,7 +385,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 ################################################################################  
   XML::newXMLNode(nodename, parent=parent, sapply(values, function(x) {
     XML::newXMLNode('value',attrs=c('xml:lang'=lang[which(values==x)]), x,
-               suppressNamespaceWarning=T)}))
+               suppressNamespaceWarning=TRUE)}))
 }
 
 .addTopics <- function(nodename, values, parent, lang) {
@@ -548,7 +566,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 
 
 
-#' Builds DSPL metadata file
+#' Builds Dataset Publication Language (DSPL) metadata file
 #' 
 #' Parsing \emph{csv}, \emph{tab} or \emph{xls(x)} files at a specific
 #' directory path, dspl generates a complete DSPL file.  If an output string is
@@ -562,24 +580,33 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 #' \url{publicdata.google.com} (a collection of csv files and the XML DSPL
 #' written file) and a message (character object).
 #' 
-#' Internally, the parsing process consists on the following steps: (1) Loading
-#' the data, (2) generating each column corresponding id, (3) Identifying the
-#' data types, (4) building concepts, (5) Identifying dimentional concepts and
-#' distinguishing between categorical, geographical and time dimentions, and
-#' finally (6) executing internal checks.
+#' Internally, the parsing process consists on the following steps:
+#' \enumerate{
+#' \item Loading the data, 
+#' \item Generating each column corresponding id, 
+#' \item Identifying the data types, 
+#' \item Building concepts, 
+#' \item Identifying dimentional concepts and distinguishing between categorical,
+#' geographical and time dimentions, and
+#' \item Executing internal checks.
+#' }
 #' 
 #' In order to properly load the zip file (DSPL file plus CSV data files), the
 #' function executes a series of internal checks upon the data structure. The
-#' detailed list: \itemize{ \item Slices with the same dimentions: DSPL
+#' detailed list:
+#' \itemize{
+#' \item \strong{Slices with the same dimentions}: DSPL
 #' requires that each slice represents one dimentional cut, this is, there
-#' shouldn't be more than one data table with the same dimensions.  \item
-#' Duplicated concetps: As a result of multiple data types, e.g a single
+#' shouldn't be more than one data table with the same dimensions.
+#' \item \strong{Duplicated concetps}: As a result of multiple data types, e.g a single
 #' concept (statistic) as integer in one table and float in other, \code{dspl}
 #' may get confused, so during the parsing process, if there is a chance, it
 #' collapses duplicated concepts into only one concept and assigns it the
-#' common data type (float).  \item Correct time format definition: Using
-#' \code{\link{checkTimeFormat}} ensures that the time format specified is
-#' compatible with DSPL.  }
+#' common data type (float).
+#' \item \strong{Correct time format definition}: Using \code{\link{checkTimeFormat}}
+#' ensures that the time format specified is
+#' compatible with DSPL.
+#' }
 #' 
 #' @param path String. Path to the folder where the tables (csv|tab|xls) are
 #' at.
@@ -615,14 +642,15 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 #' @return If there isn't any \code{output} defined, \code{dspl} returns list
 #' of \code{\link{class}} "\code{dspl}".
 #' 
-#' An object of class "\code{dspl}" is a list containing: \item{list("dspl")}{A
-#' character string containing the DSPL XML document as defined by the
-#' \code{\link{saveXML}} function.} \item{list("concepts.by.table")}{A data
-#' frame object of concepts stored by table.} \item{list("dimtabs")}{A data
-#' frame containing dimentional tables.} \item{list("slices")}{A data frame of
-#' slices.} \item{list("concepts")}{A data frame of concepts (all of them).}
-#' \item{list("dimentions")}{A data frame of dimentional concepts.}
-#' \item{list("statistics")}{A matrix of statistics.}
+#' An object of class "\code{dspl}" is a list containing:
+#' \item{dspl}{A character string containing the DSPL XML document as defined
+#' by the \code{\link[XML:saveXML]{saveXML}} function.} 
+#' \item{concepts.by.table}{A data frame object of concepts stored by table.} 
+#' \item{dimtabs}{A data frame containing dimentional tables.} 
+#' \item{slices}{A data frame of slices.} 
+#' \item{concepts}{A data frame of concepts (all of them).}
+#' \item{dimentions}{A data frame of dimentional concepts.}
+#' \item{statistics}{A matrix of statistics.}
 #' 
 #' otherwise the function will build a ZIP file as specified in the output
 #' containing the CSV and DSPL (XML) files.
@@ -632,11 +660,16 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 #' @keywords IO
 #' @examples
 #' 
-#'   \dontrun{
-#'   demo(dspl)
-#'   }
+#' demo(dspl)
+#'   
 #' 
-#' @export dspl
+#' @export 
+#' @name dspl
+#' @aliases GooglePublicData
+NULL
+
+#' @export
+#' @rdname dspl
 dspl <- function(
 ################################################################################
 # DESCRIPTION:
@@ -674,9 +707,12 @@ dspl <- function(
   sep = ";",
   dec=".",
   encoding = getOption("encoding"),
-  moreinfo = NA
+  moreinfo = NULL
   ) {
-  options(stringsAsFactors=F)
+  
+  oldopt <- options()$stringsAsFactors
+  options(stringsAsFactors=FALSE)
+  on.exit(options(stringsAsFactors = oldopt))
   
   # Initial checks
   description <- ifelse(!is.na(description),description,'No description')
@@ -690,7 +726,8 @@ dspl <- function(
   }
   else temp.path <- NA
   if (!all(is.na(moreinfo))) {
-    if (class(moreinfo) != "data.frame") .checkPath(moreinfo, "input")
+    if (!inherits(moreinfo,"data.frame"))
+      .checkPath(moreinfo, "input")
   }
   
   # Checking timeFormat
@@ -827,14 +864,18 @@ dspl <- function(
   
   colnames(pde.statistics) <- c('slices','concepts','dimentions')
   
-  result <- structure(.Data=
-    list(
+  result <- structure(
+    .Data=
+      list(
         XML::saveXML(archXML, encoding="UTF-8"), vars, .dimtabs, .slices, .concepts,
         .dims, pde.statistics
-    ), .Names=c('dspl', 'concepts.by.table', 'dimtabs', 'slices', 'concepts',
-                  'dimentions','statistics'))
-  class(result) <- c("dspl")
-  
+        ),
+    .Names = c(
+      'dspl', 'concepts.by.table', 'dimtabs', 'slices', 'concepts', 'dimentions',
+      'statistics'),
+    class = "dspl"
+    )
+
   # If an output file is specified, it writes it on it
   if (is.na(output)) {
     return(result)
@@ -850,3 +891,7 @@ dspl <- function(
     message("Metadata created successfully at:\n", normalizePath(output))
   }
 }
+
+#' @export
+#' @rdname dspl
+new_dspl <- dspl
