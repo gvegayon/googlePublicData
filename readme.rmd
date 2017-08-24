@@ -17,7 +17,7 @@ An *R* package for building *Google's* _Data Sets Publication Language_ (DSPL) m
 
 Features:
 
-*   Reads tab, csv ~~, xls and xlsx~~ from a folder.
+*   Reads tab, csv, xls and xlsx from a folder.
 
 *   Identifies data types and distinguishes between dimentional and metric concepts.
 

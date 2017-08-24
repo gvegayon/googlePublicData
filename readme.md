@@ -7,7 +7,7 @@ An *R* package for building *Google's* *Data Sets Publication Language* (DSPL) m
 
 Features:
 
--   Reads tab, csv ~~, xls and xlsx~~ from a folder.
+-   Reads tab, csv, xls and xlsx from a folder.
 
 -   Identifies data types and distinguishes between dimentional and metric concepts.
 
@@ -33,7 +33,7 @@ data.path <-try(paste(.libPaths()[1],'/googlePublicData/data',sep=''), silent=T)
 data.path
 ```
 
-    ## [1] "/home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data"
+    ## [1] "/usr/local/lib/R/site-library/googlePublicData/data"
 
 ``` r
 # The dspl function looks for csv files in that paths, and analyzes them
@@ -45,17 +45,17 @@ mydspl <- dspl(path=data.path, sep=";")
 
     ## 6 files found...
 
-    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/countries.csv analyzed correctly
+    ## /usr/local/lib/R/site-library/googlePublicData/data/countries.csv analyzed correctly
 
-    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/country_slice.csv analyzed correctly
+    ## /usr/local/lib/R/site-library/googlePublicData/data/country_slice.csv analyzed correctly
 
-    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/gender_country_slice.csv analyzed correctly
+    ## /usr/local/lib/R/site-library/googlePublicData/data/gender_country_slice.csv analyzed correctly
 
-    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/genders.csv analyzed correctly
+    ## /usr/local/lib/R/site-library/googlePublicData/data/genders.csv analyzed correctly
 
-    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/states.csv analyzed correctly
+    ## /usr/local/lib/R/site-library/googlePublicData/data/states.csv analyzed correctly
 
-    ## /home/george/R/x86_64-pc-linux-gnu-library/3.4/googlePublicData/data/state_slice.csv analyzed correctly
+    ## /usr/local/lib/R/site-library/googlePublicData/data/state_slice.csv analyzed correctly
 
 ``` r
 # If we wanted to write the zip file... ready to be uploaded to
