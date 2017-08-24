@@ -311,7 +311,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
   if (length(source)) {
     
     # If a file, reads the moreinfo file
-    if (inherits(source, "data.frame")) {
+    if (!inherits(source, "data.frame")) {
       
       oldopt <- options()$stringsAsFactors
       options(stringsAsFactors=FALSE)
@@ -725,7 +725,7 @@ dspl <- function(
     .checkPath(path, "input")
   }
   else temp.path <- NA
-  if (!all(is.na(moreinfo))) {
+  if (length(moreinfo)) {
     if (!inherits(moreinfo,"data.frame"))
       .checkPath(moreinfo, "input")
   }

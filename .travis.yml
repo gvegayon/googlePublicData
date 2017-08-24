@@ -1,7 +1,29 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+dist: trusty
 
-language: R
-sudo: false
+language: r
 cache: packages
+r:
+  - oldrel
+  - release
+  - devel
+
+cache: packages
+
+sudo: false
+
+os:
+  - linux
+  - osx
+
+
 after_success:
   - Rscript -e 'covr::codecov()'
+  
+after_failure:
+  - ./run.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
