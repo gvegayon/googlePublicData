@@ -65,7 +65,7 @@
 #' @examples
 #' 
 #' # Getting the path where all the datasets are
-#' path <- system.file("data", package="googlePublicData")
+#' path <- system.file("google", package="googlePublicData")
 #' info <- genMoreInfo(path) # This is a dataframe
 #' 
 #' # Setting the 5th concept as topic "Demographics"
