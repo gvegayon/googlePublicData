@@ -3,22 +3,17 @@
 # DESCRIPTION:
 # As a function of a path and a file extension, gets all the file names there.
 ################################################################################  
+  # Checking the sep
+  pattern <- paste0("[.]",switch(
+    sep,
+    "\t" = "tab",
+    ";" = "csv",
+    "," = "csv",
+    xls = "xls",
+    xlsx = "xlsx"), "$")
+  
   # Listing files
-  files <- list.files(path=path, full.names=T)
-  
-  # Match pattern
-  if (sep %in% c("xls","xlsx")) {
-    pat <- "[.xls][a-z]{1}$"
-  }
-  else {
-    if (sep %in% c(";", ",")) sep <- "csv"
-    else if (sep == "tab") sep <- "tab"
-    pat <- paste('[.',sep,']$',sep='')
-  }
-  
-  # Matching excluding windows "backup" files
-  valid <- grepl(pattern=pat, files) & !grepl("^[~$].*", files)
-  files <- files[valid]
+  files <- list.files(path=path, pattern = pattern, full.names=TRUE)
   
   nfiles <- length(files)
   if (nfiles==0) {

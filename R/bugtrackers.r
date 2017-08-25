@@ -83,7 +83,7 @@
 # Checks if the output path exists, otherwise stops the routine.
 ################################################################################  
   if (!is.na(x)) {
-    ER <- try(file.exists(x), silent=T)
+    ER <- try(file.exists(x), silent=TRUE)
     if (class(ER) == 'try-error') {
       stop('Incorrect ', type,' path:\n\t\t\t', x, '\n\t\t couldn\'t be found')
     } 
