@@ -1,5 +1,5 @@
 #' @importFrom XML newXMLNode newXMLDoc newXMLNamespace newXMLCommentNode saveXML
-#' @importFrom utils zip read.table write.table
+#' @importFrom utils zip read.table write.table head
 #' @importFrom readxl read_excel
 NULL
 

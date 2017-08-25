@@ -6,27 +6,25 @@
 ################################################################################
 rm(list=ls())
 
-library(rdspl)
-
-setwd("c:/comandos_paquetes_librerias/r/rdspl/playground/")
+library(googlePublicData)
 
 dspl(
-  providerURL="http://www.spensiones.cl",
-  description= "Builded using \"rdspl\" library (http://code.google.com/p/rdspl)",
+  providerURL="http://www.casen.cl",
+  description= "Built using \"googlePublicData\" (https://github.com/gvegayon/googlePublicData)",
   lang="es",
-  name="Chilean Unemployment Insurance Statistics",
-  providerName="Chilean Pension Supervisor",
-  path="unemployment_insurance/", 
+  name="CASEN",
+  providerName="MDS",
+  path="playground/casen", 
   output="mi_dspl_sc.zip", 
-  replace=T,
-  extension="xls",
+  replace=TRUE,
+  sep=",",
   timeFormat="yyyy-MM"
   )
   
 
 moreinfocasen <- genMoreInfo(
   action="replace",
-  path="casen/",
+  path="playground/casen/",
   encoding="UTF-8",
   sep=","
   )
@@ -43,16 +41,16 @@ moreinfocasen$topic[grep("educ|asiste|analfa|esco", moreinfocasen$label)] <- "Ed
 moreinfocasen$topic[grep("pobre|gini", moreinfocasen$label)] <- "Pobreza"
 moreinfocasen$topic[grep("salud|pap|disca|obeso", moreinfocasen$label)] <- "Salud"
 moreinfocasen$topic[grep("partici|ocupa|activ|trabaj", moreinfocasen$label)] <- "Empleo"
-moreinfocasen$topic[-51:-54][is.na(moreinfocasen[-51:-54]$topic)] <- "Empleo"
+# moreinfocasen$topic[-51:-54][is.na(moreinfocasen[-51:-54]$topic)] <- "Empleo"
 
 
-x <- dspl(
-  providerURL="http://www.mideplan.cl",
-  description= "Builded using \"rdspl\" library",
+dspl(
+  providerURL="http://www.casen.cl",
+  description= "Built using \"googlePublicData\" (https://github.com/gvegayon/googlePublicData)",
   lang="es",
   name="CASEN",
   providerName="MDS",
-  path="casen/", 
+  path="playground/casen/", 
   output="mi_dspl_casen.zip", 
   replace=T, 
   sep=",", 

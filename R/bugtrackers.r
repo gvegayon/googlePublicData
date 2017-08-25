@@ -44,7 +44,7 @@
     )
   
   # Frequency table
-  freq.tab <- as.data.frame(table(concepts2$id), stringsAsFactors=F)
+  freq.tab <- as.data.frame(table(concepts2$id), stringsAsFactors=FALSE)
   
   colnames(freq.tab) <- c('id','freq')  
   dpl.concepts <- freq.tab[freq.tab[["freq"]] > 1,,FALSE]
@@ -65,8 +65,8 @@
       if (test) {
         touse <- which(concepts$id == dpl)
         concepts$type[touse] <- "float"
-        warning(dpl,' concept was fixed at slices: \n - ',
-                paste(unique(concepts$slice[touse]), collapse='\n - '))
+        message(dpl,' concept was standarized as -float- in slices: \n - ',
+                paste(unique(concepts$slice[touse]), collapse=', '))
       }
       else {
         stop('Duplicated concepts cannot be homogenized\n',dpl,

@@ -15,7 +15,7 @@ genMoreInfo(path, encoding = getOption("encoding"), sep = ";",
 \item{sep}{The separation character of the tables in the 'path' folder.
 Currently supports introducing the following arguments: ``,'' or ``;'' (for
 .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
-excel files); the last one using \code{XLConnect} library.}
+excel files).}
 
 \item{output}{If defined, the place where to save the dataframe as tab file.
 Otherwise it returns a data frame object.}

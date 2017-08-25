@@ -55,7 +55,7 @@ supports multiple description as the \code{name}}
 \item{sep}{The separation character of the tables in the 'path' folder.
 Currently supports introducing the following arguments: ``,'' or ``;'' (for
 .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
-excel files); the last one using \code{XLConnect} library.}
+excel files).}
 
 \item{dec}{String. Decimal point.}
 

@@ -45,7 +45,7 @@
 #' @param sep The separation character of the tables in the 'path' folder.
 #' Currently supports introducing the following arguments: ``,'' or ``;'' (for
 #' .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
-#' excel files); the last one using \code{XLConnect} library.
+#' excel files).
 #' @param output If defined, the place where to save the dataframe as tab file.
 #' Otherwise it returns a data frame object.
 #' @param action Tells the function what to do if there's a copy of the file.
@@ -251,7 +251,8 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
                )
 
              message(
-               gsub(".*(/|\\\\)","",x)," analyzed correctly, ordered by ", ord,
+               gsub(".*(/|\\\\)","",x)," analyzed correctly, ordered by ", 
+               paste(utils::head(ord), collapse = ", "), ifelse(length(ord)>6, "...", ""),
                " and exported as csv"
                )
            }
@@ -627,7 +628,7 @@ seekTables <- function(files, encoding, sep, output = NA, replace = T, dec) {
 #' @param sep The separation character of the tables in the 'path' folder.
 #' Currently supports introducing the following arguments: ``,'' or ``;'' (for
 #' .csv files), ``\\t'' (for .tab files) and ``xls'' or ``xlsx'' (for microsofts
-#' excel files); the last one using \code{XLConnect} library.
+#' excel files).
 #' @param dec String. Decimal point.
 #' @param encoding The char encoding of the input tables. Currently ignored for
 #' microsoft excel files.
