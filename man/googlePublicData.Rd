@@ -28,12 +28,16 @@ Please visit the project home for more information and examples:
 
 }
 \references{
-\itemize{ \item googlePublicData project site:
-\url{http://github.com/gvegayon/googlePublicData} \item Public Data Explorer
-site: \url{http://publicdata.google.com/} \item Public Data Explorer
-Developers site: \url{https://developers.google.com/public-data/} \item
+\itemize{
+\item googlePublicData project site:
+\url{http://github.com/gvegayon/googlePublicData}
+\item Public Data Explorer
+site: \url{http://publicdata.google.com/}
+\item Public Data Explorer
+Developers site: \url{https://developers.google.com/public-data/}
+\item
 googleVis package:
-\url{http://code.google.com/p/google-motion-charts-with-r/} }
+\url{https://github.com/mages/googleVis#googlevis} }
 }
 \author{
 George G. Vega Yon

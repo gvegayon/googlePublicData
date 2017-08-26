@@ -1,12 +1,13 @@
 Package: googlePublicData
 Type: Package
 Title: Working with Google's Public Data Explorer DSPL Metadata Files
-Version: 0.16.99
-Date: 2017-08-13
+Version: 0.15.99
+Date: 2017-08-25
 Authors@R: person("George", "Vega Yon", email="g.vegayon@gmail.com",
 	role =c("aut","cre"))
 Description: Provides a collection of functions to set up 'Google Public Data Explorer'
-  data visualization tool with your own data, building automaticaly the corresponding DSPL (XML)
+  data visualization tool with your own data, building automaticaly the corresponding
+  DataSet Publishing Language file, or DSPL (XML),
   metadata file jointly with the CSV files. All zip-up and ready to be published in
   'Public Data Explorer'.
 Depends:
@@ -17,4 +18,4 @@ URL: http://github.com/gvegayon/googlePublicData/
 BugReports: http://github.com/gvegayon/googlePublicData/issues
 LazyLoad: yes
 RoxygenNote: 6.0.1
-Suggests: testthat, covr
+Suggests: testthat, covr, googleVis

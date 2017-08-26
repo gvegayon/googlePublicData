@@ -7,7 +7,7 @@
 \format{A data frame containing 5 observations.}
 \source{
 DSPL Google Code Page Downloads:
-\url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+\url{https://developers.google.com/public-data/docs/tutorial}
 }
 \description{
 This data set is one used in the DSPL Tutorial. Specifically, it contains

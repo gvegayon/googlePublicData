@@ -51,7 +51,7 @@ in the \code{action} argument.
 \examples{
 
 # Getting the path where all the datasets are
-path <- system.file("google", package="googlePublicData")
+path <- system.file("dspl-tutorial", package="googlePublicData")
 info <- genMoreInfo(path) # This is a dataframe
 
 # Setting the 5th concept as topic "Demographics"

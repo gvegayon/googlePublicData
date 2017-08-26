@@ -1,4 +1,4 @@
-# Changes in version 0.16.99 (2017-08-13)
+# Changes in version 0.15.99 (dev)
 
 ## Development
 

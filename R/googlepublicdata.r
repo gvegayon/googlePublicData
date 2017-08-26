@@ -14,7 +14,7 @@ NULL
 #' @docType data
 #' @format A data frame containing 5 observations.
 #' @source DSPL Google Code Page Downloads:
-#' \url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+#' \url{https://developers.google.com/public-data/docs/tutorial}
 #' @keywords datasets
 NULL
 
@@ -32,7 +32,7 @@ NULL
 #' @docType data
 #' @format A data frame containing 13 observations.
 #' @source DSPL Google Code Page Downloads:
-#' \url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+#' \url{https://developers.google.com/public-data/docs/tutorial}
 #' @keywords datasets
 NULL
 
@@ -91,7 +91,7 @@ NULL
 #' @docType data
 #' @format A data frame containing 13 observations.
 #' @source DSPL Google Code Page Downloads:
-#' \url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+#' \url{https://developers.google.com/public-data/docs/tutorial}
 #' @keywords datasets
 NULL
 
@@ -109,7 +109,7 @@ NULL
 #' @docType data
 #' @format A data frame containing 2 observations.
 #' @source DSPL Google Code Page Downloads:
-#' \url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+#' \url{https://developers.google.com/public-data/docs/tutorial}
 #' @keywords datasets
 NULL
 
@@ -136,12 +136,16 @@ NULL
 #' @aliases googlePublicData-package googlePublicData
 #' @docType package
 #' @author George G. Vega Yon 
-#' @references \itemize{ \item googlePublicData project site:
-#' \url{http://github.com/gvegayon/googlePublicData} \item Public Data Explorer
-#' site: \url{http://publicdata.google.com/} \item Public Data Explorer
-#' Developers site: \url{https://developers.google.com/public-data/} \item
+#' @references \itemize{
+#' \item googlePublicData project site:
+#' \url{http://github.com/gvegayon/googlePublicData}
+#' \item Public Data Explorer
+#' site: \url{http://publicdata.google.com/}
+#' \item Public Data Explorer
+#' Developers site: \url{https://developers.google.com/public-data/}
+#' \item
 #' googleVis package:
-#' \url{http://code.google.com/p/google-motion-charts-with-r/} }
+#' \url{https://github.com/mages/googleVis#googlevis} }
 #' @keywords package
 #' @examples
 #' 
@@ -166,7 +170,7 @@ NULL
 #' @docType data
 #' @format A data frame containing 9 observations.
 #' @source DSPL Google Code Page Downloads:
-#' \url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+#' \url{https://developers.google.com/public-data/docs/tutorial}
 #' @keywords datasets
 NULL
 
@@ -185,7 +189,7 @@ NULL
 #' @docType data
 #' @format A data frame containing 8 observations.
 #' @source DSPL Google Code Page Downloads:
-#' \url{https://code.google.com/p/dspl/downloads/detail?name=tutorial1.0.zip&can=2&q=}
+#' \url{https://developers.google.com/public-data/docs/tutorial}
 #' @keywords datasets
 NULL
 

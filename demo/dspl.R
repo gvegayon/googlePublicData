@@ -10,7 +10,7 @@ pause <- function() {
 
 # Complete directory path where the data is saved (in this case, where the
 # package is installed)
-data.path <- system.file("google", package="googlePublicData")
+data.path <- system.file("dspl-tutorial", package="googlePublicData")
 pause()
 
 # First Simplest example, 
