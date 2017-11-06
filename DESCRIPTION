@@ -1,8 +1,8 @@
 Package: googlePublicData
 Type: Package
 Title: Working with Google's Public Data Explorer DSPL Metadata Files
-Version: 0.15.99
-Date: 2017-08-25
+Version: 0.16.0
+Date: 2017-11-05
 Authors@R: person("George", "Vega Yon", email="g.vegayon@gmail.com",
 	role =c("aut","cre"))
 Description: Provides a collection of functions to set up 'Google Public Data Explorer'

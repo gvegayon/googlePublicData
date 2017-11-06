@@ -6,7 +6,6 @@ cache: packages
 r:
   - oldrel
   - release
-  - devel
 
 sudo: false
 
