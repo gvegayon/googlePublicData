@@ -65,13 +65,14 @@ NULL
 #' 
 #'   \dontrun{
 #'     # Parsing some xlsx files at "my stats folder"
-#'     mydspl <- dspl(path="my stats folder/", ext="xls")
+#'     mydspl <- dspl(path="my stats folder/")
 #'     
 #'     # Checking the summary of the data bundle
 #'     summary(mydspl)
 #'     
 #'     # Writing the DSPL XML definition into a file
-#'     print(mydspl, path="my stats folder/mydspl.xml")
+#'     outputfile <- tempfile()
+#'     print(mydspl, path=outputfile)
 #'     
 #'   }
 #' @name dspl-methods

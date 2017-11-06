@@ -1,3 +1,8 @@
+# Changes in version 0.16.1 (2017-11-06)
+
+*   Correcting wrong example.
+
+
 # Changes in version 0.16.0 (2017-11-05)
 
 ## Development
