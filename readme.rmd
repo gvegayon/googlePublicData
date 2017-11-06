@@ -14,13 +14,13 @@ Features:
 
 *   Reads tab, csv, xls and xlsx from a folder.
 
-*   Identifies data types and distinguishes between dimentional and metric concepts.
+*   Identifies data types and distinguishes between dimensional and metric concepts.
 
-*   Identifies dimentional data tabs.
+*   Identifies dimensional data tabs.
 
 *   Auto generates conceps id.
 
-*   Auto data sorting on dimentional (no time) concepts.
+*   Auto data sorting on dimensional (no time) concepts.
 
 *   Prints XML and csv files to upload to Public Data Explorer.
 

@@ -9,7 +9,7 @@
 \description{
 \code{googlePublicData} package provides a collection of functions to set up
 Google Public Data Explorer data visualization tool with your own data,
-building automaticaly the corresponding DSPL (XML) metadata file jointly
+building automatically the corresponding DSPL (XML) metadata file jointly
 with the CSV files. All zipped up and ready to be published at Public Data
 Explorer.
 }

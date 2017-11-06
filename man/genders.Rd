@@ -11,6 +11,6 @@ DSPL Google Code Page Downloads:
 }
 \description{
 This data set is one used in the DSPL Tutorial. Specifically, it contains
-the basic columns used to define a categorical dimentions such as gender.
+the basic columns used to define a categorical dimensions such as gender.
 }
 \keyword{datasets}

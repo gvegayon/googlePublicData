@@ -20,7 +20,7 @@ DSPL language.
 }
 \details{
 Public Data Explorer currently supports daily, monthly and yearly
-distributed data. Joda-time, the corresponding time format on wich DSPL
+distributed data. Joda-time, the corresponding time format on which DSPL
 times is based, allows declaring time formats using small case "d" (for
 days), capitalized "M" (for months) and small case "y" for years. Some
 examples: \tabular{ll}{ Format Specification \tab Data Example\cr "yyyy"

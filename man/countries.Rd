@@ -11,7 +11,7 @@ DSPL Google Code Page Downloads:
 }
 \description{
 This data set is one used in the DSPL Tutorial. Specifically, it contains
-the basic columns used to define geographical dimentions, in this case,
+the basic columns used to define geographical dimensions, in this case,
 countries.
 }
 \keyword{datasets}

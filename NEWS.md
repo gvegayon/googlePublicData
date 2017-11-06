@@ -46,7 +46,7 @@
 
 *   The encoding issue is definetly solved (on utf8).
 
-*   Avoiding unnecesary warings while assigning geo:location attributes.
+*   Avoiding unnecessary warings while assigning geo:location attributes.
 
 *   Fixing some bugs when checking for duplicated concepts
 

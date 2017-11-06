@@ -42,5 +42,5 @@ summary.dspl <- function(object, ...) {
   print(attributes(object))
   cat('Dataset contents\n')
   object[c('dimtabs', 'slices', 'concepts',
-            'dimentions','statistics')]
+            'dimensions','statistics')]
 }

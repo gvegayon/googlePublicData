@@ -20,7 +20,7 @@
 \item{replace}{Logical. If \code{path} exists, \code{TRUE} would replace the
 file.}
 
-\item{quiet}{Whether or not to print infor on the screen}
+\item{quiet}{Whether or not to print information on the screen}
 
 \item{\dots}{arguments passed on to \code{\link{cat}} (\code{print.dspl})}
 

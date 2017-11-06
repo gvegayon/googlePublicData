@@ -6,7 +6,7 @@ NULL
 #' World countries example data set
 #' 
 #' This data set is one used in the DSPL Tutorial. Specifically, it contains
-#' the basic columns used to define geographical dimentions, in this case,
+#' the basic columns used to define geographical dimensions, in this case,
 #' countries.
 #' 
 #' 
@@ -51,7 +51,7 @@ NULL
 #' @param path String. Output path where to save the XML DSPL file.
 #' @param replace Logical. If \code{path} exists, \code{TRUE} would replace the
 #' file.
-#' @param quiet Whether or not to print infor on the screen
+#' @param quiet Whether or not to print information on the screen
 #' @param \dots arguments passed on to \code{\link{cat}} (\code{print.dspl})
 #' @return \item{list("print.dspl")}{ None (invisible \code{NULL}).}
 #' 
@@ -103,7 +103,7 @@ NULL
 #' Genders example data set
 #' 
 #' This data set is one used in the DSPL Tutorial. Specifically, it contains
-#' the basic columns used to define a categorical dimentions such as gender.
+#' the basic columns used to define a categorical dimensions such as gender.
 #' 
 #' 
 #' @name genders
@@ -122,7 +122,7 @@ NULL
 #' 
 #' \code{googlePublicData} package provides a collection of functions to set up
 #' Google Public Data Explorer data visualization tool with your own data,
-#' building automaticaly the corresponding DSPL (XML) metadata file jointly
+#' building automatically the corresponding DSPL (XML) metadata file jointly
 #' with the CSV files. All zipped up and ready to be published at Public Data
 #' Explorer.
 #' 
@@ -182,8 +182,8 @@ NULL
 #' US states example data set
 #' 
 #' This data set is one used in the DSPL Tutorial. Specifically, it contains
-#' the basic columns used to define geographical dimentions, in this case, US
-#' Satates.
+#' the basic columns used to define geographical dimensions, in this case, US
+#' States.
 #' 
 #' 
 #' @name states
