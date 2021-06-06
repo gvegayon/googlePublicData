@@ -4,6 +4,8 @@ googlePublicData
 An *R* package for building *Google's* *Data Sets Publication Language* (DSPL) metadata files used in *Public Data Explorer*.
 
 [![Downloads](http://cranlogs.r-pkg.org/badges/googlePublicData?color=brightgreen)](http://cran.rstudio.com/package=googlePublicData) [![Travis-CI Build Status](https://travis-ci.org/gvegayon/googlePublicData.svg?branch=master)](https://travis-ci.org/gvegayon/googlePublicData) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/gvegayon/googlePublicData?branch=master&svg=true)](https://ci.appveyor.com/project/gvegayon/googlePublicData) [![codecov](https://codecov.io/gh/gvegayon/googlePublicData/branch/master/graph/badge.svg)](https://codecov.io/gh/gvegayon/googlePublicData)
+[![Grand total](http://cranlogs.r-pkg.org/badges/grand-total/googlePublicData)](https://cran.r-project.org/package=googlePublicData)
+
 
 Features:
 
