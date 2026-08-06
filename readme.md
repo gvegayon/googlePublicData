@@ -31,6 +31,16 @@ So you don't need to mess with the XML coding at all!
 library(googlePublicData)
 
 # This path has some csv files that we will use
+
+<!-- how-to-cite -->
+> [!NOTE]
+> **How to cite googlePublicData.** If you use **googlePublicData** in published work, please cite it:
+>
+> Vega Yon G. *googlePublicData: Working with Google's 'Public Data Explorer' DSPL Metadata Files*. doi:[10.32614/CRAN.package.googlePublicData](https://doi.org/10.32614/CRAN.package.googlePublicData)
+>
+> Run `citation("googlePublicData")` in R for the BibTeX entry.
+<!-- how-to-cite -->
+
 data.path <-try(paste(.libPaths()[1],'/googlePublicData/data',sep=''), silent=T)
 data.path
 ```
