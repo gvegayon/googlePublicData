@@ -1,13 +1,24 @@
-year <- sub("-.*", "", meta$Date)
+# Year resolution: CRAN sets Date/Publication on the installed package; fall
+# back to DESCRIPTION's Date, then to the current year, so the package entry
+# never renders as "(????)".
+year <- if (!is.null(meta$`Date/Publication`)) {
+  substr(meta$`Date/Publication`, 1, 4)
+} else if (!is.null(meta$Date)) {
+  substr(meta$Date, 1, 4)
+} else {
+  format(Sys.Date(), "%Y")
+}
 note <- sprintf("R package version %s", meta$Version)
 
-bibentry(bibtype = "Manual",
-         title = "{netdiffuseR}: Analysis of Diffusion and Contagion Processes on Networks",
-         author = c(
-          person("George", "Vega Yon"),
-          person("Stephanie", "Dyal"),
-          person("Timothy", "Hayes"),
-          person("Thomas", "Valente")),
-         year = year,
-         note = note,
-         url = "https://github.com/USCCANA/netdiffuseR")
+bibentry(
+  bibtype = "Manual",
+  title   = "{{googlePublicData: Working with Google's 'Public Data Explorer' DSPL Metadata Files}}",
+  author  = c(
+    person("George", "Vega Yon", comment = c(ORCID = "0000-0002-3171-0844"))
+  ),
+  year    = year,
+  note    = note,
+  url     = "https://github.com/gvegayon/googlePublicData",
+  doi     = "10.32614/CRAN.package.googlePublicData",
+  header  = "To cite googlePublicData in publications use:"
+)
