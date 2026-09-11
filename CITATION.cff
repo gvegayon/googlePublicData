@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: 'To cite package "googlePublicData" in publications use:'
+type: software
+license: MIT
+title: 'googlePublicData: Working with Google''s ''Public Data Explorer'' DSPL Metadata
+  Files'
+version: 0.16.1
+doi: 10.32614/CRAN.package.googlePublicData
+abstract: Provides a collection of functions to set up 'Google Public Data Explorer'
+  <https://www.google.com/publicdata/> data visualization tool with your own data,
+  building automatically the corresponding DataSet Publishing Language file, or DSPL
+  (XML), metadata file jointly with the CSV files. All zip-up and ready to be published
+  in 'Public Data Explorer'.
+authors:
+- family-names: Vega Yon
+  given-names: George
+  email: g.vegayon@gmail.com
+preferred-citation:
+  type: manual
+  title: 'googlePublicData: Working with Google''s ''Public Data Explorer'' DSPL Metadata
+    Files'
+  authors:
+  - family-names: Vega Yon
+    given-names: George
+    orcid: https://orcid.org/0000-0002-3171-0844
+    email: g.vegayon@gmail.com
+  year: '2017'
+  notes: R package version 0.16.1
+  url: https://github.com/gvegayon/googlePublicData
+  doi: 10.32614/CRAN.package.googlePublicData
+repository: https://CRAN.R-project.org/package=googlePublicData
+repository-code: http://github.com/gvegayon/googlePublicData
+url: http://github.com/gvegayon/googlePublicData/
+date-released: '2017-11-06'
+contact:
+- family-names: Vega Yon
+  given-names: George
+  email: g.vegayon@gmail.com
