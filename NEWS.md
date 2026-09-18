@@ -1,6 +1,7 @@
 # Changes in version 0.16.1 (2017-11-06)
 
 *   Correcting wrong example.
+*   Fixed `moreinfo` path handling so `dspl()` accepts either a directory containing `config.tab` or the complete path to `config.tab`.
 
 
 # Changes in version 0.16.0 (2017-11-05)
